@@ -1,1 +1,22 @@
-header
+%header.ecHeader
+  .top__head
+    .top__head--top
+      .top__head--icon
+        = link_to "#" do
+          = image_tag 'logo.png'
+      .top__head--searchBox
+        = form_tag( "#" ,method: 'get', class: "head__form--tag") do
+          = text_field_tag :search , '', class: "head__search--input", placeholder: "キーワードから探す"
+          = button_tag type: "submit", class: "head__search--input--btn" do
+            = image_tag 'icon-search 1.png'
+    .top__head--bottom
+      %ul.top__head__listsLeft
+        %li.top__head__listsLeft--first
+          = link_to "カテゴリー" , "#"
+        %li.top__head__listsLeft--second
+          = link_to "ブランド" , "#"
+      %ul.top__head__listsRight
+        %li.top__head__listsRight--login
+          = link_to "ログイン" , "#"
+        %li.top__head__listsRight--signup 
+          = link_to "新規会員登録" , "#"
