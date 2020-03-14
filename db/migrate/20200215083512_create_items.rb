@@ -10,7 +10,6 @@ class CreateItems < ActiveRecord::Migration[5.2]
       # enum
       t.integer    :condition_num,          null: false, limit: 1, unsigned: true, default: 0
       t.integer    :daystoship_num,         null: false, limit: 1, unsigned: true, default: 0
-      t.integer    :status_num,             null: false, limit: 1, unsigned: true, default: 0
 
       # values
       t.string     :title,                  null: false
@@ -24,7 +23,6 @@ class CreateItems < ActiveRecord::Migration[5.2]
     end
     add_index :items, :condition_num 
     add_index :items, :daystoship_num
-    add_index :items, :status_num
     add_index :items, :title
 
   end
