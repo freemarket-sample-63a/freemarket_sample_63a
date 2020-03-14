@@ -10,9 +10,7 @@ class ItemsController < ApplicationController
     @item_image = @item.item_images.build
     @categories = []
     @categories << Category.new(id:0,name:"---")
-    Category.where(ancestry: nil).each do |parent|
-      @categories << parent
-    end
+    @categories.concat(Category.where(ancestry: nil))
   end
 
   def create
