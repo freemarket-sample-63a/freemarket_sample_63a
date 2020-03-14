@@ -248,7 +248,7 @@
   height: 150px;
 }
 
-#item_category_id{
+%__select-form{
   margin-top: 16px;
   font-family: Arial,游ゴシック体,YuGothic,メイリオ,Meiryo,sans-serif;
   width: 100%;
@@ -264,28 +264,43 @@
   padding: 0 56px 0 16px;
 }
 
+#parent{
+ @extend %__select-form;
+}
+#child{
+ @extend %__select-form;
+}
+
+#item_category_id{
+  @extend %__select-form;
+}
+
+#item_product_size_id{
+  @extend %__select-form;
+}
+
 #item_brand_id{
-  @extend #item_category_id;
+  @extend %__select-form;
 }
 
 #item_condition_num{
-  @extend #item_category_id;
+  @extend %__select-form;
 }
 
-#item_shippingcharge_num{
-  @extend #item_category_id;
+#shippingway{
+  @extend %__select-form;
 }
 
 #item_shippingway_id{
-  @extend #item_category_id;
+  @extend %__select-form;
 }
 
 #item_daystoship_num{
-  @extend #item_category_id;
+  @extend %__select-form;
 }
 
 #item_price{
-  @extend #item_category_id;
+  @extend %__select-form;
   width: 50%;
   height: 50px;
   border-radius: 4px;

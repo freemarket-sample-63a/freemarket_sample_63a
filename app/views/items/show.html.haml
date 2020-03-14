@@ -18,7 +18,7 @@
                       = image_tag image.image.url,class:'items-show-summary__sub-image--image'
             .items-show-summary__price
               %span
-                = @item.price
+                = thousands_separator(@item.price)
               .items-show-summary__price--detail
                 %span
                   (税込)
