@@ -1,7 +1,7 @@
 module TradesHelper
 
-  def card_exists_and_addres_exists?
-    return unless @default_card_information.nil? || @address.nil? 
+  def card_present_and_addres_present?
+    @default_card_information.present? && @address.present?
   end
 
 end

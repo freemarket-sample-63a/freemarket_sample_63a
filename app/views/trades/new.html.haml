@@ -39,9 +39,6 @@
                         %span.trades-new-buy-register-text--new
                           登録してください
                 - else
-                  = link_to "#", class: "trades-new-buy-user-info-fix" do
-                    %span.trades-new-buy-register-text--edit
-                      変更する
                   %p.trades-new-buy-user-info-text__cardinfo
                     .creditcards-show-confirmation__contents
                       .creditcards-show-confirmation__card-number
@@ -75,7 +72,7 @@
                     = @address.number 
                     %br/
                     = @address.building 
-            - if card_exists_and_addres_exists?
+            - if card_present_and_addres_present?
               .trades-new-buy-content
                 = button_tag "購入する"
   %footer.trades-new-footer
