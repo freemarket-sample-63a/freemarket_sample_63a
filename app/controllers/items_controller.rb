@@ -9,7 +9,7 @@ class ItemsController < ApplicationController
     @item = Item.new(feerate: 0.1)
     @item_image = @item.item_images.build
     @categories = []
-    @categories << Category.new(id:0,name:"---")
+    @categories.push(Category.new(id:0,name:"---"))
     @categories.concat(Category.where(ancestry: nil))
   end
 
