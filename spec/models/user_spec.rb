@@ -2,11 +2,15 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   describe '#create' do
+
+    # ----空ではない場合に登録ができること----
     # # 1. nickname,email,first_name,last_name,first_name_kana,last_name_kana,birthday,telephone_numbeが存在すれば登録できること
     it "is valid with a nickname,email,first_name,last_name,first_name_kana,last_name_kana,birthday,telephone_number" do
       user = build(:user)
       expect(user).to be_valid
     end
+
+    # ----空の場合に登録ができないこと----
     # 2. nicknameが空では登録できないこと
     it "is invalid without a nickname" do
       user = build(:user, nickname: nil)
@@ -77,6 +81,7 @@ RSpec.describe User, type: :model do
       expect(user.errors[:telephone_number]).to include("を入力してください", "は有効でありません。")
     end
 
+    # ----nicknameに関するテスト----
     # 12. nicknameが16文字以上であれば登録できないこと
     it "is invalid with a nickname that has more than 15 characters " do
       user = build(:user, nickname: "1234567890123456")
@@ -84,6 +89,7 @@ RSpec.describe User, type: :model do
       expect(user.errors[:nickname]).to include("は15文字以内で入力してください")
     end
 
+    # ----emailに関するテスト----
     # 13. 重複したemailが存在する場合登録できないこと
     it "is invalid with a duplicate email address" do
       user = create(:user)
@@ -92,16 +98,70 @@ RSpec.describe User, type: :model do
       expect(another_user.errors[:email]).to include("はすでに存在します")
     end
 
-    # 14. passwordが7文字以上であれば登録できること（英字と数字の両方を含むこと）
-    it "is valid with a password that has more than 6 characters " do
-      user = build(:user, password: "1234567a", password_confirmation: "1234567a")
+    # 14. emailの頭に@があると登録できないこと
+    it "is invalid with a email includes no character before @ " do
+      user = build(:user, email: "@abdd@aaa.com")
       user.valid?
-      expect(user).to be_valid
+      expect(user.errors[:email][0]).to include("は有効でありません。")
     end
 
-    # 15
+    # 15. emailの最後尾に@があると登録できないこと
+    it "is invalid with a email includes no character after @ " do
+      user = build(:user, email: "abdd@aaa.com@")
+      user.valid?
+      expect(user.errors[:email][0]).to include("は有効でありません。")
+    end
+
+    # 16. emailの登録で@マーク後の.(ドット）後に英字がない場合は登録ができないこと
+    it 'is invalid with a email wrong format' do
+      user = build(:user, email: 'a12345678@aaa.111')
+      user.valid?
+      expect(user.errors[:email]).to include("は有効でありません。")
+    end
+
+    # 17. emailの登録で@マーク後の.(ドット）がない場合は登録ができないこと
+    it 'is invalid with a email wrong format' do
+      user = build(:user, email: 'a12345678@aaacom')
+      user.valid?
+      expect(user.errors[:email]).to include("は有効でありません。")
+    end
 
 
+
+    # # 13. 重複したemailが存在する場合登録できないこと
+    # it "is invalid with a duplicate email address" do
+    #   user = create(:user)
+    #   another_user = build(:user, email: user.email)
+    #   another_user.valid?
+    #   expect(another_user.errors[:email]).to include("はすでに存在します")
+    # end
+
+    # # 英字が入っていないから不適切
+    # it 'is invalid with a email wrong format' do
+    #   user = build(:user, email: '12345678')
+    #   user.valid?
+    #   expect(user.errors[:email]).to include("は有効でありません。")
+    # end
+
+
+
+
+
+    # # 14. passwordが7文字以上であれば登録できること（英字と数字の両方を含むこと）
+    # it "is valid with a password that has more than 6 characters " do
+    #   user = build(:user, password: "1234567a", password_confirmation: "1234567a")
+    #   user.valid?
+    #   expect(user).to be_valid
+    # end
+
+    # # 15. passwordが6文字以下であれば登録できないこと
+    # it "is invalid with a password that has less than characters " do
+    #   user = build(:user, password: "12345a", password_confirmation: "12345a")
+    #   user.valid?
+    #   expect(user.errors[:password]).to include("は7文字以上で入力してください")
+    # end   
+    
+    
 
 
 
