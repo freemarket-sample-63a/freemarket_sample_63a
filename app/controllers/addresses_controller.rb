@@ -10,9 +10,7 @@ class AddressesController < ApplicationController
 
   def create
     @address = Address.new(address_params)
-    unless @address.save
-      render user_address_path
-    end
+    render user_address_path and returne unless @address.save
     redirect_to user_addresses_path
   end
 
