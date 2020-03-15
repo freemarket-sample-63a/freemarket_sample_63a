@@ -11,7 +11,7 @@ class AddressesController < ApplicationController
   def create
     @address = Address.new(address_params)
     if @address.save
-      Address.create(address_params)
+
     else
       render user_address_path
     end
