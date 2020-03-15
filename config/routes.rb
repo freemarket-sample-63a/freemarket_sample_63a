@@ -28,7 +28,7 @@ Rails.application.routes.draw do
         post 'show', to: 'creditcards#show'
       end
     end
-    resources :addresses, only: [:index,:new, :edit, :update]
+    resources :addresses, only: [:index,:new, :create, :edit, :update]
   end
 
 end
