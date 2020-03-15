@@ -31,7 +31,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use ActiveStorage variant
-gem 'mini_magick', '~> 4.8'
+gem 'mini_magick', ' < 4.10'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -86,9 +86,11 @@ gem 'carrierwave'
 gem 'pry-rails'
 gem 'font-awesome-sass'	
 gem 'seed-fu'
-gem 'payjp'
+gem 'payjp', '< 0.0.7'
 gem 'enum_help'
 gem 'autonumeric-rails'
 gem 'dotenv-rails'
 gem 'gon'
 gem 'fog-aws'
+gem 'rails-i18n'
+gem 'devise-i18n-views'

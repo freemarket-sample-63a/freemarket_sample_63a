@@ -1,0 +1,14 @@
+.items-destory
+  %header.items-destroy__header
+    = render 'layouts/header'
+  %main.items-destroy__main
+    .items-destroy-container
+      .items-destroy-content
+        .items-destroy-content__message
+          商品の出品を取り消しました。
+        .items-destroy-content__btn
+          = link_to 'トップに戻る', root_path,class:"items-destroy-content__btn--link"
+    
+  %footer.items-destroy__footer
+    = render 'layouts/footer'
+  = render 'layouts/purchase-btn'

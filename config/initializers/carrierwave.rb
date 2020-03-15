@@ -12,11 +12,10 @@ CarrierWave.configure do |config|
       aws_secret_access_key: Rails.application.credentials.aws[:secret_access_key],
       region: 'ap-northeast-1'
     }
+    config.fog_directory  = 'mayutech63'
+    config.asset_host = 'https://s3-ap-northeast-1.amazonaws.com/mayutech63'
   else
     config.storage = :file
     config.enable_processing = false if Rails.env.test? #test:処理をスキップ
   end
-
-  config.fog_directory  = 'mayutech63'
-  config.asset_host = 'https://s3-ap-northeast-1.amazonaws.com/mayutech63'
 end

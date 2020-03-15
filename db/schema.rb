@@ -15,11 +15,15 @@ ActiveRecord::Schema.define(version: 2020_03_03_102404) do
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "area_id", null: false
-    t.integer "status_num", limit: 1, null: false, unsigned: true
+    t.integer "status_num", limit: 1, default: 0, null: false, unsigned: true
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "first_name_kana", null: false
+    t.string "last_name_kana", null: false
     t.string "postal_number", null: false
     t.string "city", null: false
     t.string "number", null: false
-    t.string "building", null: false
+    t.string "building"
     t.string "telephone_number", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

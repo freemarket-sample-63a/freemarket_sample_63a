@@ -1,0 +1,24 @@
+.addresses-index
+  %header.addresses-index__header
+    = render 'layouts/header'
+  %main.addresses-index__main
+    .addresses-index-container
+      .addresses-index-container__left
+        = render 'layouts/user-nav'
+      .addresses-index-container__right
+        .addresses-index-info
+          .addresses-index-info__title
+            発送元・お届け先住所一覧
+          .addresses-index-info__field
+            -@addresses.each_with_index do |address,i|
+              %i
+                = i+1
+              %i
+                = address.city + address.number + address.building
+              %button.addresses-index-info__edit
+                =link_to '編集する',edit_user_address_path(current_user.id,address.id)
+            %button.addresses-index-info__new
+              =link_to '住所を追加する',new_user_address_path(current_user.id)
+  %footer.adresses-index__footer
+    = render 'layouts/footer'
+    = render 'layouts/purchase-btn'

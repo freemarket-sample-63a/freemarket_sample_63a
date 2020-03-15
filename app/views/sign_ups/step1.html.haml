@@ -1,0 +1,97 @@
+.registrations-new
+  %header.registrations-new__header
+    =link_to root_path do
+      = image_tag 'logo.png',class: "registrations-new__header--logo"
+    .registrations-new-sign-up-bar
+      %ul.registrations-new-sign-up-bar__ul
+        %l1.registrations-new-sign-up-bar__l1
+          会員情報 
+          .registrations-new-sign-up-bar__l1--progress-status1
+        %l2.registrations-new-sign-up-bar__l2
+          電話番号認証
+          .registrations-new-sign-up-bar__l2--progress-status2
+        %l3.registrations-new-sign-up-bar__l3
+          完了
+          .registrations-new-sign-up-bar__l3--progress-status3
+
+  %main.registrations-new__main
+    .registrations-new-main-title
+      %h2 会員情報登録
+    .registrations-new-main-input-class
+      = render 'error-messages'
+      = form_with model: @user, local: true, url: step2_sign_ups_path,method: :get do |f|
+        .registrations-new-main-input-class-field
+          = f.label :"ニックネーム"
+          %span.form-require 必須
+          %br/
+          = f.text_field :nickname, class: "registrations-new-main-input-class-field__text-box",autofocus: true,placeholder: "例）テックタロウ"
+        .registrations-new-main-input-class-field
+          = f.label :"メールアドレス"
+          %span.form-require 必須
+          %br/
+          = f.email_field :email, class: "registrations-new-main-input-class-field__text-box",placeholder: "例）XXX@gmail.com"
+        .registrations-new-main-input-class-field
+          = f.label :password
+          - if @minimum_password_length
+            %em
+            (#{@minimum_password_length} characters minimum)
+          %span.form-require 必須
+          %br/
+          = f.password_field :password, class: "registrations-new-main-input-class-field__text-box",autocomplete: "new-password",placeholder: "password"
+        .registrations-new-main-input-class-field
+          = f.label :password_confirmation
+          %span.form-require 必須
+          %br/
+          = f.password_field :password_confirmation, class: "registrations-new-main-input-class-field__text-box",autocomplete: "new-password",placeholder: "password（確認用）"
+          %br
+          %p.registrations-new-main-input-class-field__gray-text ※ 英字と数字の両方を含めて設定してください
+          %br
+          %input{ type: 'checkbox'} 
+          %label{ for: 'password-checkbox' ,class: "registrations-new-main-input-class-field__checkbox-text"} パスワードを表示する 
+        .registrations-new-main-input-class-field
+          %h2 本人確認
+          %P.registrations-new-main-input-class-field__identification 安心・安全にご利用いただくために、お客さまの本人情報の登録にご協力ください。他のお客さまに公開されることはありません。     
+        .registrations-new-main-input-class-field
+          .registrations-new-main-input-class-field__box
+            .registrations-new-main-input-class-field__box--name
+              = f.label :"お名前(全角)"
+              %span.form-require 必須
+              %br/
+              = f.text_field :first_name, class: "registrations-new-main-input-class-field__text-box", placeholder: "例）山田"
+            .registrations-new-main-input-class-field__box-lastname
+              %br/
+              = f.text_field :last_name, class: "registrations-new-main-input-class-field__text-box",placeholder: "例）太郎"
+          .registrations-new-main-input-class-field__box
+            .registrations-new-main-input-class-field__box--name-kana
+              = f.label :"お名前カナ(全角)"
+              %span.form-require 必須
+              %br/
+              = f.text_field :first_name_kana, class: "registrations-new-main-input-class-field__text-box", placeholder: "例）ヤマダ"
+            .registrations-new-main-input-class-field__box--lastname-kana
+              %br/
+              = f.text_field :last_name_kana, class: "registrations-new-main-input-class-field__text-box",autofocus: true,title:"error",placeholder: "例）タロウ"
+        .registrations-new-main-input-class-field__birthday
+          = f.label :"生年月日"
+          %span.form-require 必須
+          %br/
+          != sprintf(f.date_select(:birthday, prefix:'birthday',with_css_classes:'registrations-new-main-input-class-field__birthday__text-box', prompt:"--",use_month_numbers:true, start_year:Time.now.year, end_year:1900, date_separator:'%s'),'年','月')+'日'           
+        .registrations-new-main-input-class-field
+        %br/
+        %P.registrations-new-main-input-class-field__text-Identity-information ※ 本人情報は正しく入力してください。会員登録後、修正するにはお時間を頂く場合があります。
+        %br/
+        %br/
+        .registrations-new-main-input-class-field__consent
+        %P.registrations-new-main-input-class-field__consent--text
+          「次へ進む」のボタンを押すことにより、#{link_to "利用規約","#URL",class:"registrations-new-main-input-class-field__consent--link" }に同意したものとみなします。
+        .registrations-new-main-input-class-field
+          .registrations-new-main-input-class-field__botton
+            = f.submit "送信",value: "次へ進む",class:"registrations-new-main-input-class-field__botton--text" 
+        .registrations-new-main-input-class-field
+          %P.registrations-new-main-input-class-field__bottom-link
+            #{link_to "本人情報の登録について＞","#URL",class:"registrations-new-main-input-class-field__bottom-link--link" }
+        .registrations-new-main-input-class-field
+          .registrations-new-main-input-class-field__bottom-box
+            %P.registrations-new-main-input-class-field__bottom-box--text
+              This site is protected by reCAPTCHA and the Google Privacy Policy#{link_to "Privacy Policy","#URL",class:"registrations-new-main-input-class-field__bottom-box--link"}and#{link_to "Terms of Service","#URL",class:"registrations-new-main-input-class-field__bottom-box--link"}
+  %footer.registrations-new__footer
+    = render "devise/navigation"

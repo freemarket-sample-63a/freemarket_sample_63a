@@ -10,7 +10,7 @@
     display:flex;
     margin:0 auto;
     &--image{
-      height:87px;
+      width:69px;
     }
   }
 }
@@ -84,6 +84,7 @@
 .items-show-comment{
   &__submit{
     &--btn{
+      display:block;
       margin:0 auto;
       font-size: 18px;
       line-height: 48px;
@@ -91,7 +92,6 @@
       border: 1px solid #3CCACE;
       color: #fff;
       width: 60%;
-      font-size: 18px;
       border-radius: 100px;
     }
   }
@@ -99,4 +99,52 @@
 .items-show-links{
   display:flex;
   justify-content: space-between;
+}
+
+.items-show-button{
+  width:700px;
+  display:flex;
+  justify-content: space-between;
+  &__edit{
+    margin:0 auto;
+    text-align: center;
+    font-size: 18px;
+    line-height: 48px;
+    background: #3CCACE;
+    border: 1px solid #3CCACE;
+    width: 30%;
+    border-radius: 100px;
+    &--link{
+      color: #fff;
+      text-decoration: none;
+    }
+  }
+  &__cancel{
+    margin:0 auto;
+    text-align: center;
+    font-size: 18px;
+    line-height: 48px;
+    background: #ea352d;
+    border: 1px solid #ea352d;
+    width: 30%;
+    border-radius: 100px;
+    &--link{
+      color: #fff;
+      text-decoration: none;
+    }
+  }
+  &__purchase{
+    margin:0 auto;
+    text-align: center;
+    font-size: 18px;
+    line-height: 48px;
+    background: #3CCACE;
+    border: 1px solid #3CCACE;
+    width: 60%;
+    border-radius: 100px;
+    &--link{
+      color: #fff;
+      text-decoration: none;
+    }
+  }
 }

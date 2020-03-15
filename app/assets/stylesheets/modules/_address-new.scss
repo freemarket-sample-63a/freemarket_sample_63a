@@ -1,0 +1,62 @@
+.address-new{
+  &__main{
+    padding-bottom:40px;
+    background-color: #f5f5f5;
+  }
+}
+
+.address-new-container{
+  padding-top: 40px;
+  margin: 0 auto;
+  width: 1020px;
+  display: flex;
+  justify-content: space-around;
+  &__left{
+    margin-bottom: 30px;
+    margin-right: 40px;
+    width: 25%;
+    background-color: #fff;
+  }
+  &__right{
+    height: 100%;
+    width: 60%;
+  }
+}
+
+.address-new-info {
+  background-color: #fff;
+  &__title {
+    padding: 12px 4%;
+    border-bottom: 1px solid #f5f5f5;
+    text-align: center;
+    font-size: 18px;
+  }
+  &__field {
+    padding: 40px 40px 64px;
+    align-items: center;
+    max-width: 343px;
+  }
+}
+
+.address-new-info{
+  &__field{
+    &--textbox{
+      margin-top: 0 auto;
+    }
+  }
+}
+#address_area_id {
+  margin-top: 8px;
+  font-family: Arial,游ゴシック体,YuGothic,メイリオ,Meiryo,sans-serif;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #222;
+  font-size: 16px;
+  height: 48px;
+  line-height: 1;
+  outline: none;
+  padding: 0 56px 0 16px;
+}

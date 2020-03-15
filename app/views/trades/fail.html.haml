@@ -1,0 +1,29 @@
+.trades-new
+  %header.trades-header
+    .trades-header__icon
+      = link_to root_path do
+        = image_tag 'logo.png'
+  %main.trades-fail-main
+  %main.trades-fail-buy-main
+    .trades-fail-buy-item-container
+      %h2.trades-fail-buy-head 購入失敗
+      .trades-fail-buy-content
+        .trades-fail-buy-content-inner
+          .trades-fail-buy-item-box
+            %h3.trades-fail-buy-item__image
+              = image_tag @item.item_images.first.image.url, class:'trades-image'
+              .trades-fail-buy-item__detail
+                .trades-item__name 
+                  = @item.title
+                .trades-fail-buy-item__price-ja
+                  %span
+                    = thousands_separator(@item.price)
+                  %span.trades-fail-buy-item__shipping-fee （税込）送料込み
+      .trades-fail-buy-content
+        .trades-fail-buy-content-inner
+          .trades-fail-buy-content
+            .trades-fail-buy-content-inner
+              %h2 購入に失敗しました。
+          = link_to new_item_trade_path(@item.id) do
+            = button_tag "購入画面に戻る"
+  %footer.trades75x75footer

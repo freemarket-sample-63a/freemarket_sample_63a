@@ -1,0 +1,34 @@
+.registrations-new
+  %header.registrations-new__header
+    =link_to root_path do
+      = image_tag 'logo.png',class: "registrations-new__header--logo"
+    .registrations-new-sign-up-bar
+      %ul.registrations-new-sign-up-bar__ul
+        %l1.registrations-new-sign-up-bar__l1
+          会員情報 
+          .registrations-new-sign-up-bar__l1--progress-status1
+        %l2.registrations-new-sign-up-bar__l2
+          電話番号認証
+          .registrations-new-sign-up-bar__l2--progress-status2
+        %l3.registrations-new-sign-up-bar__l3
+          完了
+          .registrations-new-sign-up-bar__l3--progress-status3
+
+  %main.registrations-new__main
+    .registrations-new-main-title
+      %h2 電話番号の確認
+    .registrations-new-main-input-class
+      = form_with model: @user, local: true, url: { controller: :sign_ups, action: :create },method: :post do |f|
+        .registrations-new-main-input-class-field
+          = f.label :"電話番号"
+          %span.form-require 必須
+          %br/
+          = f.number_field :telephone_number, class: "registrations-new-main-input-class-field__text-box",autofocus: true,placeholder: "携帯電話の番号を入力",value: ""
+        .registrations-new-main-input-class-field
+          .registrations-new-main-input-class-field__botton
+            = f.submit "送信",value: "次へ進む",class:"registrations-new-main-input-class-field__botton--text" 
+        .registrations-new-main-input-class-field
+          %P.registrations-new-main-input-class-field__bottom-link
+            #{link_to "電話番号の認証が必要な理由","#URL",class:"registrations-new-main-input-class-field__bottom-link--link" }
+  %footer.registrations-new__footer
+    = render "devise/navigation"

@@ -3,15 +3,16 @@
     = render 'layouts/header'
   %main.user-show__main
     .user-show-container
-      .user-show-container__left
-        = render 'layouts/user-nav'
+      - if @user.id == current_user.id
+        .user-show-container__left
+          = render 'layouts/user-nav'
       .user-show-container__right
         %section.user-show-info
           = link_to "#" , class:"user-show-info__minute" do
             %figure.user-show-info__image
               = image_tag 'member_photo_noimage_thumb.png'
             %h2.user-show-info__name
-              name
+              = @user.nickname
             .user-show-info__exhibition
               %div.user-show-info__exhibition--assessment
                 評価
@@ -30,7 +31,7 @@
               %li.user-show-tabs__btn
                 = link_to  "#", class:"user-show-tabs__btn--link" do
                   %figure.user-show-tabs__btn--image
-                    = image_tag('mercari_profile.png')
+                    = image_tag('logo2.png')
                   .user-show-tabs__text
                     %p.user-show-tabs__text--notify
                       [test]お知らせ内容
@@ -43,7 +44,7 @@
               %li.user-show-tabs__btn
                 = link_to  "#", class:"user-show-tabs__btn--link" do
                   %figure.user-show-tabs__btn--image
-                    = image_tag('mercari_profile.png')
+                    = image_tag('logo2.png')
                   .user-show-tabs__text
                     %p.user-show-tabs__text--notify
                       [test]お知らせ内容
@@ -56,7 +57,7 @@
               %li.user-show-tabs__btn
                 = link_to  "#", class:"user-show-tabs__btn--link" do
                   %figure.user-show-tabs__btn--image
-                    = image_tag('mercari_profile.png')
+                    = image_tag('logo2.png')
                   .user-show-tabs__text
                     %p.user-show-tabs__text--notify
                       [test]お知らせ内容
@@ -69,7 +70,7 @@
               %li.user-show-tabs__btn
                 = link_to  "#", class:"user-show-tabs__btn--link" do
                   %figure.user-show-tabs__btn--image
-                    = image_tag('mercari_profile.png')
+                    = image_tag('logo2.png')
                   .user-show-tabs__text
                     %p.user-show-tabs__text--notify
                       [test]お知らせ内容
@@ -82,7 +83,7 @@
               %li.user-show-tabs__btn
                 = link_to  "#", class:"user-show-tabs__btn--link" do
                   %figure.user-show-tabs__btn--image
-                    = image_tag('mercari_profile.png')
+                    = image_tag('logo2.png')
                   .user-show-tabs__text
                     %p.user-show-tabs__text--notify
                       [test]お知らせ内容

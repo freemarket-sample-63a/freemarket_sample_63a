@@ -7,4 +7,10 @@ module ItemsHelper
       ん。あわせやすいのでおすすめです。
     EOS
   end
+
+  def thousands_separator(price)
+    # 現状はJPY固定。
+    number_to_currency(price, unit: "￥", strip_insignificant_zeros: true)
+  end
+
 end

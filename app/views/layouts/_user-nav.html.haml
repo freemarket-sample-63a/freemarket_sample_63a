@@ -1,7 +1,7 @@
 %nav.user-nav
   %ul.user-nav__now
     %li.user-nav__btn
-      = link_to "#",class:"user-nav__btn--text" do
+      = link_to user_path(current_user.id),class:"user-nav__btn--text" do
         マイページ
         %i.user-nav__btn--icon
           = icon('fa', 'chevron-right')
@@ -92,10 +92,16 @@
         %i.user-nav__btn--icon
           = icon('fa', 'chevron-right')
     %li.user-nav__btn
-      = link_to "#", class:"user-nav__btn--text" do
-        発送元・お届け住所
-        %i.user-nav__btn--icon
-          = icon('fa', 'chevron-right')
+      - if current_user.addresses.first
+        = link_to user_addresses_path(current_user.id), class:"user-nav__btn--text" do
+          発送元・お届け住所変更
+          %i.user-nav__btn--icon
+            = icon('fa', 'chevron-right')
+      - else
+        = link_to new_user_address_path(current_user.id), class:"user-nav__btn--text" do
+          発送元・お届け住所登録
+          %i.user-nav__btn--icon
+            = icon('fa', 'chevron-right')
     %li.user-nav__btn
       = link_to new_user_creditcard_path(current_user.id) , class:"user-nav__btn--text" do
         支払い方法

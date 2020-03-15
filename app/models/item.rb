@@ -6,7 +6,7 @@ class Item < ApplicationRecord
   belongs_to    :shippingway,  optional: true
 
 
-  has_many      :item_images 
+  has_many      :item_images , dependent: :destroy
   accepts_nested_attributes_for      :item_images
 
   belongs_to    :user

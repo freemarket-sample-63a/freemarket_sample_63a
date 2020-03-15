@@ -1,13 +1,7 @@
 .user-show{
-  &__header{
-
-  }
   &__main{
     padding-bottom:40px;
     background-color: #f5f5f5;
-  }
-  &__footer{
-
   }
 }
 .user-show-container{
@@ -16,20 +10,17 @@
   width: 1020px;
   display: flex;
   justify-content: space-around;
-  // section-left
   &__left{
     margin-bottom: 30px;
     margin-right: 40px;
     width: 25%;
     background-color: #fff;
-    }
-  // section-right
+  }
   &__right{
     height: 100%;
     width: 60%;
-    }
   }
-
+}
 .user-show-info{
   height: 200px;
   padding: 20px;
@@ -83,9 +74,6 @@
 }
 
 .user-show-tabs{
-  &__primary{
-
-  }
   &__secondary{
     margin: 40px 0 0;
     background: #fff;

@@ -1,0 +1,2 @@
+module ShippingwaysHelper
+end

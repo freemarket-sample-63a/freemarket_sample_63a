@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
   before_action :set_user_address,only: :create
+  before_action :set_item,only: [:show,:destroy]
 
   def index
   end
@@ -7,6 +8,9 @@ class ItemsController < ApplicationController
   def new
     @item = Item.new(feerate: 0.1)
     @item_image = @item.item_images.build
+    @categories = []
+    @categories.push(Category.new(id:0,name:"---"))
+    @categories.concat(Category.where(ancestry: nil))
   end
 
   def create
@@ -18,7 +22,7 @@ class ItemsController < ApplicationController
     
     if @item.save
       params[:item_images]['image'].each do |img|
-        @item_image = @item.item_images.create(:image => img, :item_id => @item.id)
+        @item_image = @item.item_images.create(image: img, item_id: @item.id)
       end
       #この後の画像機能追加で、以下の記述を使用するためコメントアウトしています。
       # image_params[:images].each do |image|
@@ -38,9 +42,13 @@ class ItemsController < ApplicationController
   def show
   end
 
+  def destroy
+    @item.destroy
+  end
+
   private
     def item_params
-      params.require(:item).permit(:brand_id,:category_id,:shippingway_id,:size_num,:condition_num,:daystoship_num,:title,:description,:price, item_images_attributes: [:id, :item_id, :image])
+      params.require(:item).permit(:brand_id,:category_id,:shippingway_id,:product_size_id,:condition_num,:daystoship_num,:title,:description,:price, item_images_attributes: [:id, :item_id, :image])
     end
     # ドラッグ&ドロップのajax通信の際に必要な記述ですが、今はhtmlを通してデータを保存しているのでコメントアウト。
     # def image_params
@@ -49,5 +57,9 @@ class ItemsController < ApplicationController
 
     def set_user_address
       @address = Address.find_by(user_id: current_user.id,status_num: 0)
+    end
+
+    def set_item
+      @item = Item.find(params[:id])
     end
 end

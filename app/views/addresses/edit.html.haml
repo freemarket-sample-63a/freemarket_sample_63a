@@ -1,0 +1,72 @@
+.addresses-edit
+  %header.addresses-edit__header
+    = render 'layouts/header'
+  %main.addresses-edit__main
+    .addresses-edit-container
+      .addresses-edit-container__left
+        = render 'layouts/user-nav'
+      .addresses-edit-container__right
+        .addresses-edit-info
+          .addresses-edit-info__title
+            発送元・お届け先住所変更
+          .addresses-edit-info__field
+            = form_with(model: @address, locale: true, id: 'edit_address') do |f|
+              .addresses-edit-info__groups
+                .addresses-edit-info__group
+                  .addresses-edit-info__group--content
+                    = f.label :"お名前(全角)"
+                    %span.form-require 必須
+                    %br/
+                    = f.text_field :first_name, class: "addresses-edit-info__textbox", placeholder: "例）山田"
+                  .addresses-edit-info__group--content
+                    = f.text_field :last_name, class: "addresses-edit-info__textbox",placeholder: "例）太郎"
+                .addresses-edit-info__group
+                  .addresses-edit-info__group--content
+                    = f.label :"お名前カナ(全角)"
+                    %span.form-require 必須
+                    %br/
+                    = f.text_field :first_name_kana, class: "addresses-edit-info__textbox", placeholder: "例）ヤマダ"
+                  .addresses-edit-info__group--content
+                    = f.text_field :last_name_kana, class: "addresses-edit-info__textbox",autofocus: true,title:"error",placeholder: "例）タロウ"
+                .addresses-edit-info__group
+                  .addresses-edit-info__group--content
+                    = f.label :"郵便番号"
+                    %span.form-require 必須
+                    %br/
+                    = f.text_field :postal_number, class: "addresses-edit-info__textbox",placeholder: "例）123-4567"
+                .addresses-edit-info__group
+                  .addresses-edit-info__group--content
+                    = f.label :"都道府県"
+                    %span.form-require 必須
+                    %br/
+                    = f.collection_select :area_id, Area.all, :id, :name, autofocus: true
+                .addresses-edit-info__group
+                  .addresses-edit-info__group--content
+                    = f.label :"市区町村"
+                    %span.form-require 必須
+                    %br/
+                    = f.text_field :city, class: "addresses-edit-info__textbox", placeholder: "例）横浜市緑区"
+                .addresses-edit-info__group
+                  .addresses-edit-info__group--content
+                    = f.label :"番地"
+                    %span.form-require 必須
+                    %br/
+                    = f.text_field :number, class: "addresses-edit-info__textbox", placeholder: "例）青山1−1−1"
+                .addresses-edit-info__group
+                  .addresses-edit-info__group--content
+                    = f.label :"建物名"
+                    %span.common-field__tag--any 任意
+                    %br/
+                    = f.text_field :building, class: "addresses-edit-info__textbox", placeholder: "例）柳ビル101"
+                .addresses-edit-info__group
+                  .addresses-edit-info__group--content
+                    = f.label :"電話番号"
+                    %span.common-field__tag--any 任意
+                    %br/
+                    = f.text_field :telephonenumber, class: "addresses-edit-info__textbox", placeholder: "例）09012345678"
+                .addresses-edit-info__submit
+                  = f.submit "変更する",class:"addresses-edit-info__submit-btn" 
+
+  %footer.adresses-edit__footer
+    = render 'layouts/footer'
+    = render 'layouts/purchase-btn'

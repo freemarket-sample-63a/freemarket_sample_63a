@@ -1,3 +1,6 @@
+# 親：---
+default = Shippingway.create(name: "---")
+
 # 親：配送料の負担
 advancepay = Shippingway.create(name: "送料込み（出品者負担）")
 

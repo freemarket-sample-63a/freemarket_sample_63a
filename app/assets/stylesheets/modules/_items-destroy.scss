@@ -1,0 +1,38 @@
+.items-destroy{
+  &__main{
+    height:calc(100vh - 100px - 350px);
+  }
+}
+
+.items-destroy-container{
+  width:700px;
+  margin:0 auto;
+}
+.items-destroy-links{
+  display:flex;
+  justify-content: space-between;
+}
+
+.items-destroy-content{
+  padding:50px 0px;
+  &__message{
+    margin:0 auto;
+    text-align: center;
+    font-size: 48px;
+    font-weight: bold;
+  }
+  &__btn{
+    margin:50px auto;
+    text-align: center;
+    font-size: 18px;
+    line-height: 48px;
+    background: #3CCACE;
+    border: 1px solid #3CCACE;
+    width: 60%;
+    border-radius: 100px;
+    &--link{
+      color: #fff;
+      text-decoration: none;
+    }
+  }
+}

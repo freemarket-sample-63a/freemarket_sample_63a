@@ -7,5 +7,4 @@ require './db/seeds/category_size.rb'
 if Rails.env == "development"
   require './db/seeds/user.rb'
   require './db/seeds/address.rb'
-  require './db/seeds/item.rb'
 end

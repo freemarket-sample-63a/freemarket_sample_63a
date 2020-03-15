@@ -6,74 +6,99 @@
       .items-show-contents
         .items-show-content
           .items-show-summary
-            %h2.items-show-summary__name product3
+            %h2.items-show-summary__name
+              = @item.title
             .items-show-summary__body
               %ul
                 %li
-                  =image_tag '',class:'items-show-summary__main-image'
+                  = image_tag @item.item_images.first.image.url,class:'items-show-summary__main-image'
                 %ul.items-show-summary__sub-images
-                  %li
-                    =image_tag '',size:'75x75',class:'items-show-summary__sub-image--image'
-                  %li
-                    =image_tag '',size:'75x75',class:'items-show-summary__sub-image--image'
-                  %li
-                    =image_tag '',size:'75x75',class:'items-show-summary__sub-image--image'
+                  -@item.item_images.each do |image|
+                    %li
+                      = image_tag image.image.url,class:'items-show-summary__sub-image--image'
             .items-show-summary__price
               %span
-                ¥30,000
+                = thousands_separator(@item.price)
               .items-show-summary__price--detail
                 %span
                   (税込)
                 %span
-                  送料込み
-          .items-show-detail product3
+                  - if @item.shippingway.parent.name == '送料込み（出品者負担）'
+                    送料込み
+                  - else
+                    送料別
+          .items-show-detail
+            = @item.title
           .items-show-detail__table
             %table.items-show-detail__table--table
               %tbody.items-show-detail__table--tbody
                 %tr.items-show-detail__table--tr
-                  %th.items-show-detail__table--th 出品者
-                  %td.items-show-detail__table--td hoge
-                %tr.items-show-detail__table--tr
-                  %th.items-show-detail__table--th カテゴリー
+                  %th.items-show-detail__table--th
+                    出品者
                   %td.items-show-detail__table--td
-                    =link_to 'ベビー・キッズ','#'
-                    %br/
-                    =link_to 'ベビー服(男女兼用)  ~95cm','#'
-                    %br/
-                    =link_to 'アウター','#'
+                    = @item.user.nickname
                 %tr.items-show-detail__table--tr
-                  %th.items-show-detail__table--th ブランド
+                  %th.items-show-detail__table--th
+                    カテゴリー
                   %td.items-show-detail__table--td
+                    = link_to @item.category.parent.parent.name,'#'
+                    %br/
+                    = link_to @item.category.parent.name,'#'
+                    %br/
+                    = link_to @item.category.name,'#'
+                %tr.items-show-detail__table--tr
+                  %th.items-show-detail__table--th
+                    ブランド
+                  %td.items-show-detail__table--td
+                    - if @item.brand
+                      = @item.brand.name
                 %tr.items-show-detail__table--tr
                   %th.items-show-detail__table--th 商品のサイズ
                   %td.items-show-detail__table--td
+                    - if @item.product_size
+                      = @item.product_size.name
                 %tr.items-show-detail__table--tr
                   %th.items-show-detail__table--th 商品の状態
-                  %td.items-show-detail__table--td 未使用に近い
+                  %td.items-show-detail__table--td
+                    = @item.condition_num_i18n
                 %tr.items-show-detail__table--tr
                   %th.items-show-detail__table--th 配送料の負担
-                  %td.items-show-detail__table--td 送料込み（出品者負担）
+                  %td.items-show-detail__table--td
+                    = @item.shippingway.parent.name
                 %tr.items-show-detail__table--tr
                   %th.items-show-detail__table--th 発送元の地域
                   %td.items-show-detail__table--td
-                    =link_to '岩手県','#'
+                    = link_to @item.address.area.name,'#'
                 %tr.items-show-detail__table--tr
                   %th.items-show-detail__table--th 発送日の目安
-                  %td.items-show-detail__table--td 4-7日で発送
+                  %td.items-show-detail__table--td
+                    = @item.daystoship_num_i18n
+          .items-show-button
+            - if user_signed_in? && @item.user_id == current_user.id
+              .items-show-button__edit
+                = link_to '編集する', edit_item_path(@item.id),class:"items-show-button__edit--link"
+              .items-show-button__cancel
+                = link_to '出品を取り消す', item_path(@item.id),method: :delete,class:"items-show-button__cancel--link", data: { confirm: '出品を取り消します。よろしいですか？' }
+            - else
+              .items-show-button__purchase
+                - if user_signed_in?
+                  = link_to '購入する', new_item_trade_path(@item.id) ,class:"items-show-button__purchase--link"
+                - else
+                  = link_to 'ログイン', new_user_session_path, class:"items-show-button__purchase--link"
           .items-show-other
             %ul.items-show-other__favorite
               %li.items-show-other__favorite--btn
                 %i.items-show-other--icon
-                  =icon('fa','star')
+                  = icon('fa','star')
                   お気に入り 0
             %ul.items-show-other__report
               %li.items-show-other__report--btn
-                =link_to '#',class:'.items-show-other__report--link' do
+                = link_to '#',class:'.items-show-other__report--link' do
                   %i.items-show-other__report--icon
-                    =icon('fa','flag')
+                    = icon('fa','flag')
                   不適切な商品の通報
         .items-show-comments
-          %ul.items-show-comment
+          .items-show-comment
             = form_with(model:@comment,local:true) do |f|
               = f.text_area :comment
               %p.items-show-comment__notify
@@ -88,16 +113,16 @@
                     コメントする
       %ul.items-show-links
         %li
-          =link_to "#" do
+          = link_to "#" do
             %i.fa.fa-angle-left
             %span
             前の商品
         %li
-          =link_to "#" do
+          = link_to "#" do
             %span 後ろの商品
             %i.fa.fa-angle-right
       .items-show-related
-        =link_to 'ベビー・キッズをもっと見る',"#" 
+        = link_to 'ベビー・キッズをもっと見る',"#" 
         .productLists
   %footer.items-show__footer
     = render 'layouts/footer'

@@ -1,0 +1,21 @@
+.registrations-new
+  %header.registrations-new__header
+    =link_to root_path do
+      = image_tag 'logo.png',class: "registrations-new__header--logo"
+    .registrations-new-sign-up-bar
+      %ul.registrations-new-sign-up-bar__ul
+        %l1.registrations-new-sign-up-bar__l1
+          会員情報 
+          .registrations-new-sign-up-bar__l1--progress-status1
+        %l2.registrations-new-sign-up-bar__l2
+          電話番号認証
+          .registrations-new-sign-up-bar__l2--progress-status2
+        %l3.registrations-new-sign-up-bar__l3
+          完了
+          .registrations-new-sign-up-bar__l3--progress-status3
+
+  %main.registrations-new__main
+    =link_to '登録が完了しました',root_path
+
+  %footer.registrations-new__footer
+    = render "devise/navigation"

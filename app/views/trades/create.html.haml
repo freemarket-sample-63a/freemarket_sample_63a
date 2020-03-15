@@ -1,0 +1,28 @@
+.trades-new
+  %header.trades-header
+    .trades-header__icon
+      = link_to root_path do
+        = image_tag 'logo.png'
+  %main.trades-create-buy-main
+    .trades-create-buy-item-container
+      %h2.trades-create-buy-head 購入完了
+      .trades-create-buy-content
+        .trades-create-buy-content-inner
+          .trades-create-buy-item-box
+            %h3.trades-create-buy-item__image
+              = image_tag @item.item_images.first.image.url, class:'trades-image'
+              .trades-create-buy-item__detail
+                .trades-item__name 
+                  = @item.title
+                .trades-create-buy-item__price-ja
+                  %span
+                    = thousands_separator(@item.price)
+                  %span.trades-create-buy-item__shipping-fee （税込）送料込み
+      .trades-create-buy-content
+        .trades-create-buy-content-inner
+          .trades-create-buy-content
+            .trades-create-buy-content-inner
+              %h2 購入が完了しました。
+            = link_to root_path do
+              = button_tag "戻る"
+  %footer.trades-create-footer
