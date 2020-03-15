@@ -183,8 +183,36 @@ RSpec.describe User, type: :model do
       expect(user).to be_valid
     end
 
-     # ----first_name,last_nameに関するテスト----
-     # 25. 
+    # ----first_name,last_nameに関するテスト----
+    # 26. first_nameが15文字以内であれば登録ができること
+    it "is valid with a first_name that Contains letters and numbers and symbol " do
+      user = build(:user, first_name: "aaaaa1234567890")
+      user.valid?
+      expect(user).to be_valid
+    end
+
+    # 27. first_nameが16文字以上であれば登録できないこと
+    it "is invalid with a first_name that has more than 15 characters " do
+      user = build(:user, first_name: "1234567890123456")
+      user.valid?
+      expect(user.errors[:first_name]).to include("は15文字以内で入力してください")
+    end
+
+    # 28. last_nameが15文字以内であれば登録ができること
+    it "is valid with a last_name that Contains letters and numbers and symbol " do
+      user = build(:user, last_name: "aaaaa1234567890")
+      user.valid?
+      expect(user).to be_valid
+    end
+
+    # 29. last_nameが16文字以上であれば登録できないこと
+    it "is invalid with a last_name that has more than 15 characters " do
+      user = build(:user, last_name: "1234567890123456")
+      user.valid?
+      expect(user.errors[:last_name]).to include("は15文字以内で入力してください")
+    end
+
+    # ----first_name_kana,last_name_kanaに関するテスト----
 
 
     
