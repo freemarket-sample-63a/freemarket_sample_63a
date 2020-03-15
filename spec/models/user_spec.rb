@@ -141,21 +141,28 @@ RSpec.describe User, type: :model do
       expect(user).to be_valid
     end
 
-    # 20. passwordに英字がない場合は登録ができないこと
+    # 20. passwordが数字のみ場合は登録ができないこと
     it 'is invalid with a password wrong format' do
       user = build(:user, password: "12345678")
       user.valid?
       expect(user.errors[:password]).to include("は英字と数字両方を含むパスワードを設定してください")
     end
 
-    # 21. passwordが６文字以下の場合は登録ができないこと
+    # 21. passwordが英字のみ場合は登録ができないこと
+    it 'is invalid with a password wrong format' do
+      user = build(:user, password: "aaaaaaaa")
+      user.valid?
+      expect(user.errors[:password]).to include("は英字と数字両方を含むパスワードを設定してください")
+    end
+
+    # 22. passwordが６文字以下の場合は登録ができないこと
     it "is invalid with a password that has less than 6 characters " do
       user = build(:user, password: "a12345")
       user.valid?
       expect(user.errors[:password]).to include("は7文字以上で入力してください", "は英字と数字両方を含むパスワードを設定してください") 
     end
 
-    # 22. passwordが21文字以上の場合は登録ができないこと
+    # 23. passwordが21文字以上の場合は登録ができないこと
     it "is invalid with a password that has more than 21 characters " do
       user = build(:user, password: "a12345678901234567890")
       user.valid?
