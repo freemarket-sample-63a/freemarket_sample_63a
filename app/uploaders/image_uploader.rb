@@ -5,12 +5,14 @@ class ImageUploader < CarrierWave::Uploader::Base
   process resize_to_fit: [200, 200] #数値は仮設定
 
   # Choose what kind of storage to use for this uploader:
-  # storage :file
-  if Rails.env.development? || Rails.env.test? #開発とテストはローカル
-    storage :file
-  else #本番はS3に保存
-    storage :fog
-  end
+  storage :file
+  
+  #S3設定完了までコメントアウト
+  # if Rails.env.development? || Rails.env.test? #開発とテストはローカル
+  #   storage :file
+  # else #本番はS3に保存
+  #   storage :fog
+  # end
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
