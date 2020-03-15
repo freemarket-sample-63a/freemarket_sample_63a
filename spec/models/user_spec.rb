@@ -82,7 +82,14 @@ RSpec.describe User, type: :model do
     end
 
     # ----nicknameに関するテスト----
-    # 12. nicknameが16文字以上であれば登録できないこと
+    # 12. nicknameが15文字以内であれば登録ができること
+    it "is valid with a nickname that Contains letters and numbers and symbol " do
+      user = build(:user, nickname: "aaaaa1234567890")
+      user.valid?
+      expect(user).to be_valid
+    end
+
+    # 13. nicknameが16文字以上であれば登録できないこと
     it "is invalid with a nickname that has more than 15 characters " do
       user = build(:user, nickname: "1234567890123456")
       user.valid?
@@ -90,14 +97,14 @@ RSpec.describe User, type: :model do
     end
 
     # ----emailに関するテスト----
-     # 13. email英数字( ハイフン、ドット、プラス記号を含む)が@マーク前に１文字以上、@終わりのドット前に英小文字、数字、ハイフン、ドットが１文字以上、ドット終わりの後に小英字が１文字以上で登録ができること。
+     # 14. email英数字( ハイフン、ドット、プラス記号を含む)が@マーク前に１文字以上、@終わりのドット前に英小文字、数字、ハイフン、ドットが１文字以上、ドット終わりの後に小英字が１文字以上で登録ができること。
     it "is valid with a email that Contains letters and numbers " do
       user = build(:user, email: "a@a.a")
       user.valid?
       expect(user).to be_valid
     end
 
-    # 14. 重複したemailが存在する場合登録できないこと
+    # 15. 重複したemailが存在する場合登録できないこと
     it "is invalid with a duplicate email address" do
       user = create(:user)
       another_user = build(:user, email: user.email)
@@ -105,28 +112,28 @@ RSpec.describe User, type: :model do
       expect(another_user.errors[:email]).to include("はすでに存在します")
     end
 
-    # 15. emailの頭に@があると登録できないこと
+    # 16. emailの頭に@があると登録できないこと
     it "is invalid with a email includes no character before @ " do
       user = build(:user, email: "@abdd@aaa.com")
       user.valid?
       expect(user.errors[:email][0]).to include("は有効でありません。")
     end
 
-    # 16. emailの最後尾に@があると登録できないこと
+    # 17. emailの最後尾に@があると登録できないこと
     it "is invalid with a email includes no character after @ " do
       user = build(:user, email: "abdd@aaa.com@")
       user.valid?
       expect(user.errors[:email][0]).to include("は有効でありません。")
     end
 
-    # 17. emailの登録で@マーク後の.(ドット）後に英字がない場合は登録ができないこと
+    # 18. emailの登録で@マーク後の.(ドット）後に英字がない場合は登録ができないこと
     it 'is invalid with a email wrong format' do
       user = build(:user, email: 'a12345678@aaa.111')
       user.valid?
       expect(user.errors[:email]).to include("は有効でありません。")
     end
 
-    # 18. emailの登録で@マーク後の.(ドット）がない場合は登録ができないこと
+    # 19. emailの登録で@マーク後の.(ドット）がない場合は登録ができないこと
     it 'is invalid with a email wrong format' do
       user = build(:user, email: 'a12345678@aaacom')
       user.valid?
@@ -134,40 +141,50 @@ RSpec.describe User, type: :model do
     end
 
     # ----passwordに関するテスト----
-    # 19, passwordに英字と数字が含まれており、7から20文字以内でpassword_confirmationと一致していれば登録ができること
+    # 20, passwordに英字と数字が含まれており、7から20文字以内でpassword_confirmationと一致していれば登録ができること
     it "is valid with a password that Contains letters and numbers " do
       user = build(:user, password: "a1234567", password_confirmation: "a1234567")
       user.valid?
       expect(user).to be_valid
     end
 
-    # 20. passwordが数字のみ場合は登録ができないこと
+    # 21. passwordが数字のみ場合は登録ができないこと
     it 'is invalid with a password wrong format' do
       user = build(:user, password: "12345678")
       user.valid?
       expect(user.errors[:password]).to include("は英字と数字両方を含むパスワードを設定してください")
     end
 
-    # 21. passwordが英字のみ場合は登録ができないこと
+    # 22. passwordが英字のみ場合は登録ができないこと
     it 'is invalid with a password wrong format' do
       user = build(:user, password: "aaaaaaaa")
       user.valid?
       expect(user.errors[:password]).to include("は英字と数字両方を含むパスワードを設定してください")
     end
 
-    # 22. passwordが６文字以下の場合は登録ができないこと
+    # 23. passwordが６文字以下の場合は登録ができないこと
     it "is invalid with a password that has less than 6 characters " do
       user = build(:user, password: "a12345")
       user.valid?
       expect(user.errors[:password]).to include("は7文字以上で入力してください", "は英字と数字両方を含むパスワードを設定してください") 
     end
 
-    # 23. passwordが21文字以上の場合は登録ができないこと
+    # 24. passwordが21文字以上の場合は登録ができないこと
     it "is invalid with a password that has more than 21 characters " do
       user = build(:user, password: "a12345678901234567890")
       user.valid?
       expect(user.errors[:password]).to include("は20文字以内で入力してください", "は英字と数字両方を含むパスワードを設定してください") 
     end
+
+    # 25. passwordに指定した記号を入れても登録ができること
+    it "is valid with a password that Contains letters and numbers and symbol " do
+      user = build(:user, password: "a1!@#$%^&*)(=_-", password_confirmation: "a1!@#$%^&*)(=_-")
+      user.valid?
+      expect(user).to be_valid
+    end
+
+     # ----first_name,last_nameに関するテスト----
+     # 25. 
 
 
     
