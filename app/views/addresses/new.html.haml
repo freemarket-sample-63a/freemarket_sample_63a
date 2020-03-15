@@ -10,7 +10,7 @@
           .addresses-new-info__title
             発送元・お届け先住所登録
           .addresses-new-info__field
-            = form_with(model:[@user, @address], local: true, id: 'new_address') do |f|
+            = form_with(model:[current_user, @address], local: true, id: 'new_address') do |f|
               .addresses-new-info__groups
                 .addresses-new-info__group
                   .addresses-new-info__group--content

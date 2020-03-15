@@ -1,5 +1,4 @@
 class AddressesController < ApplicationController
-  before_action :set_user
 
   def index
     @addresses = Address.where(user_id: current_user.id)
@@ -10,9 +9,13 @@ class AddressesController < ApplicationController
   end
 
   def create
-    Address.create(address_params)
+    @address = Address.new(address_params)
+    if @address.save
+      Address.create(address_params)
+    else
+      render user_address_path
+    end
     redirect_to user_addresses_path
-
   end
 
   def edit
@@ -27,7 +30,4 @@ class AddressesController < ApplicationController
     params.required(:address).permit(:first_name, :last_name, :frist_name_kana, :last_name_kana, :area_id, :building, :city, :number, :postal_number, :status_nun, :telephone_number).merge(user_id: current_user.id, status_num: 0)
   end
 
-  def set_user
-    @user = User.find(current_user.id)
-  end
 end
