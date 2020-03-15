@@ -6,7 +6,6 @@ RSpec.describe User, type: :model do
     it "is valid with a nickname,email,first_name,last_name,first_name_kana,last_name_kana,birthday,telephone_number" do
       user = build(:user)
       expect(user).to be_valid
-
     end
     # 2. nicknameが空では登録できないこと
     it "is invalid without a nickname" do
@@ -84,6 +83,23 @@ RSpec.describe User, type: :model do
       user.valid?
       expect(user.errors[:nickname]).to include("は15文字以内で入力してください")
     end
+
+    # 13. 重複したemailが存在する場合登録できないこと
+    it "is invalid with a duplicate email address" do
+      user = create(:user)
+      another_user = build(:user, email: user.email)
+      another_user.valid?
+      expect(another_user.errors[:email]).to include("はすでに存在します")
+    end
+
+    # 14. passwordが7文字以上であれば登録できること（英字と数字の両方を含むこと）
+    it "is valid with a password that has more than 6 characters " do
+      user = build(:user, password: "1234567a", password_confirmation: "1234567a")
+      user.valid?
+      expect(user).to be_valid
+    end
+
+    # 15
 
 
 
