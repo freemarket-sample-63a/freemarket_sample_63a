@@ -47,7 +47,7 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'faker'
   gem 'faker-japanese'
-  gem 'capistrano'
+  gem 'capistrano','= 3.12.0'
   gem 'capistrano-rbenv'
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
