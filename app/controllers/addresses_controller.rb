@@ -11,21 +11,21 @@ class AddressesController < ApplicationController
 
   def create
     @address = Address.new(address_params)
-    render :new and returne unless @address.save
-    render user_address_path and return unless @address.save
+    render :new and return unless @address.save
+    redirect_to user_addresses_path
   end
 
   def edit
   end
 
   def update
-    render :edit and returne unless @address.update(address_params)
+    render :edit and return unless @address.update(address_params)
     redirect_to user_addresses_path
   end
 
   def destroy
     @address.destroy
-    redirect_to user_addresses_path
+    redirect_to user_addresses_path if @address.destroy
   end
 
   
