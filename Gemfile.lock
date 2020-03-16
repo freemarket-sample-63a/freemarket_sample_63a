@@ -110,7 +110,8 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    devise-i18n-views (0.3.7)
+    devise-i18n (1.9.0)
+      devise (>= 4.7.1)
     diff-lcs (1.3)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
@@ -381,7 +382,7 @@ DEPENDENCIES
   autonumeric-rails
   bootsnap (>= 1.1.0)
   byebug
-  capistrano
+  capistrano (= 3.12.0)
   capistrano-bundler
   capistrano-rails
   capistrano-rbenv
@@ -391,7 +392,7 @@ DEPENDENCIES
   chromedriver-helper
   coffee-rails (~> 4.2)
   devise
-  devise-i18n-views
+  devise-i18n
   dotenv-rails
   enum_help
   factory_bot_rails
