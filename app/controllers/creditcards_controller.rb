@@ -7,7 +7,7 @@ class CreditcardsController < ApplicationController
     gon.payip_access_key = ENV['PAYJP_KEY']
   end
 
-  def pay 
+  def pay
     Payjp.api_key = ENV["PAYJP_PRIVATE_KEY"]
     if params['payjp-token'].blank?
       redirect_to action: "new"
