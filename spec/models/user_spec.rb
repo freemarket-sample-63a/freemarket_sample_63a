@@ -83,7 +83,7 @@ RSpec.describe User, type: :model do
 
     # ----nicknameに関するテスト----
     # 12. nicknameが15文字以内であれば登録ができること
-    it "is valid with a nickname that Contains letters and numbers and symbol " do
+    it "is invalid with a nickname that has less than 15 characters" do
       user = build(:user, nickname: "aaaaa1234567890")
       user.valid?
       expect(user).to be_valid
@@ -142,7 +142,8 @@ RSpec.describe User, type: :model do
 
     # ----passwordに関するテスト----
     # 20, passwordに英字と数字が含まれており、7から20文字以内でpassword_confirmationと一致していれば登録ができること
-    it "is valid with a password that Contains letters and numbers " do
+    it "is valid with a password that Contains letters and numbers 
+    7 to 20 characters" do
       user = build(:user, password: "a1234567", password_confirmation: "a1234567")
       user.valid?
       expect(user).to be_valid
@@ -199,7 +200,7 @@ RSpec.describe User, type: :model do
     end
 
     # 28. last_nameが15文字以内であれば登録ができること
-    it "is valid with a last_name that Contains letters and numbers and symbol " do
+    it "is valid with a last_name that has less than 15 characters " do
       user = build(:user, last_name: "aaaaa1234567890")
       user.valid?
       expect(user).to be_valid
@@ -213,6 +214,49 @@ RSpec.describe User, type: :model do
     end
 
     # ----first_name_kana,last_name_kanaに関するテスト----
+    # 30. first_name_kanaが20文字以内であれば登録ができること
+    it "is invalid with a first_name_kana that has less than 20 characters " do
+      user = build(:user, first_name_kana: "アアアアアアアアアアイイイイイイイイイイ")
+      user.valid?
+      expect(user).to be_valid
+    end
+
+    # 31. first_name_kanaに空白、長音記号があっても登録ができること
+    it "Valid even if first_name_kana contains spaces and long symbols " do
+      user = build(:user, last_name_kana: "ー－　イイイイイイイイイイ")
+      user.valid?
+      expect(user).to be_valid
+    end
+
+    # 32. last_name_kanaが20文字以内であれば登録ができること
+    it "is invalid with a last_name_kana that has less than 20 characters " do
+      user = build(:user, last_name_kana: "アアアアアアアアアアイイイイイイイイイイ")
+      user.valid?
+      expect(user).to be_valid
+    end
+
+    # 33. last_name_kanaに空白、長音記号があっても登録ができること
+    it "Valid even if last_name_kana contains spaces and long symbols " do
+    user = build(:user, last_name_kana: "ー－　イイイイイイイイイイ")
+    user.valid?
+    expect(user).to be_valid
+  end
+
+    # ----telephone_numberに関するテスト----
+    # 33. 電話番号形式の入力の場合は登録できること
+    it "is valid with a tel that Phone number format " do
+      user = build(:user, telephone_number: "1234567890")
+      user.valid?
+      expect(user).to be_valid
+    end
+
+    # 34. 電話番号に英字が混ざっていた場合は登録できないこと
+    it "is invalid with a telephone_number that Phone number format " do
+      user = build(:user, telephone_number: "a123456789")
+      user.valid?
+      expect(user.errors[:telephone_number]).to include("は有効でありません。")
+    end
+
 
 
     
