@@ -142,8 +142,7 @@ RSpec.describe User, type: :model do
 
     # ----passwordに関するテスト----
     # 20, passwordに英字と数字が含まれており、7から20文字以内でpassword_confirmationと一致していれば登録ができること
-    it "is valid with a password that Contains letters and numbers 
-    7 to 20 characters" do
+    it "is valid with a password that Contains letters and numbers 7 to 20 characters" do
       user = build(:user, password: "a1234567", password_confirmation: "a1234567")
       user.valid?
       expect(user).to be_valid
@@ -237,10 +236,10 @@ RSpec.describe User, type: :model do
 
     # 33. last_name_kanaに空白、長音記号があっても登録ができること
     it "Valid even if last_name_kana contains spaces and long symbols " do
-    user = build(:user, last_name_kana: "ー－　イイイイイイイイイイ")
-    user.valid?
-    expect(user).to be_valid
-  end
+      user = build(:user, last_name_kana: "ー－　イイイイイイイイイイ")
+      user.valid?
+      expect(user).to be_valid
+    end
 
     # ----telephone_numberに関するテスト----
     # 33. 電話番号形式の入力の場合は登録できること
@@ -256,11 +255,5 @@ RSpec.describe User, type: :model do
       user.valid?
       expect(user.errors[:telephone_number]).to include("は有効でありません。")
     end
-
-
-
-    
-    
-
   end
 end
