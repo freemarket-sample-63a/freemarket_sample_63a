@@ -256,14 +256,14 @@ RSpec.describe User, type: :model do
     end
 
     # ----telephone_numberに関するテスト----
-    # 33. 電話番号形式の入力の場合は登録できること
+    # 36. 電話番号形式の入力の場合は登録できること
     it "is valid with a telephone_number that Phone number format " do
       user = build(:user, telephone_number: "1234567890")
       user.valid?
       expect(user).to be_valid
     end
 
-    # 34. 電話番号に英字が混ざっていた場合は登録できないこと
+    # 37. 電話番号に英字が混ざっていた場合は登録できないこと
     it "is invalid with a telephone_number that Phone number format " do
       user = build(:user, telephone_number: "a123456789")
       user.valid?
