@@ -22,5 +22,4 @@ class User < ApplicationRecord
   validates :password_confirmation,:birthday, presence: true
   validates :last_name_kana,:first_name_kana,  presence: true, length: { maximum: 20 }, format: { with: VALID_KATAKANA_REGEX, message: 'はカタカナで入力して下さい。'}
   validates :telephone_number, presence: true, format: { with: VALID_PHONE_REGEX, message: 'は有効でありません。'}
-
 end

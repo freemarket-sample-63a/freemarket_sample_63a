@@ -18,7 +18,7 @@
                       = image_tag image.image.url,class:'items-show-summary__sub-image--image'
             .items-show-summary__price
               %span
-                = @item.price
+                = thousands_separator(@item.price)
               .items-show-summary__price--detail
                 %span
                   (税込)
@@ -81,7 +81,10 @@
                 = link_to '出品を取り消す', item_path(@item.id),method: :delete,class:"items-show-button__cancel--link", data: { confirm: '出品を取り消します。よろしいですか？' }
             - else
               .items-show-button__purchase
-                = link_to '購入する', new_item_trade_path(@item.id) ,class:"items-show-button__purchase--link"
+                - if user_signed_in?
+                  = link_to '購入する', new_item_trade_path(@item.id) ,class:"items-show-button__purchase--link"
+                - else
+                  = link_to 'ログイン', new_user_session_path, class:"items-show-button__purchase--link"
           .items-show-other
             %ul.items-show-other__favorite
               %li.items-show-other__favorite--btn

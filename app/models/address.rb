@@ -5,5 +5,6 @@ class Address < ApplicationRecord
 
     has_many      :items
     has_many      :trades
+    
   
 end

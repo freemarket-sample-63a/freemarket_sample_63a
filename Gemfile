@@ -47,11 +47,12 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'faker'
   gem 'faker-japanese'
-  gem 'capistrano'
+  gem 'capistrano','= 3.12.0'
   gem 'capistrano-rbenv'
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
   gem 'capistrano3-unicorn'
+  gem 'dotenv-rails'
 end
 
 group :development do
@@ -89,8 +90,7 @@ gem 'seed-fu'
 gem 'payjp', '< 0.0.7'
 gem 'enum_help'
 gem 'autonumeric-rails'
-gem 'dotenv-rails'
 gem 'gon'
 gem 'fog-aws'
 gem 'rails-i18n'
-gem 'devise-i18n-views'
+gem 'devise-i18n'

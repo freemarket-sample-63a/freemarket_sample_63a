@@ -10,7 +10,7 @@
           .addresses-new-info__title
             発送元・お届け先住所登録
           .addresses-new-info__field
-            = form_with(model: @address, locale: true, id: 'edit_address') do |f|
+            = form_with(model:[current_user, @address], local: true, id: 'new_address') do |f|
               .addresses-new-info__groups
                 .addresses-new-info__group
                   .addresses-new-info__group--content
@@ -27,7 +27,7 @@
                     %br/
                     = f.text_field :first_name_kana, class: "addresses-new-info__textbox", placeholder: "例）ヤマダ"
                   .addresses-new-info__group--content
-                    = f.text_field :last_name_kana, class: "addresses-new-info__textbox",autofocus: true,title:"error",placeholder: "例）タロウ"
+                    = f.text_field :last_name_kana, class: "addresses-new-info__textbox", placeholder: "例）タロウ"
                 .addresses-new-info__group
                   .addresses-new-info__group--content
                     = f.label :"郵便番号"
@@ -39,7 +39,7 @@
                     = f.label :"都道府県"
                     %span.form-require 必須
                     %br/
-                    = f.collection_select :area_id, Area.all, :id, :name, autofocus: true
+                    = f.collection_select :area_id, Area.all, :id, :name
                 .addresses-new-info__group
                   .addresses-new-info__group--content
                     = f.label :"市区町村"
@@ -63,9 +63,9 @@
                     = f.label :"電話番号"
                     %span.common-field__tag--any 任意
                     %br/
-                    = f.text_field :telephonenumber, class: "addresses-new-info__textbox", placeholder: "例）09012345678"
+                    = f.text_field :telephone_number, class: "addresses-new-info__textbox", placeholder: "例）09012345678"
                 .addresses-new-info__submit
-                  = f.submit "変更する",class:"addresses-new-info__submit-btn" 
+                  = f.submit "登録する",class:"addresses-new-info__submit-btn" 
 
   %footer.adresses-new__footer
     = render 'layouts/footer'
