@@ -1,16 +1,15 @@
 FactoryBot.define do
 
-  factory :user, class: User do
-    sequence(:nickname) { |i| "イチロー_#{i.to_s.tr('0-9a-zA-Z', '０-９ａ-ｚＡ-Ｚ')}"}
-    sequence(:email) { |i| "user_#{i}@test.co.jp"}
-    sequence(:password) { |i| "password#{i}"}
-    sequence(:password_confirmation) { |i| "password#{i}"}
-    sequence(:first_name) { |i| "イチロー_#{i.to_s.tr('0-9a-zA-Z', '０-９ａ-ｚＡ-Ｚ')}"}
-    sequence(:last_name) { |i| "イチロー_#{i.to_s.tr('0-9a-zA-Z', '０-９ａ-ｚＡ-Ｚ')}"}
-    first_name_kana  {"イチロー"}
-    last_name_kana   {"イチロー"}
-    telephone_number {"09012345678"}
-    birthday         {"1971/01/01"}
+  factory :user do
+    nickname              {"テスト太郎"}
+    email                 {"kkk@gmail.com"}
+    password              {"00000000a"}
+    password_confirmation {"00000000a"}
+    last_name             {"苗字太郎"}
+    first_name            {"名前太郎"}
+    last_name_kana        {"ミョウジカナ"}
+    first_name_kana       {"ナマエカナ"}
+    birthday              {"20190101"}
+    telephone_number      {"1234567890"}
   end
-
 end
