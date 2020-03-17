@@ -1,6 +1,7 @@
 $(document).on('turbolinks:load', function() {
   if (document.getElementById("token_submit") != null) { 
     Payjp.setPublicKey(gon.payip_access_key); 
+    alert(gon.payip_access_key)
     let btn = document.getElementById("token_submit"); 
     btn.addEventListener("click", e => { 
       e.preventDefault(); 
