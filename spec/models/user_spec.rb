@@ -4,7 +4,7 @@ RSpec.describe User, type: :model do
   describe '#create' do
 
     # ----空ではない場合に登録ができること----
-    # # 1. nickname,email,first_name,last_name,first_name_kana,last_name_kana,birthday,telephone_numbeが存在すれば登録できること
+    # 1. nickname,email,first_name,last_name,first_name_kana,last_name_kana,birthday,telephone_numbeが存在すれば登録できること
     it "is valid with a nickname,email,first_name,last_name,first_name_kana,last_name_kana,birthday,telephone_number" do
       user = build(:user)
       expect(user).to be_valid
@@ -83,7 +83,7 @@ RSpec.describe User, type: :model do
 
     # ----nicknameに関するテスト----
     # 12. nicknameが15文字以内であれば登録ができること
-    it "is invalid with a nickname that has less than 15 characters" do
+    it "is valid with a nickname that has less than 15 characters" do
       user = build(:user, nickname: "aaaaa1234567890")
       user.valid?
       expect(user).to be_valid
@@ -149,34 +149,48 @@ RSpec.describe User, type: :model do
     end
 
     # 21. passwordが数字のみ場合は登録ができないこと
-    it 'is invalid with a password wrong format' do
+    it 'Registration is not possible if the password is only numbers' do
       user = build(:user, password: "12345678")
       user.valid?
       expect(user.errors[:password]).to include("は英字と数字両方を含むパスワードを設定してください")
     end
 
-    # 22. passwordが英字のみ場合は登録ができないこと
-    it 'is invalid with a password wrong format' do
+    # 23. passwordが英字のみ場合は登録ができないこと
+    it 'Registration is not possible if the password is only English letterst' do
       user = build(:user, password: "aaaaaaaa")
       user.valid?
       expect(user.errors[:password]).to include("は英字と数字両方を含むパスワードを設定してください")
     end
 
-    # 23. passwordが６文字以下の場合は登録ができないこと
+    # 24. passwordにひらがながある場合は登録ができないこと
+    it 'If the password has hiragana, you cannot register' do
+      user = build(:user, password: "あ12345aaaaa")
+      user.valid?
+      expect(user.errors[:password]).to include("は英字と数字両方を含むパスワードを設定してください")
+    end
+
+    # 25. passwordにカタカナがある場合は登録ができないこと
+    it 'If there is katakana in the password, you can not register' do
+      user = build(:user, password: "ア12345aaaaa")
+      user.valid?
+      expect(user.errors[:password]).to include("は英字と数字両方を含むパスワードを設定してください")
+    end
+
+    # 26. passwordが６文字以下の場合は登録ができないこと
     it "is invalid with a password that has less than 6 characters " do
       user = build(:user, password: "a12345")
       user.valid?
       expect(user.errors[:password]).to include("は7文字以上で入力してください", "は英字と数字両方を含むパスワードを設定してください") 
     end
 
-    # 24. passwordが21文字以上の場合は登録ができないこと
+    # 27. passwordが21文字以上の場合は登録ができないこと
     it "is invalid with a password that has more than 21 characters " do
       user = build(:user, password: "a12345678901234567890")
       user.valid?
       expect(user.errors[:password]).to include("は20文字以内で入力してください", "は英字と数字両方を含むパスワードを設定してください") 
     end
 
-    # 25. passwordに指定した記号を入れても登録ができること
+    # 28. passwordに指定した記号を入れても登録ができること
     it "is valid with a password that Contains letters and numbers and symbol " do
       user = build(:user, password: "a1!@#$%^&*)(=_-", password_confirmation: "a1!@#$%^&*)(=_-")
       user.valid?
@@ -184,28 +198,28 @@ RSpec.describe User, type: :model do
     end
 
     # ----first_name,last_nameに関するテスト----
-    # 26. first_nameが15文字以内であれば登録ができること
+    # 29. first_nameが15文字以内であれば登録ができること
     it "is valid with a first_name that Contains letters and numbers and symbol " do
       user = build(:user, first_name: "aaaaa1234567890")
       user.valid?
       expect(user).to be_valid
     end
 
-    # 27. first_nameが16文字以上であれば登録できないこと
+    # 30. first_nameが16文字以上であれば登録できないこと
     it "is invalid with a first_name that has more than 15 characters " do
       user = build(:user, first_name: "1234567890123456")
       user.valid?
       expect(user.errors[:first_name]).to include("は15文字以内で入力してください")
     end
 
-    # 28. last_nameが15文字以内であれば登録ができること
+    # 31. last_nameが15文字以内であれば登録ができること
     it "is valid with a last_name that has less than 15 characters " do
       user = build(:user, last_name: "aaaaa1234567890")
       user.valid?
       expect(user).to be_valid
     end
 
-    # 29. last_nameが16文字以上であれば登録できないこと
+    # 32. last_nameが16文字以上であれば登録できないこと
     it "is invalid with a last_name that has more than 15 characters " do
       user = build(:user, last_name: "1234567890123456")
       user.valid?
@@ -213,61 +227,125 @@ RSpec.describe User, type: :model do
     end
 
     # ----first_name_kana,last_name_kanaに関するテスト----
-    # 30. first_name_kanaが20文字以内であれば登録ができること
-    it "is invalid with a first_name_kana that has less than 20 characters " do
+    # 33. first_name_kanaが20文字以内であれば登録ができること
+    it "is valid with a first_name_kana that has less than 20 characters " do
       user = build(:user, first_name_kana: "アアアアアアアアアアイイイイイイイイイイ")
       user.valid?
       expect(user).to be_valid
     end
 
-    # 31. first_name_kanaに空白、長音記号があっても登録ができること
+    # 34. first_name_kanaに空白、長音記号があっても登録ができること
     it "Valid even if first_name_kana contains spaces and long symbols " do
       user = build(:user, first_name_kana: "ー－　イイイイイイイイイイ")
       user.valid?
       expect(user).to be_valid
     end
 
-    # 32. first_name_kanaがひらがなだと登録ができないこと
+    # 35. first_name_kanaがひらがなだと登録ができないこと
     it "is invalid with a first_name_kana that Hiragana " do
       user = build(:user, first_name_kana: "あいうえお")
       user.valid?
       expect(user.errors[:first_name_kana]).to include("はカタカナで入力して下さい。")
     end
 
-    # 33. last_name_kanaが20文字以内であれば登録ができること
-    it "is invalid with a last_name_kana that has less than 20 characters " do
+    # 36. first_name_kanaが数字だと登録ができないこと
+    it "is invalid with a first_name_kana that number " do
+      user = build(:user, first_name_kana: "12345")
+      user.valid?
+      expect(user.errors[:first_name_kana]).to include("はカタカナで入力して下さい。")
+    end
+
+    # 37. first_name_kanaが記号だと登録ができないこと
+    it "is invalid with a first_name_kana that sumbol " do
+      user = build(:user, first_name_kana: "!#()$%")
+      user.valid?
+      expect(user.errors[:first_name_kana]).to include("はカタカナで入力して下さい。")
+    end
+
+    # 38. first_name_kanaがアルファベットだと登録ができないこと
+    it "is invalid with a first_name_kana that Alphabet " do
+      user = build(:user, first_name_kana: "abcde")
+      user.valid?
+      expect(user.errors[:first_name_kana]).to include("はカタカナで入力して下さい。")
+    end
+
+    # 39. last_name_kanaが20文字以内であれば登録ができること
+    it "is valid with a last_name_kana that has less than 20 characters " do
       user = build(:user, last_name_kana: "アアアアアアアアアアイイイイイイイイイイ")
       user.valid?
       expect(user).to be_valid
     end
 
-    # 34. last_name_kanaに空白、長音記号があっても登録ができること
+    # 40. last_name_kanaに空白、長音記号があっても登録ができること
     it "Valid even if last_name_kana contains spaces and long symbols " do
       user = build(:user, last_name_kana: "ー－　イイイイイイイイイイ")
       user.valid?
       expect(user).to be_valid
     end
 
-    # 35. last_name_kanaがひらがなだと登録ができないこと
+    # 41. last_name_kanaがひらがなだと登録ができないこと
     it "is invalid with a last_name_kana that Hiragana " do
       user = build(:user, last_name_kana: "あいうえお")
       user.valid?
       expect(user.errors[:last_name_kana]).to include("はカタカナで入力して下さい。")
     end
 
+    # 42. last_name_kanaが数字だと登録ができないこと
+    it "is invalid with a last_name_kana that number " do
+      user = build(:user, last_name_kana: "12345")
+      user.valid?
+      expect(user.errors[:last_name_kana]).to include("はカタカナで入力して下さい。")
+    end
+
+    # 43. last_name_kanaが数字だと登録ができないこと
+    it "is invalid with a last_name_kana that sumbol " do
+      user = build(:user, last_name_kana: "!#()$%")
+      user.valid?
+      expect(user.errors[:last_name_kana]).to include("はカタカナで入力して下さい。")
+    end
+
+    # 44. last_name_kanaがアルファベットだと登録ができないこと
+    it "is invalid with a last_name_kana that Alphabet " do
+      user = build(:user, last_name_kana: "abcde")
+      user.valid?
+      expect(user.errors[:last_name_kana]).to include("はカタカナで入力して下さい。")
+    end
+
     # ----telephone_numberに関するテスト----
-    # 36. 電話番号形式の入力の場合は登録できること
+    # 45. 電話番号形式の入力の場合は登録できること
     it "is valid with a telephone_number that Phone number format " do
       user = build(:user, telephone_number: "1234567890")
       user.valid?
       expect(user).to be_valid
     end
 
-    # 37. 電話番号に英字が混ざっていた場合は登録できないこと
-    it "is invalid with a telephone_number that Phone number format " do
+    # 46. 電話番号に英字が混ざっていた場合は登録できないこと
+    it "Invalid if phone number format is mixed alphabetic " do
       user = build(:user, telephone_number: "a123456789")
       user.valid?
       expect(user.errors[:telephone_number]).to include("は有効でありません。")
     end
+
+    # 47. 電話番号にひらがなが混ざっていた場合は登録できないこと
+    it "Invalid if phone number format is mixed with hiragana " do
+      user = build(:user, telephone_number: "あ123456789")
+      user.valid?
+      expect(user.errors[:telephone_number]).to include("は有効でありません。")
+    end
+
+    # 48. 電話番号にカタカナが混ざっていた場合は登録できないこと
+    it "Invalid if phone number format is mixed with Katakana " do
+      user = build(:user, telephone_number: "ア123456789")
+      user.valid?
+      expect(user.errors[:telephone_number]).to include("は有効でありません。")
+    end
+
+    # 49. 電話番号に記号が混ざっていた場合は登録できないこと
+    it "Invalid phone number format with mixed symbols " do
+      user = build(:user, telephone_number: "!123456789")
+      user.valid?
+      expect(user.errors[:telephone_number]).to include("は有効でありません。")
+    end
+
   end
 end
