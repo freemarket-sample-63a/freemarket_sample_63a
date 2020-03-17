@@ -3,6 +3,9 @@ Rails.application.routes.draw do
 
   root "tops#index"
   resources :tops,only: :index 
+  resources :categories,only: :index, defaults: {format: 'json'}
+  resources :product_sizes,only: :index, defaults: {format: 'json'}
+  resources :shippingways,only: :index, defaults: {format: 'json'}
   resources :sign_ups, only: :create do
     collection do
       get 'index'
@@ -25,6 +28,7 @@ Rails.application.routes.draw do
         post 'show', to: 'creditcards#show'
       end
     end
-    resources :addresses, only: [:index,:new, :edit, :update]
+    resources :addresses, only: [:index,:new, :create, :edit, :update, :destroy]
   end
+
 end

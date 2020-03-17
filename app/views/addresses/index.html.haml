@@ -16,7 +16,9 @@
               %i
                 = address.city + address.number + address.building
               %button.addresses-index-info__edit
-                =link_to '編集する',edit_user_address_path(current_user.id,address.id)
+                =link_to '編集',edit_user_address_path(current_user.id,address.id)
+              %button.addresses-index-info__delete
+                =link_to '削除', user_address_path(current_user.id,address.id), method: :delete
             %button.addresses-index-info__new
               =link_to '住所を追加する',new_user_address_path(current_user.id)
   %footer.adresses-index__footer

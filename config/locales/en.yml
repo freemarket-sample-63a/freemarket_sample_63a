@@ -29,31 +29,4 @@
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 
-
-
 en:
-  enums:
-    item:
-      condition_num:
-        brand_new: 新品、未使用
-        near_new: 未使用に近い
-        no_dirt: 目立った傷や汚れ無し
-        near_dirt: やや傷や汚れあり
-        dirty: 傷や汚れあり
-        bad_condition: 全体的に状態が悪い
-      shippingcharge_num:
-        seller_burden: 送料込み(出品者負担)
-        cod: 着払い(購入者負担)
-      daystoship_num:
-        one_to_two: 1~2日で発送
-        two_to_three: 2~3日で発送
-        four_to_seven: 4~7日で発送
-      daystoship_num:
-        one_to_two: 1~2日で発送
-        two_to_three: 2~3日で発送
-        four_to_seven: 4~7日で発送
-    trade:
-      status_num:
-        trading: 取引中
-        under_delivery: 発送中
-        finished: 完了 
