@@ -1,19 +1,14 @@
 $(document).on('turbolinks:load', function() {
   if (document.getElementById("token_submit") != null) { 
-    // Payjp.setPublicKey(gon.payip_access_key); 
-    // alert(gon.payip_access_key);
-    // alert('success');
-    // console.log(gon.payip_access_key);
-    // console.log('success');
+    Payjp.setPublicKey(gon.payip_access_key); 
+    alert(gon.payip_access_key);
+    alert('success');
+    console.log(gon.payip_access_key);
+    console.log('success');
     
     let btn = document.getElementById("token_submit"); 
     btn.addEventListener("click", e => { 
       e.preventDefault();
-      Payjp.setPublicKey(gon.payip_access_key); 
-      alert(gon.payip_access_key);
-      alert('success');
-      console.log(gon.payip_access_key);
-      console.log('success');
       let card = {
         number: document.getElementById("card_number").value,
         cvc: document.getElementById("cvc").value,
