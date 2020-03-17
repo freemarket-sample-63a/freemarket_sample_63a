@@ -48,7 +48,7 @@ class TradesController < ApplicationController
   def get_card
     card =  Creditcard.where(user_id: current_user.id).first
     unless card.nil?
-      Payjp.api_key = ENV["PAYJP_PRIVATE_KEY"]
+      Payjp.api_key = ENV['PAYJP_PRIVATE_KEY']
       customer = Payjp::Customer.retrieve(card.customer_id)
       @default_card_information = customer.cards.retrieve(card.card_id)
     end
