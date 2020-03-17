@@ -19,6 +19,9 @@
               = icon('fab', 'google')
           .sessions-new-content__field
             = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+              .sessions-new-error
+                - flash.each do |key, value|
+                  = content_tag :div, value, class: key
               = f.email_field :email,placeholder: "メールアドレス", autocomplete: "email",class:"sessions-new-content__field--password"
               = f.password_field :password,placeholder: "パスワード", autocomplete: "current-password",class:"sessions-new-content__field--password"
               .sessions-new-recaptcha
