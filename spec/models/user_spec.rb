@@ -222,28 +222,42 @@ RSpec.describe User, type: :model do
 
     # 31. first_name_kanaに空白、長音記号があっても登録ができること
     it "Valid even if first_name_kana contains spaces and long symbols " do
-      user = build(:user, last_name_kana: "ー－　イイイイイイイイイイ")
+      user = build(:user, first_name_kana: "ー－　イイイイイイイイイイ")
       user.valid?
       expect(user).to be_valid
     end
 
-    # 32. last_name_kanaが20文字以内であれば登録ができること
+    # 32. first_name_kanaがひらがなだと登録ができないこと
+    it "is invalid with a first_name_kana that Hiragana " do
+      user = build(:user, first_name_kana: "あいうえお")
+      user.valid?
+      expect(user.errors[:first_name_kana]).to include("はカタカナで入力して下さい。")
+    end
+
+    # 33. last_name_kanaが20文字以内であれば登録ができること
     it "is invalid with a last_name_kana that has less than 20 characters " do
       user = build(:user, last_name_kana: "アアアアアアアアアアイイイイイイイイイイ")
       user.valid?
       expect(user).to be_valid
     end
 
-    # 33. last_name_kanaに空白、長音記号があっても登録ができること
+    # 34. last_name_kanaに空白、長音記号があっても登録ができること
     it "Valid even if last_name_kana contains spaces and long symbols " do
       user = build(:user, last_name_kana: "ー－　イイイイイイイイイイ")
       user.valid?
       expect(user).to be_valid
     end
 
+    # 35. last_name_kanaがひらがなだと登録ができないこと
+    it "is invalid with a last_name_kana that Hiragana " do
+      user = build(:user, last_name_kana: "あいうえお")
+      user.valid?
+      expect(user.errors[:last_name_kana]).to include("はカタカナで入力して下さい。")
+    end
+
     # ----telephone_numberに関するテスト----
     # 33. 電話番号形式の入力の場合は登録できること
-    it "is valid with a tel that Phone number format " do
+    it "is valid with a telephone_number that Phone number format " do
       user = build(:user, telephone_number: "1234567890")
       user.valid?
       expect(user).to be_valid
