@@ -10,6 +10,6 @@ module ItemsHelper
 
   def thousands_separator(price)
     # 現状はJPY固定。
-    number_to_currency(price,format: "%u%n", unit: "￥", strip_insignificant_zeros: true)
+    number_to_currency(price, format: "%u%n", unit: "￥", strip_insignificant_zeros: true)
   end
 end
