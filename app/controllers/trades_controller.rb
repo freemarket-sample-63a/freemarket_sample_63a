@@ -1,6 +1,6 @@
 class TradesController < ApplicationController
   protect_from_forgery except: [:create]
-  before_action :get_item, :get_card, only: [:index, :new, :create, :fail]
+  before_action :get_item, :get_card, :get_trade, only: [:index, :new, :create, :fail]
 
   def index
 
@@ -52,6 +52,10 @@ class TradesController < ApplicationController
       customer = Payjp::Customer.retrieve(card.customer_id)
       @default_card_information = customer.cards.retrieve(card.card_id)
     end
+  end
+
+  def get_trade
+    @trade = Trade.find_by(user_id: current_user.id, item_id: params[:item_id])
   end
 
   def get_params
