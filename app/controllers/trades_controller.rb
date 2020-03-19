@@ -14,7 +14,6 @@ class TradesController < ApplicationController
     #支払い処理
     card = Creditcard.find_by(user_id: current_user.id)
     Payjp.api_key = ENV['PAYJP_PRIVATE_KEY']
-    binding.pry
     pay = Payjp::Charge.create(
       :amount => @item.price.to_i, #decimalをintegerに変換
       :customer => card.customer_id, #顧客ID 
