@@ -20,66 +20,71 @@
                   %span.trades-new-buy-item__shipping-fee （税込）送料込み
       .trades-new-buy-content
         .trades-new-buy-content-inner
-          -# 購入機能を実装させるために、まずはform_tagにて実装をする。 今後はform_withへ移行する。
-          = form_with(model: [@item, @trade], method: item_trades_path(@item.id), local: true) do |f|
-            %ul.trades-new-buy-price-table
-              %li.trades-new-buy-price-table__row
-                .trades-new-buy-price-table__cell--label 支払い金額
-                .trades-new-buy-price-table__cell
-                  %span
-                    = thousands_separator(@item.price)
-            .trades-new-buy-content
-              .trades-new-buy-content-inner
-                %h3 支払い方法
-                - if @default_card_information.nil?
-                  = link_to  new_user_creditcard_path(current_user.id), class: "trades-new-buy-user-info-fix" do
+          - if trade_submited?(@trade)
+            %span.trades-new-buy-alreay-submited
+              この商品は売約済みです。
+            .trades-create-buy-content-inner
+              = link_to root_path do
+                = button_tag "戻る", class: "trades-create-buy-content-inner__rootbtn"
+          - else
+            = form_with(model: [@item, @trade],  local: true) do |f|
+              %ul.trades-new-buy-price-table
+                %li.trades-new-buy-price-table__row
+                  .trades-new-buy-price-table__cell--label 支払い金額
+                  .trades-new-buy-price-table__cell
+                    %span
+                      = thousands_separator(@item.price)
+              .trades-new-buy-content
+                .trades-new-buy-content-inner
+                  %h3 支払い方法
+                  - if @default_card_information.nil?
+                    = link_to new_user_creditcard_path(current_user.id), class: "trades-new-buy-user-info-fix" do
+                      %p.trades-new-buy-user-info-text__cardinfo
+                        .trades-new-icon-plus-circle
+                          = icon('fas', 'plus-circle')
+                          %span.trades-new-buy-register-text--new
+                            登録してください
+                  - else
                     %p.trades-new-buy-user-info-text__cardinfo
-                      .trades-new-icon-plus-circle
-                        = icon('fas', 'plus-circle')
-                        %span.trades-new-buy-register-text--new
-                          登録してください
-                - else
-                  %p.trades-new-buy-user-info-text__cardinfo
-                    .creditcards-show-confirmation__contents
-                      .creditcards-show-confirmation__card-number
-                        .creditcards-show-confirmation__card-number--text カード番号
-                        .creditcards-show-confirmation__card-number--number
-                          = "**** **** **** " + @default_card_information.last4
-                      .creditcards-show-confirmation__expire
-                        .creditcards-show-confirmation__expire--text 有効期限
-                        .creditcards-show-confirmation__expire--date
-                          - exp_month = @default_card_information.exp_month.to_s
-                          - exp_year = @default_card_information.exp_year.to_s.slice(2,3)
-                          = exp_month + " 月 / " + exp_year + " 年"
-            .trades-new-buy-content
-              .trades-new-buy-content-inner
-                %h3 配送先
-                - if @address.nil?
-                  = link_to new_user_address_path(current_user.id), class: "trades-new-buy-user-info-fix" do
-                    %p.trades-new-buy-user-info-text
-                      .trades-new-icon-plus-circle
-                        = icon('fas', 'plus-circle')
-                        %span.trades-new-buy-register-text 登録してください
-                - else
-                  = link_to edit_user_address_path(current_user.id, @address.id), class: "trades-new-buy-user-info-fix" do
-                    %span.trades-new-buy-register-text--edit
-                      変更する
-                  %p.trades-new-buy-user-info-text__addressinfo
-                    = @address.postal_number 
-                    %br/
-                    = @address.city 
-                    %br/
-                    = @address.number 
-                    %br/
-                    = @address.building 
-            .trades-new-buy-content
-              - if trade_submited?(@trade)
-                %span.trades-new-buy-alreay-submited
-                  この商品は売約済みです。
-                .trades-create-buy-content-inner
-                  = link_to root_path do
-                    = button_tag "戻る", class: "trades-create-buy-content-inner__rootbtn"
-              - elsif card_present_and_addres_present?(@default_card_information, @address)
-                .trades-create-buy-content-inner
-                  = submit_tag "購入する", class: "trades-create-buy-content-inner__submit"
+                      .creditcards-show-confirmation__contents
+                        .creditcards-show-confirmation__card-number
+                          .creditcards-show-confirmation__card-number--text カード番号
+                          .creditcards-show-confirmation__card-number--number
+                            = "**** **** **** " + @default_card_information.last4
+                        .creditcards-show-confirmation__expire
+                          .creditcards-show-confirmation__expire--text 有効期限
+                          .creditcards-show-confirmation__expire--date
+                            - exp_month = @default_card_information.exp_month.to_s
+                            - exp_year = @default_card_information.exp_year.to_s.slice(2,3)
+                            = exp_month + " 月 / " + exp_year + " 年"
+              .trades-new-buy-content
+                .trades-new-buy-content-inner
+                  %h3 配送先
+                  - if @address.nil?
+                    = link_to new_user_address_path(current_user.id), class: "trades-new-buy-user-info-fix" do
+                      %p.trades-new-buy-user-info-text
+                        .trades-new-icon-plus-circle
+                          = icon('fas', 'plus-circle')
+                          %span.trades-new-buy-register-text 登録してください
+                  - else
+                    = link_to edit_user_address_path(current_user.id, @address.id), class: "trades-new-buy-user-info-fix" do
+                      %span.trades-new-buy-register-text--edit
+                        変更する
+                    %p.trades-new-buy-user-info-text__addressinfo
+                      = @address.postal_number 
+                      %br/
+                      = @address.city 
+                      %br/
+                      = @address.number 
+                      %br/
+                      = @address.building 
+              .trades-new-buy-content
+                .trades-new-buy-content-inner
+                  = f.hidden_field :user_id
+                  = f.hidden_field :item_id
+                  = f.hidden_field :address_id
+                .trades-new-buy-content
+                - if card_present_and_addres_present?(@default_card_information, @address)
+                  .trades-create-buy-content-inner
+                    = submit_tag "購入する", class: "trades-create-buy-content-inner__submit"
   %footer.trades-new-footer
