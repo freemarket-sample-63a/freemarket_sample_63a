@@ -4,8 +4,9 @@ module TradesHelper
   def card_present_and_addres_present?(card, address)
     card.present? && address.present?
   end
-  # 売約済みチェック（tradeレコードがあれば売約済み）
+
+  # 売約済みチェック（trade_idがあれば売約済み）
   def trade_submited?(trade)
-    trade.present?
+    trade.id.present?
   end
 end
