@@ -14,6 +14,7 @@ class TradesController < ApplicationController
     #支払い処理
     card = Creditcard.find_by(user_id: current_user.id)
     Payjp.api_key = ENV['PAYJP_PRIVATE_KEY']
+    binding.pry
     pay = Payjp::Charge.create(
       :amount => @item.price.to_i, #decimalをintegerに変換
       :customer => card.customer_id, #顧客ID 
@@ -21,14 +22,9 @@ class TradesController < ApplicationController
     )
 
     if pay.paid
-     #支払処理成功後のTradeレコード登録処理
-      @trade = Trade.new
-
-      @trade["user_id"] = current_user.id
-      @trade["item_id"] = @item.id
-      @trade["address_id"] = @address.id
-
-      unless @trade.save
+      #支払処理成功後のTradeレコード登録処理
+      trade = Trade.new(trade_params)
+      unless trade.save
         trade_failed 
       end
     else
@@ -46,7 +42,7 @@ class TradesController < ApplicationController
   end
 
   def get_card
-    card =  Creditcard.where(user_id: current_user.id).first
+    card =  Creditcard.find_by(user_id: current_user.id)
     unless card.nil?
       Payjp.api_key = ENV['PAYJP_PRIVATE_KEY']
       customer = Payjp::Customer.retrieve(card.customer_id)
@@ -56,11 +52,16 @@ class TradesController < ApplicationController
 
   def get_trade
     @trade = Trade.find_by(user_id: current_user.id, item_id: params[:item_id])
+    if @trade.nil?
+      @trade = Trade.new
+      @trade.user_id = current_user.id
+      @trade.item_id = @item.id
+      @trade.address_id = @address.id
+    end 
   end
 
-  def get_params
-    #from_withで「購入」ボタンが押された場合の処理(現在はform_tagなので未実装)
-    params.require(:trade).permit(:brand_id,:category_id,:shippingway_id,:size_num,:condition_num,:daystoship_num,:title,:description,:price, item_images_attributes: [:id, :item_id, :image])
+  def trade_params
+    params.require(:trade).permit(:item_id,:user_id,:address_id)
   end
 
   def trade_failed
