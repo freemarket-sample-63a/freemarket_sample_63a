@@ -21,7 +21,7 @@
       .trades-new-buy-content
         .trades-new-buy-content-inner
           -# 購入機能を実装させるために、まずはform_tagにて実装をする。 今後はform_withへ移行する。
-          = form_tag(action: :create, method: :post) do
+          = form_with(model: [@item, @trade], method: item_trades_path(@item.id), local: true) do |f|
             %ul.trades-new-buy-price-table
               %li.trades-new-buy-price-table__row
                 .trades-new-buy-price-table__cell--label 支払い金額
