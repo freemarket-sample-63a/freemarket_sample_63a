@@ -78,7 +78,7 @@
                     .tops-index-content-picup-list-body__details  
                       %ul
                         %li
-                          = item.price
+                          = thousands_separator(item.price)
                       %p (税込)
     .tops-index-content-picups
       .tops-index-content-picup
@@ -100,7 +100,7 @@
                     .tops-index-content-picup-list-body__details  
                       %ul
                         %li
-                          = item.price
+                          = thousands_separator(item.price)
                       %p (税込)
 
   = render 'layouts/tertiarybanner'
