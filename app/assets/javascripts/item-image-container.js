@@ -46,13 +46,8 @@ $(document).on('turbolinks:load', function() {
 
       }
     }
-
-    var elm = document.getElementById('d-d-delete');
-    elm.style.display = 'none';
-
-    var cl = document.getElementById('click-delete');
-    cl.style.display = 'none';
-    
+    $('#d-d-delete').css('display','none')
+    $('#click-delete').css('display','none');
   });
 
   $(document).on('click','.item-image-container__unit--preview a',function(){
