@@ -16,52 +16,8 @@ $(document).on('turbolinks:load', function() {
       </li>`
     return html
   };
-
-
-  //DataTransferオブジェクトで、データを格納する箱を作る
-  var dataBox = new DataTransfer();
-  //querySelectorでfile_fieldを取得
-  var file_field = document.querySelector('input[type=file]')
-  var files_array = [];
-   //fileが選択された時に発火するイベント
-
-   $('#image-label').change(function(){
-    //選択したfileのオブジェクトをpropで取得
-    var files = $('input[type="file"]').prop('files')[0];
-
-    $.each(this.files, function(i, file){
-      //FileReaderのreadAsDataURLで指定したFileオブジェクトを読み込む
-      var fileReader = new FileReader();
-      //DataTransferオブジェクトに対して、fileを追加
-      dataBox.items.add(file)
-      //DataTransferオブジェクトに入ったfile一覧をfile_fieldの中に代入
-      file_field.files = dataBox.files
-
-      var num = $('.item-image-container__unit--preview').length + 1 + i
-      fileReader.readAsDataURL(file);
-
-      //読み込みが完了すると、srcにfileのURLを格納
-      fileReader.onloadend = function() {
-        var loadedImageUri = fileReader.result
-        var html = buildImage(loadedImageUri,i)
-        $(html).appendTo(".item-image-container__unit ul").trigger("build");
-      };
-      if(dataBox.items.length > 4){
-        return false;
-      }
-    });
-    $('#d-d-delete').css('display','none')
-    $('#click-delete').css('display','none');
-  });
-
-  $('.item-image-container__unit--guide').on('dragover',function(e){
-      e.preventDefault();
-  });
-
-  $('.item-image-container__unit--guide').on('drop',function(event){
-    event.preventDefault();
-    var files = event.originalEvent.dataTransfer.files;
-
+  
+  function imageUpdate(files){
     $.each(files, function(i, file){
       //FileReaderのreadAsDataURLで指定したFileオブジェクトを読み込む
       var fileReader = new FileReader();
@@ -69,6 +25,7 @@ $(document).on('turbolinks:load', function() {
       dataBox.items.add(file)
       //DataTransferオブジェクトに入ったfile一覧をfile_fieldの中に代入
       file_field.files = dataBox.files
+
       var num = $('.item-image-container__unit--preview').length + 1 + i
       fileReader.readAsDataURL(file);
 
@@ -82,6 +39,30 @@ $(document).on('turbolinks:load', function() {
         return false;
       }
     });
+  }
+
+  //DataTransferオブジェクトで、データを格納する箱を作る
+  var dataBox = new DataTransfer();
+  //querySelectorでfile_fieldを取得
+  var file_field = document.querySelector('input[type=file]')
+  var files_array = [];
+
+  //fileが選択された時に発火するイベント
+   $('#image-label').change(function(){
+    //選択したfileのオブジェクトをpropで取得
+    var files = this.files
+    imageUpdate(files)
+    $('#d-d-delete').css('display','none')
+    $('#click-delete').css('display','none');
+  });
+
+  $('.item-image-container__unit--guide').on('dragover',function(e){
+    e.preventDefault();
+  });
+  $('.item-image-container__unit--guide').on('drop',function(event){
+    event.preventDefault();
+    var files = event.originalEvent.dataTransfer.files;
+    imageUpdate(files)
     $('#d-d-delete').css('display','none')
     $('#click-delete').css('display','none');
   });
@@ -239,39 +220,4 @@ $(document).on('turbolinks:load', function() {
       });
     }
   });
-
-//次の画像機能の実装で使用する予定のためコメントアウトしています。
-// function buildhtml(result){
-// <select name="child" id="child">
-//   <option value="1">レディース</option>
-//   <option value="15">メンズ</option>
-// </select>
-// }
-// var aj_url = window.location.pathname;
-// var aj_url = '/users/1/items';
-
-// $('#new_item').on('submit', function(e){
-//   e.preventDefault();
-  
-//   var formData = new FormData($(this).get(0));
-  
-//   files_array.forEach(function(file){
-//    formData.append("image[images][]" , file)
-//   });
-  
-//   $.ajax({
-//     url:         aj_url,
-//     type:        "POST",
-//     data:        formData,
-//     contentType: false,
-//     processData: false,
-//     dataType:   'json',
-//   })
-//   .done(function(){
-//     alert('出品に成功しました！');
-//   })
-//   .fail(function(){
-//     alert('出品に失敗しました！');
-//   });
-// });
 })
