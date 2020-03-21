@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :set_user_address,only: :create
-  before_action :set_item,only: [:show,:destroy]
+  before_action :set_item,only: [:edit,:show,:destroy]
 
   def index
   end
@@ -40,6 +40,17 @@ class ItemsController < ApplicationController
   end
 
   def show
+  end
+
+
+  def edit
+    @categories = []
+    @categories.push(Category.new(id:0,name:"---"))
+    @categories.concat(Category.where(ancestry: nil))
+    binding.pry
+  end
+
+  def update
   end
 
   def destroy
