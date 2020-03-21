@@ -29,7 +29,7 @@ $(document).on('turbolinks:load', function() {
     //選択したfileのオブジェクトをpropで取得
     var files = $('input[type="file"]').prop('files')[0];
 
-    $.each(files, function(i, file){
+    $.each(this.files, function(i, file){
       //FileReaderのreadAsDataURLで指定したFileオブジェクトを読み込む
       var fileReader = new FileReader();
       //DataTransferオブジェクトに対して、fileを追加
