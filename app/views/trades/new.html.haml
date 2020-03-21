@@ -84,7 +84,7 @@
                   = f.hidden_field :item_id
                   = f.hidden_field :address_id
                 .trades-new-buy-content
-                - if card_present_and_addres_present?(@default_card_information, @address)
+                - if card_present_and_address_present?(@default_card_information, @address)
                   .trades-create-buy-content-inner
                     = submit_tag "購入する", class: "trades-create-buy-content-inner__submit"
   %footer.trades-new-footer

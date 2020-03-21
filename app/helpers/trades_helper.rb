@@ -1,7 +1,7 @@
 module TradesHelper
 
   # 購入者チェック（カード情報と住所があれば購入できる）
-  def card_present_and_addres_present?(card, address)
+  def card_present_and_address_present?(card, address)
     card.present? && address.present?
   end
 
