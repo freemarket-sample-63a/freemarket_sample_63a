@@ -65,7 +65,19 @@ RSpec.describe Item, type: :model do
 
     context 'can not save' do
 
+      it 'is invalid with title' do
+        item = build(:item, title: "")
+        item.valid?
+        binding.pry
+        expect(item.errors[:title])
+      end
 
+      it 'is invalid with address' do
+        item = build(:item, address_id: "")
+        item.valid?
+        expect(item.errors[:address_id])
+      end
     end
+
   end
 end
