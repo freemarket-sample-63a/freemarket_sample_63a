@@ -50,7 +50,7 @@ class TradesController < ApplicationController
   end
 
   def get_trade
-    @trade = Trade.find_by(user_id: current_user.id, item_id: params[:item_id])
+    @trade = Trade.find_by(item_id: params[:item_id])
     if @trade.nil?
       @trade = Trade.new
       @trade.user_id = current_user.id
