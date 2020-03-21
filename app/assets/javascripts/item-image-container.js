@@ -1,19 +1,19 @@
 $(document).on('turbolinks:load', function() {
   function buildImage(loadedImageUri,i){
     var html =
-    `<li class="item-image-container__unit--preview" image-data-id=${i}>
-      <div class="item-image-container__unit--caption">
-        <img src="${loadedImageUri}">
-      </div>
-      <div class="image-option">
-        <div  class="image-option__list">
-          <div class="image-option__list--tag">編集</div>
+      `<li class="item-image-container__unit--preview" image-data-id=${i}>
+        <div class="item-image-container__unit--caption">
+          <img src="${loadedImageUri}">
         </div>
-        <div class="image-option__list">
-          <a class="image-option__list--tag">削除</a>
+        <div class="image-option">
+          <div  class="image-option__list">
+            <div class="image-option__list--tag">編集</div>
+          </div>
+          <div class="image-option__list">
+            <a class="image-option__list--tag">削除</a>
+          </div>
         </div>
-      </div>
-    </li>`
+      </li>`
     return html
   };
 
