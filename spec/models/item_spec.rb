@@ -1,12 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe Item, type: :model do
-
   describe '#create' do
     context 'can save' do
 
       it "is valid item" do
         item = build(:item)
+        expect(item).to be_valid
+      end
+
+      it 'is valid with user_id' do
+        user = create(:user)
+        item = build(:item, user_id: user.id)
         expect(item).to be_valid
       end
 
@@ -65,19 +70,55 @@ RSpec.describe Item, type: :model do
 
     context 'can not save' do
 
-      it 'is invalid with title' do
-        item = build(:item, title: "")
+      it 'is invalid with user_id' do
+        item = build(:item, user_id: nil)
         item.valid?
-        binding.pry
-        expect(item.errors[:title])
+      end
+
+      it "is invalid without title" do
+        item = build(:item, title: nil)
+        item.valid?
+      end
+
+      it "is invalid without description" do
+        item = build(:item, description: nil)
+        item.valid?
+      end
+
+      it "is invalid without price" do
+        item = build(:item, price: nil)
+        item.valid?
       end
 
       it 'is invalid with address' do
-        item = build(:item, address_id: "")
+        item = build(:item, address_id: nil)
         item.valid?
-        expect(item.errors[:address_id])
+      end
+
+      it 'is invalid with category' do
+        item = build(:item, category_id: nil)
+        item.valid?
+      end
+
+      it 'is invalid with condition_num' do
+        item = build(:item, condition_num: nil)
+        item.valid?
+      end
+
+      it 'is valid with daystoship_num' do
+        item = build(:item, daystoship_num: nil)
+        item.valid?
+      end
+
+      it 'is valid with feerate' do
+        item = build(:item, feerate: nil)
+        item.valid?
+      end
+
+      it 'is valid with profit_price' do
+        item = build(:item, profit_price: nil)
+        item.valid?
       end
     end
-
   end
 end
