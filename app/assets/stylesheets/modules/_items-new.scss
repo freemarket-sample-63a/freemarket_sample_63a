@@ -1,18 +1,18 @@
 .items-new {
   background-color: rgb(245, 245, 245);
   align-items: center;
-  &-header {
+  &__header {
     height: 120px;
     display: flex;
     justify-content: center;
     align-items: center;
-    &__icon {
+    &--icon {
       height: 50px;
       width: 200px;
     }
   }
 
-  &-main {
+  &__main {
     background-color: #ffffff;
     max-width: 700px;
     margin: 0 auto;
@@ -23,30 +23,8 @@
     }
   }
 
-  &-footer {
-    height: 150px;
+  &__footer {
     text-align: center;
-    padding: 40px;
-    ul {
-      display: flex;
-      justify-content: center;
-      li {
-        padding: 5px;
-        a{
-          color: #000000;
-          text-decoration: none;
-          font-size: 12px;
-        }
-      }
-    }
-    &__icon {
-      max-width: 160px;
-      margin: 0 auto;
-      img{
-        width: 100%;
-        height: auto;
-      }
-    }
     p {
       font-size: 14px;
     }
@@ -54,23 +32,24 @@
 }
 
 // headerとfooter以外
-.common-field__tag{
-  margin-left: 8px;
-  background-color: rgb(235, 51, 41);
-  color: white;
-  font-size: 13px;
-  padding: 1px 3px;
-  border-radius: 2px;
-  font-family: Arial,游ゴシック体,YuGothic,メイリオ,Meiryo,sans-serif;
-
-  &--any{
+.common-field{
+  &__tag{
     margin-left: 8px;
-    background-color: rgb(191, 191, 191);
+    background-color: rgb(235, 51, 41);
     color: white;
     font-size: 13px;
     padding: 1px 3px;
     border-radius: 2px;
     font-family: Arial,游ゴシック体,YuGothic,メイリオ,Meiryo,sans-serif;
+    &--any{
+      margin-left: 8px;
+      background-color: rgb(191, 191, 191);
+      color: white;
+      font-size: 13px;
+      padding: 1px 3px;
+      border-radius: 2px;
+      font-family: Arial,游ゴシック体,YuGothic,メイリオ,Meiryo,sans-serif;
+    }
   }
 }
 // hr

@@ -1,11 +1,11 @@
 .items-new
-  .items-new-header
-    .items-new-header__icon
+  .items-new__header
+    .items-new__header--icon
       = link_to root_path do
         = image_tag 'logo.png'
 
-  .registrations-new-main
-    .regstrations-new-main--form
+  .items-new__main
+    .itemss-new__main--form
       = form_with(model:@item, local: true , id: 'new_item') do |f|
         .item-image-container
           = f.label :"出品画像"
@@ -111,15 +111,5 @@
             禁止されている行為および出品物を必ずご確認ください。偽ブランド品や盗品物などの販売は犯罪であり、法律により処罰される可能性があります。 また、出品をもちまして加盟店規約に同意したことになります。
 
   .items-new-footer
-    %ul.items-new-footer__contents
-      %li.items-new-footer__contents--list
-        = link_to "プライバシーポリシー" , "#"
-      %li.items-new-footer__contents--list
-        = link_to "FURIMA利用規約" , "#"
-      %li.items-new-footer__contents--list
-        = link_to "ポイントに関する特約" , "#"
-    .items-new-footer__icon
-      = link_to root_path do
-        = image_tag 'logo-white.png'
-
+    = render "devise/navigation"
     %p ©️FURIMA
