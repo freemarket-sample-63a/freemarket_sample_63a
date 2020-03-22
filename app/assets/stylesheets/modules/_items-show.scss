@@ -1,8 +1,36 @@
+.items-show{
+  &__main{
+    background-color: rgb(245, 245, 245);
+    padding:40px;
+  }
+}
+
 .items-show-container{
   width:700px;
   margin:0 auto;
+  background-color: rgb(255, 255, 255);
 }
 .items-show-summary{
+  padding:40px;
+  &__name{
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
+  }
+  &__price{
+    margin: 24px 0 24px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    font-size: 46px;
+    font-weight: bold;
+    &--detail{
+      font-size: 16px;      
+    }
+  }
+  &__body{
+    margin-top:16px;
+  }
   &__main-image{
     height:346px;
   }
@@ -15,7 +43,10 @@
   }
 }
 .items-show-detail{
-  width:700px;
+
+  &__container{
+    padding:40px;
+  }
   &__table{
     border-collapse: collapse;
     border-spacing: 0;
@@ -23,20 +54,18 @@
     vertical-align: middle;
     border-color: inherit;
     &--table{
-      width: 100%;
+      width: 620px;
       height: 375px;
       border-collapse: collapse;
-      border: 1px solid #f8f8f8;
+      border: 1px solid rgb(245, 245, 245);
     }
     &--tbody{
       display: table-row-group;
       vertical-align: middle;
-      border-color: inherit;
     }
     &--tr{
       display: table-row;
-      vertical-align: inherit;
-      border-color: inherit;
+      vertical-align: middle;
     }
     &--th{
       font-style: normal;
@@ -47,6 +76,7 @@
       border: 1px solid #dedede;
       font-size: 14px;
       text-align: center;
+      vertical-align: middle;
     }
     &--td{
       width: 61%;
@@ -54,13 +84,14 @@
       border: 1px solid #dedede;
       font-size: 14px;
       display: table-cell;
-      vertical-align: inherit;
     }
   }
 }
 .items-show-other{
   display:flex;
   justify-content: space-between;
+  padding:0 40px;
+  margin:20px 0;
   &__favorite{
     &--btn{
       margin-right: auto;
@@ -82,7 +113,9 @@
   }
 }
 .items-show-comment{
+  padding:40px;
   &__submit{
+    margin:20px 0;
     &--btn{
       display:block;
       margin:0 auto;
@@ -95,16 +128,55 @@
       border-radius: 100px;
     }
   }
+  &__text-area{
+    width: 100%;
+    min-height: 104px;
+    padding: 10px;
+  }
+  &__notify{
+    padding: 8px;
+    font-size: 14px;
+    background-color: rgb(245, 245, 245);
+    margin: 10px 0;
+    text-align: left;
+  }
 }
 .items-show-links{
+  width:700px;
+  margin:20px auto;
   display:flex;
   justify-content: space-between;
+  &__link{
+    color:#3CCACE;
+  }
 }
-
+.items-show-related{
+  color:#3CCACE;
+  width:700px;
+  margin:20px auto;
+  display:flex;
+  justify-content: space-between;
+  &__link{
+    font-weight: bold;
+    font-size: 22px;
+    color:#3CCACE;
+  }
+}
 .items-show-button{
   width:700px;
   display:flex;
   justify-content: space-between;
+  &__sold-out{
+    margin:0 auto;
+    text-align: center;
+    font-size: 18px;
+    line-height: 48px;
+    background: #ea352d;
+    border: 1px solid #ea352d;
+    width: 30%;
+    border-radius: 100px;
+    color: #fff;
+  }
   &__edit{
     margin:0 auto;
     text-align: center;

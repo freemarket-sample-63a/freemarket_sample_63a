@@ -9,5 +9,4 @@ module TradesHelper
   def trade_submited?(trade)
     trade.id.present?
   end
-
 end
