@@ -11,7 +11,7 @@ class Item < ApplicationRecord
 
   belongs_to    :user
   belongs_to    :address
-  has_many      :trades
+  has_one       :trade
   
 
   # enum
