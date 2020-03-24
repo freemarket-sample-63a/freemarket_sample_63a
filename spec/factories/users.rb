@@ -17,8 +17,8 @@ FactoryBot.define do
   factory :seller, class: User do
     sequence(:nickname)        { |i| "出品者_#{i}"}
     sequence(:email)           { |i| "seller_#{i}@test.com"}
-    password                   {"00000000a"}
-    password_confirmation      {"00000000a"}
+    password                   {"00000000b"}
+    password_confirmation      {"00000000b"}
     last_name                  {"苗字太郎"}
     first_name                 {"名前太郎"}
     last_name_kana             {"ミョウジカナ"}
@@ -31,8 +31,8 @@ FactoryBot.define do
   factory :buyer, class: User do
     sequence(:nickname)        { |i| "購入者_#{i}"}
     sequence(:email)           { |i| "byuer_#{i}@test.com"}
-    password                   {"00000000a"}
-    password_confirmation      {"00000000a"}
+    password                   {"00000000c"}
+    password_confirmation      {"00000000c"}
     last_name                  {"苗字太郎"}
     first_name                 {"名前太郎"}
     last_name_kana             {"ミョウジカナ"}
