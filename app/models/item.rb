@@ -12,7 +12,6 @@ class Item < ApplicationRecord
   belongs_to    :user
   belongs_to    :address
   has_one       :trade
-  
 
   # enum
   enum condition_num:{ brand_new: 0, near_new: 1, no_dirt: 2, near_dirt:3 ,dirty:4, bad_condition:5 }
