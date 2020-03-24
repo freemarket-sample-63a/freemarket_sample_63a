@@ -11,7 +11,6 @@ FactoryBot.define do
     price            {1000.000}
     feerate          {0.100}
     profit_price     {900.000}
-    user_id
 
     association :user
     association :address
