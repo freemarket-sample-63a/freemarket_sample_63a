@@ -23,6 +23,14 @@ RSpec.describe Trade, type: :model do
       trade.valid?
       expect(trade.errors[:status_num]).to include("を入力してください")
     end
+    it "is invalid duplicate a item_id" do
+      trade1 = create(:trade)
+      address2 = create(:buyaddress)
+      user2 = create(:buyer)
+      trade2 = build(:trade, item_id: trade1.item_id, user_id: user2.id, address_id: address2.id)
+      trade2.valid?
+      expect(trade2.errors[:item_id]).to include("はすでに存在します")
+    end
     it "is valid trade" do
       expect(trade).to be_valid
     end
