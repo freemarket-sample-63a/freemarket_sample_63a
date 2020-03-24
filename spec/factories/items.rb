@@ -11,10 +11,29 @@ FactoryBot.define do
     price            {1000.000}
     feerate          {0.100}
     profit_price     {900.000}
+    user_id
 
     association :user
     association :address
     association :category
+
+  end
+
+  # tradeモデルテスト用
+  factory :sellitem, class: Item do
+
+    sequence(:title) { |i| "product_#{i}"}
+    sequence(:description) { |i| "description_#{i}"}
+
+    condition_num    {0}
+    daystoship_num   {0}
+    price            {1000.000}
+    feerate          {0.100}
+    profit_price     {900.000}
+
+    association :category
+    association :address, factory: :selladdress
+    user             {address.user}
 
   end
 

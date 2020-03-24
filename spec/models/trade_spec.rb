@@ -2,11 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Trade, type: :model do
   describe "#create" do
-    let(:seller) { create(:user) }
-    let(:item) { create(:item, user_id: seller.id) }
-    let(:buyer) { create(:user) }
-    let(:address) { create(:address, user_id: buyer.id) }
-
+    let(:trade)    { create(:trade) }
     it "is invalid without a item_id" do
       trade = build(:trade, item_id: nil)
       trade.valid?
@@ -28,15 +24,6 @@ RSpec.describe Trade, type: :model do
       expect(trade.errors[:status_num]).to include("を入力してください")
     end
     it "is valid trade" do
-      seller
-      binding.pry
-      item
-      buyer
-      address
-      binding.pry
-      trade = build(:trade, item_id: item.id, user_id: buyre.id, address_id: address.id)
-      trade.valid?
-      binding.pry
       expect(trade).to be_valid
     end
   end
