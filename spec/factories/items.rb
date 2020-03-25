@@ -20,7 +20,7 @@ FactoryBot.define do
   end
 
   # tradeモデルテスト用
-  factory :sellitem, class: Item do
+  factory :seller_item, class: Item do
 
     sequence(:title) { |i| "product_#{i}"}
     sequence(:description) { |i| "description_#{i}"}
@@ -32,7 +32,7 @@ FactoryBot.define do
     profit_price     {900.000}
 
     association :category
-    association :address, factory: :selladdress
+    association :address, factory: :seller_address
     user             {address.user}
 
   end

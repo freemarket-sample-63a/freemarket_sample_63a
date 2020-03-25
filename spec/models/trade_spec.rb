@@ -25,7 +25,7 @@ RSpec.describe Trade, type: :model do
     end
     it "is invalid duplicate a item_id" do
       trade1 = create(:trade)
-      address2 = create(:buyaddress)
+      address2 = create(:buyer_address)
       user2 = create(:buyer)
       trade2 = build(:trade, item_id: trade1.item_id, user_id: user2.id, address_id: address2.id)
       trade2.valid?

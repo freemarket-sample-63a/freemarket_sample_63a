@@ -4,8 +4,8 @@ FactoryBot.define do
 
     status_num  {0}
 
-    association :item, factory: :sellitem
-    association :address, factory: :buyaddress
+    association :item, factory: :seller_item
+    association :address, factory: :buyer_address
     user        {address.user}
 
   end

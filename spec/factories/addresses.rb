@@ -35,7 +35,7 @@ FactoryBot.define do
   end
 
   # tradeモデルテスト用 出品者住所
-  factory :selladdress, class: Address do
+  factory :seller_address, class: Address do
        
     postal_number    {"1234567"}
     city             {"city_1"}
@@ -48,13 +48,13 @@ FactoryBot.define do
     status_num       {0}
     telephone_number {"03-1234-5678"}
 
-    association :area
+    association :area, factory: :seller_area
     association :user, factory: :seller
 
   end
 
   # tradeモデルテスト用 購入者住所
-  factory :buyaddress, class: Address do
+  factory :buyer_address, class: Address do
 
     postal_number    {"1234567"}
     city             {"city_2"}
@@ -67,7 +67,7 @@ FactoryBot.define do
     status_num       {0}
     telephone_number {"03-1234-5678"}
 
-    association :area
+    association :area, factory: :buyer_area
     association :user, factory: :buyer
 
   end
