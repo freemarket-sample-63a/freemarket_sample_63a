@@ -5,10 +5,6 @@ FactoryBot.define do
     sequence(:title) { |i| "product_#{i}"}
     sequence(:description) { |i| "description_#{i}"}
 
-    user_id          {1}
-    address_id       {1}
-    brand_id         {1}
-    category_id      {1}
     product_size_id  {1}
     shippingway_id   {3}
     condition_num    {1}
