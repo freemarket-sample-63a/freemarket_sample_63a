@@ -37,7 +37,7 @@ FactoryBot.define do
   # tradeモデルテスト用 出品者住所
   factory :selladdress, class: Address do
        
-    postal_number    {"123-4567"}
+    postal_number    {"1234567"}
     city             {"city_1"}
     number           {"number_1"}
     building         {"building_1"}
@@ -56,7 +56,7 @@ FactoryBot.define do
   # tradeモデルテスト用 購入者住所
   factory :buyaddress, class: Address do
 
-    postal_number    {"123-4567"}
+    postal_number    {"1234567"}
     city             {"city_2"}
     number           {"number_2"}
     building         {"building_2"}
