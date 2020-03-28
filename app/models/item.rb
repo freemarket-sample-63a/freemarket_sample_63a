@@ -21,7 +21,7 @@ class Item < ApplicationRecord
   # scope
   # 出品中の商品のみを抽出するscope。
   scope :for_sale_only, -> {
-    left_outer_joins(:trades).where(trades: {id: nil})
+    left_outer_joins(:trade).where(trades: {id: nil})
   }
 
 end
