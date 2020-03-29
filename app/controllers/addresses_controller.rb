@@ -24,7 +24,7 @@ class AddressesController < ApplicationController
   end
 
   def destroy
-    @address.destroy
+    render :index and return unless @address.destroy
     redirect_to user_addresses_path, notice:"住所を削除しました" if @address.destroy
   end
 

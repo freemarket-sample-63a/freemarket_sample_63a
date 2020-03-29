@@ -6,6 +6,9 @@
       .addresses-index-container__left
         = render 'layouts/user-nav'
       .addresses-index-container__right
+        .addresses-new-notification
+          - flash.each do |key, value|
+            = content_tag :div, value, class: key
         .addresses-index-info
           .addresses-index-info__title
             発送元・お届け先住所一覧
