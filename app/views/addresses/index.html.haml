@@ -14,16 +14,21 @@
             発送元・お届け先住所一覧
           .addresses-index-info__field
             -@addresses.each_with_index do |address,i|
-              %i
-                = i+1
-              %i
-                = address.city + address.number + address.building
-              %button.addresses-index-info__edit
-                =link_to '編集',edit_user_address_path(current_user.id,address.id)
-              %button.addresses-index-info__delete
-                =link_to '削除', user_address_path(current_user.id,address.id), method: :delete
+              %ul.addresses-index-info-field__contents
+                %i.addresses-index-info-field__contents--number
+                  = i+1
+                %i.addresses-index-info-field__contents--name
+                  = address.first_name + address.last_name 
+                %button.addresses-index-info-field__contents--btn
+                  =link_to '編集',edit_user_address_path(current_user.id,address.id)
+                %button.addresses-index-info-field__contents--btn
+                  =link_to '削除', user_address_path(current_user.id,address.id), method: :delete
+                %br/
+                %i.addresses-index-info-field__contents--address
+                  = address.city + address.number + address.building
+            %br/
             %button.addresses-index-info__new
-              =link_to '住所を追加する',new_user_address_path(current_user.id)
+              =link_to '住所を追加する',new_user_address_path(current_user.id), class:"addresses-index-info__new--link"
   %footer.adresses-index__footer
     = render 'layouts/footer'
     = render 'layouts/purchase-btn'
