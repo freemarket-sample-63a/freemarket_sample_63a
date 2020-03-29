@@ -36,6 +36,12 @@
     align-items: center;
     max-width: 343px;
   }
+  &__errors {
+    margin: 0 auto;
+    padding-bottom: 40px;
+    color: red;
+    max-width: 343px;
+  }
 }
 
 .address-new-info{

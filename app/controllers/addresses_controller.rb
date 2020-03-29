@@ -12,7 +12,7 @@ class AddressesController < ApplicationController
   def create
     @address = Address.new(address_params)
     render :new and return unless @address.save
-    redirect_to user_addresses_path
+    redirect_to user_addresses_path, notice: "新規住所を登録しました"
   end
 
   def edit
@@ -20,12 +20,12 @@ class AddressesController < ApplicationController
 
   def update
     render :edit and return unless @address.update(address_params)
-    redirect_to user_addresses_path
+    redirect_to user_addresses_path, notice: "住所を編集しました"
   end
 
   def destroy
-    @address.destroy
-    redirect_to user_addresses_path if @address.destroy
+    render :index and return unless @address.destroy
+    redirect_to user_addresses_path, notice:"住所を削除しました" if @address.destroy
   end
 
   
