@@ -1,11 +1,11 @@
-.items-new
-  .items-new__header
-    .items-new__header--icon
+.items
+  .items__header
+    .items__header--icon
       = link_to root_path do
         = image_tag 'logo.png'
 
-  .items-new__main
-    .itemss-new__main--form
+  .items__main
+    .items__main--form
       = form_with(model:@item, local: true , id: 'new_item') do |f|
         .item-image-container
           = f.label :"出品画像"
@@ -23,85 +23,85 @@
                     = icon('fas','camera')
                     %p#d-d-delete ドラッグ&ドロップ
                     %p#click-delete またはクリックしてファイルをアップロード
-        %hr.items-new-hr
-        .items-new-first
-          .items-new-first__head
+        %hr.items-hr
+        .items-first
+          .items-first__head
             = f.label :"商品名"
             %span.form-require 必須
             %br/
-            = f.text_field :title ,placeholder: "40文字まで"          
-          .items-new-first__foot
+            = f.text_field :title ,placeholder: "40文字まで" ,class:"items-first__title"
+          .items-first__foot
             = f.label :"商品の説明"
             %span.form-require 必須
             %br/
-            = f.text_area :description,placeholder: text_placeholder 
+            = f.text_area :description,placeholder: text_placeholder ,class:"items-first__description"
             %p
               #textlength
                 0
-        %hr.items-new-hr
-        .items-new-second
-          %p.items-new-second__detail
+        %hr.items-hr
+        .items-second
+          %p.items-second__detail
             商品の詳細
-          .items-new-second__head
+          .items-second__head
             = f.label :"カテゴリー"
             %span.form-require 必須
             %br/
-            .items-new-second__head--first
+            .items-second__head--first
               = select_tag 'parent', options_for_select(@categories.pluck(:name,:id))
-            .items-new-second__head--second
-            .items-new-second__head--third
-            .items-new-second__head--fourth{style:"display:none;"}
+            .items-second__head--second
+            .items-second__head--third
+            .items-second__head--fourth{style:"display:none;"}
               = f.label :"サイズ"
               %span.form-require 必須
               %br/
-          .items-new-second__center
+          .items-second__center
             = f.label :"ブランド"
             %span.common-field__tag--any 任意
             %br/
             = f.text_field :brand_id ,placeholder: "例）シャネル"
-          .items-new-second__foot
+          .items-second__foot
             = f.label :"商品の状態"
             %span.form-require 必須
             %br/
             = f.select :condition_num, Item.condition_nums.keys.map {|k| [I18n.t("enums.item.condition_num.#{k}"), k]}
-        %hr.items-new-hr
-        .items-new-third
-          %p.items-new-third__detail
+        %hr.items-hr
+        .items-third
+          %p.items-third__detail
             配送について
-          .items-new-third__head
+          .items-third__head
             = f.label :"配送料の負担"
             %span.form-require 必須
             %br/
             = select_tag 'shippingway', options_for_select(Shippingway.where(ancestry: nil).pluck(:name,:id))
-          .items-new-third__center{style:"display:none;"}
+          .items-third__center{style:"display:none;"}
             = f.label :"配送の方法"
             %span.form-require 必須
             %br/
-          .items-new-third__foot
+          .items-third__foot
             = f.label :"発送までの日数"
             %span.form-require 必須
             %br/
             = f.select :daystoship_num, Item.daystoship_nums.keys.map {|k| [I18n.t("enums.item.daystoship_num.#{k}"), k]}
-        %hr.items-new-hr
-        .items-new-final
-          %p.items-new-final__detail
+        %hr.items-hr
+        .items-final
+          %p.items-final__detail
             価格 (¥200~9,999,999)
-          .items-new-final__head
-            .items-new-final__head--inner
+          .items-final__head
+            .items-final__head--inner
               = f.label :"販売価格"
               %span.form-require 必須
             %br/
             = f.text_field :price, data: { autonumeric: { aSign: '¥', mDec: 0 } } , placeholder: "金額を入力して下さい"
-          .items-new-final__commission
-            .items-new-final__commission--factor
+          .items-final__commission
+            .items-final__commission--factor
               %div
                 販売手数料(10%)
-          %hr.items-new-hr
-          .items-new-final__profit
-            .items-new-final__profit--factor
+          %hr.items-hr
+          .items-final__profit
+            .items-final__profit--factor
               %div
                 販売利益
-          .items-new-final__exibition
+          .items-final__exibition
             .exibition-n-back
               = f.submit "出品する",class:"exibition-n-back__submit" , data: { confirm: '入力した情報で出品します。よろしいですか？' }
               = link_to "もどる" , root_path, class:"exibition-n-back__previous"
@@ -110,6 +110,6 @@
           %P.common-field__consent
             禁止されている行為および出品物を必ずご確認ください。偽ブランド品や盗品物などの販売は犯罪であり、法律により処罰される可能性があります。 また、出品をもちまして加盟店規約に同意したことになります。
 
-  .items-new-footer
+  .items__footer
     = render "devise/navigation"
     %p ©️FURIMA

@@ -1,11 +1,10 @@
-.items-edit
-  .items-edit__header
-    .items-edit__header--icon
+.items
+  .items__header
+    .items__header--icon
       = link_to root_path do
         = image_tag 'logo.png'
-
-  .items-edit__main
-    .items-edit__main--form
+  .items__main
+    .items__main--form
       = form_with(model:@item, local: true , id: 'edit_item') do |f|
         .item-image-container
           = f.label :"出品画像"
@@ -13,42 +12,38 @@
           %p.item-image-container__lead
             最大5枚までアップロードできます
           .item-image-container__unit
-            = f.fields_for :item_images do |i|
-              %ul
-                %li.item-image-container__unit--preview#visible
-                  .item-image-container__unit--caption
-                    =image_tag @item.item_images[i.index].image.url
-                  .image-option
-                    .image-option__list
-                      .image-option__list--tag 編集
-                    .image-option__list
-                      %a.image-option__list--tag 削除
-              .item-image-container__unit--guide
-                %label(for="image-label")
-                  = i.file_field :image, multiple: true, class: 'image-upload-dropfile-hidden', id:"image-label",type: 'file', name: "item_images[image][]"
-                  %div.image-upload-dropfile-entire{style:"display:none;"}
-                    .have-image
-                      = icon('fas','camera')
-                      %p#d-d-delete ドラッグ&ドロップ
-                      %p#click-delete またはクリックしてファイルをアップロード
-        %hr.items-edit-hr
-        .items-edit-first
-          .items-edit-first__head
+            %ul
+            .item-image-container__unit--guide
+              //プレビューの数に合わせてforオプションを指定
+              = f.label :"item_images_attributes_#{@item.item_images.length}_image", class: "label-box", id: "label-box--#{@item.item_images.length}" do
+                .image-upload-dropfile-entire
+                  %pre#click-delete クリックしてファイルをアップロード
+            .hidden-content
+              = f.fields_for :item_images do |i|
+                //プレビューが出ている分のfile_fieldとdelete用のチェックボックスを設置
+                = i.file_field :image, class: "hidden-field"
+                = i.check_box:_destroy, class: "hidden-checkbox"
+                //5つのfile_fieldを準備するに当たって、足りない分を表示
+              - @item.item_images.length.upto(4) do |i|
+                %input{name: "item[item_images_attributes][#{i}][image]", id: "item_item_images_attributes_#{i}_image", class:"hidden-field", type:"file"}
+        %hr.items-hr
+        .items-first
+          .items-first__head
             = f.label :"商品名"
             %span.form-require 必須
             %br/
-            = f.text_field :title ,placeholder: "40文字まで",value:@item.title
-          .items-edit-first__foot
+            = f.text_field :title ,placeholder: "40文字まで",value:@item.title,class:"items-first__title"
+          .items-first__foot
             = f.label :"商品の説明"
             %span.form-require 必須
             %br/
-            = f.text_area :description,placeholder: text_placeholder 
+            = f.text_area :description,placeholder: text_placeholder,class:"items-first__description"
             %p
               #textlength
                 0
-        %hr.items-edit-hr
+        %hr.items-hr
         .items-new-second
-          %p.items-edit-second__detail
+          %p.items-second__detail
             商品の詳細
           .items-new-second__head
             = f.label :"カテゴリー"
@@ -57,61 +52,69 @@
             .items-new-second__head--first
               = select_tag 'parent', options_for_select(@categories.pluck(:name,:id),selected:@item.category.parent.parent.id)
             .items-new-second__head--second
-              = select_tag 'child' , options_for_select([['---', '0'],[@item.category.parent.name,@item.category.parent.id]],selected:@item.category.parent.id)
+              = select_tag 'child' , options_for_select(Category.where(ancestry: @item.category.parent.parent.id).pluck(:name,:id),selected:@item.category.parent.id)
             .items-new-second__head--third
-              = f.collection_select :category_id, Category.all, :id, :name, autofocus: true
-            .items-new-second__head--fourth{style:"display:none;"}
-              = f.label :"サイズ"
-              %span.form-require 必須
-              %br/
-          .items-edit-second__center
+              = f.collection_select :category_id,Category.where(ancestry: "#{@item.category.parent.parent.id.to_s + '/' + @item.category.parent.id.to_s}"),:id,:name,selected:@item.category.id
+            -if ProductSize.where(ancestry: CategorySize.find_by(category_id: @item.category.id).product_size_id).present?
+              .items-new-second__head--fourth
+                = f.label :"サイズ"
+                %span.form-require 必須
+                %br/
+                = f.collection_select :product_size_id,ProductSize.where(ancestry: CategorySize.find_by(category_id: @item.category.id).product_size_id),:id,:name,selected:@item.category.id
+            - else
+              .items-new-second__head--fourth{style:"display:none;"}
+                = f.label :"サイズ"
+                %span.form-require 必須
+                %br/
+          .items-second__center
             = f.label :"ブランド"
             %span.common-field__tag--any 任意
             %br/
             = f.text_field :brand_id ,placeholder: "例）シャネル"
-          .items-edit-second__foot
+          .items-second__foot
             = f.label :"商品の状態"
             %span.form-require 必須
             %br/
             = f.select :condition_num, Item.condition_nums.keys.map {|k| [I18n.t("enums.item.condition_num.#{k}"), k]}
-        %hr.items-edit-hr
-        .items-edit-third
-          %p.items-edit-third__detail
+        %hr.items-hr
+        .items-new-third
+          %p.items-new-third__detail
             配送について
-          .items-edit-third__head
+          .items-new-third__head
             = f.label :"配送料の負担"
             %span.form-require 必須
             %br/
             = select_tag 'shippingway', options_for_select(Shippingway.where(ancestry: nil).pluck(:name,:id),selected:@item.shippingway.parent.id)
-          .items-edit-third__center{style:"display:none;"}
+          .items-new-third__center
             = f.label :"配送の方法"
             %span.form-require 必須
             %br/
-          .items-edit-third__foot
+            = f.collection_select :shippingway_id ,Shippingway.where(ancestry: @item.shippingway.parent.id),:id,:name,selected:@item.shippingway.id
+          .items-third__foot
             = f.label :"発送までの日数"
             %span.form-require 必須
             %br/
             = f.select :daystoship_num, Item.daystoship_nums.keys.map {|k| [I18n.t("enums.item.daystoship_num.#{k}"), k]}
-        %hr.items-edit-hr
-        .items-edit-final
-          %p.items-edit-final__detail
+        %hr.items-hr
+        .items-final
+          %p.items-final__detail
             価格 (¥200~9,999,999)
-          .items-edit-final__head
-            .items-edit-final__head--inner
+          .items-final__head
+            .items-final__head--inner
               = f.label :"販売価格"
               %span.form-require 必須
             %br/
             = f.text_field :price, data: { autonumeric: { aSign: '¥', mDec: 0 } } , placeholder: "金額を入力して下さい"
-          .items-edit-final__commission
-            .items-edit-final__commission--factor
+          .items-final__commission
+            .items-final__commission--factor
               %div
                 販売手数料(10%)
-          %hr.items-edit-hr
-          .items-edit-final__profit
-            .items-edit-final__profit--factor
+          %hr.items-hr
+          .items-final__profit
+            .items-final__profit--factor
               %div
                 販売利益
-          .items-edit-final__exibition
+          .items-final__exibition
             .exibition-n-back
               = f.submit "出品する",class:"exibition-n-back__submit" , data: { confirm: '入力した情報で出品します。よろしいですか？' }
               = link_to "もどる" , root_path, class:"exibition-n-back__previous"
@@ -120,6 +123,6 @@
           %P.common-field__consent
             禁止されている行為および出品物を必ずご確認ください。偽ブランド品や盗品物などの販売は犯罪であり、法律により処罰される可能性があります。 また、出品をもちまして加盟店規約に同意したことになります。
 
-  .items-edit__footer
+  .items__footer
     = render "devise/navigation"
     %p ©️FURIMA
