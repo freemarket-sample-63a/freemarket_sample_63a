@@ -22,7 +22,7 @@ class ItemsController < ApplicationController
     
     if @item.save
       params[:item_images]['image'].each do |img|
-        @item_image = @item.item_images.create(image: img, item_id: @item.id)
+        @item.item_images.create(image: img, item_id: @item.id)
       end
       redirect_to item_path(@item.id)
     end
@@ -36,10 +36,13 @@ class ItemsController < ApplicationController
     @categories = []
     @categories.push(Category.new(id:0,name:"---"))
     @categories.concat(Category.where(ancestry: nil))
-    binding.pry
+    gon.item_images = @item.item_images
   end
 
   def update
+    item = Item.find(params[:id])
+    item.update(item_update_params)
+    redirect_to item_path(item.id)
   end
 
   def destroy
@@ -48,7 +51,11 @@ class ItemsController < ApplicationController
 
   private
     def item_params
-      params.require(:item).permit(:brand_id,:category_id,:shippingway_id,:product_size_id,:condition_num,:daystoship_num,:title,:description,:price, item_images_attributes: [:id, :item_id, :image])
+      params.require(:item).permit(:brand_id,:category_id,:shippingway_id,:product_size_id,:condition_num,:daystoship_num,:title,:description,:price, [item_images_attributes: [:id, :image]])
+    end
+
+    def item_update_params
+      params.require(:item).permit(:brand_id,:category_id,:shippingway_id,:product_size_id,:condition_num,:daystoship_num,:title,:description,:price, [item_images_attributes: [:image, :_destroy, :id]])
     end
 
     def set_user_address
