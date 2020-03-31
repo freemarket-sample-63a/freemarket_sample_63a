@@ -16,8 +16,9 @@
             .item-image-container__unit--guide
               //プレビューの数に合わせてforオプションを指定
               = f.label :"item_images_attributes_#{@item.item_images.length}_image", class: "label-box", id: "label-box--#{@item.item_images.length}" do
-                .image-upload-dropfile-entire
-                  %pre#click-delete クリックしてファイルをアップロード
+                %div.image-upload-dropfile-entire
+                  .have-image
+                    %p#click-delete クリックしてファイルをアップロード
             .hidden-content
               = f.fields_for :item_images do |i|
                 //プレビューが出ている分のfile_fieldとdelete用のチェックボックスを設置
@@ -40,29 +41,29 @@
             = f.text_area :description,placeholder: text_placeholder,class:"items-first__description"
             %p
               #textlength
-                0
+                現在 0/1000 文字入力済
         %hr.items-hr
-        .items-new-second
+        .items-second
           %p.items-second__detail
             商品の詳細
-          .items-new-second__head
+          .items-second__head
             = f.label :"カテゴリー"
             %span.form-require 必須
             %br/
-            .items-new-second__head--first
+            .items-second__head--first
               = select_tag 'parent', options_for_select(@categories.pluck(:name,:id),selected:@item.category.parent.parent.id)
-            .items-new-second__head--second
+            .items-second__head--second
               = select_tag 'child' , options_for_select(Category.where(ancestry: @item.category.parent.parent.id).pluck(:name,:id),selected:@item.category.parent.id)
-            .items-new-second__head--third
+            .items-second__head--third
               = f.collection_select :category_id,Category.where(ancestry: "#{@item.category.parent.parent.id.to_s + '/' + @item.category.parent.id.to_s}"),:id,:name,selected:@item.category.id
             -if ProductSize.where(ancestry: CategorySize.find_by(category_id: @item.category.id).product_size_id).present?
-              .items-new-second__head--fourth
+              .items-second__head--fourth
                 = f.label :"サイズ"
                 %span.form-require 必須
                 %br/
                 = f.collection_select :product_size_id,ProductSize.where(ancestry: CategorySize.find_by(category_id: @item.category.id).product_size_id),:id,:name,selected:@item.category.id
             - else
-              .items-new-second__head--fourth{style:"display:none;"}
+              .items-second__head--fourth{style:"display:none;"}
                 = f.label :"サイズ"
                 %span.form-require 必須
                 %br/
@@ -77,15 +78,15 @@
             %br/
             = f.select :condition_num, Item.condition_nums.keys.map {|k| [I18n.t("enums.item.condition_num.#{k}"), k]}
         %hr.items-hr
-        .items-new-third
-          %p.items-new-third__detail
+        .items-third
+          %p.items-third__detail
             配送について
-          .items-new-third__head
+          .items-third__head
             = f.label :"配送料の負担"
             %span.form-require 必須
             %br/
             = select_tag 'shippingway', options_for_select(Shippingway.where(ancestry: nil).pluck(:name,:id),selected:@item.shippingway.parent.id)
-          .items-new-third__center
+          .items-third__center
             = f.label :"配送の方法"
             %span.form-require 必須
             %br/
