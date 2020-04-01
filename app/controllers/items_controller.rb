@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :set_user_address,only: :create
-  before_action :set_categories_shippingways,only:[:new,:edit]
+  before_action :set_categories, :set_shippingways,only:[:new,:edit]
   before_action :set_item,only: [:edit,:show,:destroy]
 
   def index
@@ -60,10 +60,12 @@ class ItemsController < ApplicationController
     def set_item
       @item = Item.find(params[:id])
     end
-    def set_categories_shippingways
+    def set_categories
       @categories = []
       @categories.push(Category.new(id:0,name:"---"))
       @categories.concat(Category.where(ancestry: nil))
+    end
+    def set_shippingways
       @shippingways = []
       @shippingways.push(Shippingway.new(id:0,name:"---"))
       @shippingways.concat(Shippingway.where(ancestry: nil))
