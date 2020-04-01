@@ -6,11 +6,18 @@
       .addresses-new-container__left
         = render 'layouts/user-nav'
       .addresses-new-container__right
+        -# 登録フォーム
         .addresses-new-info
           .addresses-new-info__title
             発送元・お届け先住所登録
           .addresses-new-info__field
             = form_with(model:[current_user, @address], local: true, id: 'new_address') do |f|
+              - if @address.errors.any?
+                .address-new-info__errors
+                  %h2= "#{@address.errors.full_messages.count}件のエラーが発生しました。"
+                  %ul
+                    - @address.errors.full_messages.each do |message|
+                      %li= message
               .addresses-new-info__groups
                 .addresses-new-info__group
                   .addresses-new-info__group--content
@@ -33,7 +40,7 @@
                     = f.label :"郵便番号"
                     %span.form-require 必須
                     %br/
-                    = f.text_field :postal_number, class: "addresses-new-info__textbox",placeholder: "例）123-4567"
+                    = f.text_field :postal_number, class: "addresses-new-info__textbox",placeholder: "例）1234567"
                 .addresses-new-info__group
                   .addresses-new-info__group--content
                     = f.label :"都道府県"

@@ -11,6 +11,12 @@
             発送元・お届け先住所変更
           .addresses-edit-info__field
             = form_with(model:[current_user, @address], locale: true, id: 'edit_address') do |f|
+              - if @address.errors.any?
+                .address-edit-info__errors
+                  %h2= "#{@address.errors.full_messages.count}件のエラーが発生しました。"
+                  %ul
+                    - @address.errors.full_messages.each do |message|
+                      %li= message
               .addresses-edit-info__groups
                 .addresses-edit-info__group
                   .addresses-edit-info__group--content
@@ -33,7 +39,7 @@
                     = f.label :"郵便番号"
                     %span.form-require 必須
                     %br/
-                    = f.text_field :postal_number, class: "addresses-edit-info__textbox",placeholder: "例）123-4567"
+                    = f.text_field :postal_number, class: "addresses-edit-info__textbox",placeholder: "例）1234567"
                 .addresses-edit-info__group
                   .addresses-edit-info__group--content
                     = f.label :"都道府県"

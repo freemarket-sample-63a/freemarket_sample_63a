@@ -3,41 +3,45 @@
     .items__header--icon
       = link_to root_path do
         = image_tag 'logo.png'
-
   .items__main
     .items__main--form
-      = form_with(model:@item, local: true , id: 'new_item') do |f|
+      = form_with(model:@item, local: true , id: 'edit_item') do |f|
         .item-image-container
           = f.label :"出品画像"
           %span.form-require 必須
           %p.item-image-container__lead
             最大5枚までアップロードできます
           .item-image-container__unit
-            = f.fields_for :item_images do |i|
-              %ul
-              .item-image-container__unit--guide
-                %label(for="image-label")
-                  = i.file_field :image, multiple: true, class: 'image-upload-dropfile-hidden', id:"image-label",type: 'file', name: "item_images[image][]"
-                  %div.image-upload-dropfile-entire
+            %ul
+            .item-image-container__unit--guide
+              //プレビューの数に合わせてforオプションを指定
+              = f.label :"item_images_attributes_#{@item.item_images.length}_image", class: "label-box", id: "label-box--#{@item.item_images.length}" do
+                %div.image-upload-dropfile-entire
                   .have-image
-                    = icon('fas','camera')
-                    %p#d-d-delete ドラッグ&ドロップ
-                    %p#click-delete またはクリックしてファイルをアップロード
+                    %p#click-delete クリックしてファイルをアップロード
+            .hidden-content
+              = f.fields_for :item_images do |i|
+                //プレビューが出ている分のfile_fieldとdelete用のチェックボックスを設置
+                = i.file_field :image, class: "hidden-field"
+                = i.check_box:_destroy, class: "hidden-checkbox"
+                //5つのfile_fieldを準備するに当たって、足りない分を表示
+              - @item.item_images.length.upto(4) do |i|
+                %input{name: "item[item_images_attributes][#{i}][image]", id: "item_item_images_attributes_#{i}_image", class:"hidden-field", type:"file"}
         %hr.items-hr
         .items-first
           .items-first__head
             = f.label :"商品名"
             %span.form-require 必須
             %br/
-            = f.text_field :title ,placeholder: "40文字まで" ,class:"items-first__title"
+            = f.text_field :title ,placeholder: "40文字まで",value:@item.title,class:"items-first__title"
           .items-first__foot
             = f.label :"商品の説明"
             %span.form-require 必須
             %br/
-            = f.text_area :description,placeholder: text_placeholder ,class:"items-first__description"
+            = f.text_area :description,placeholder: text_placeholder,class:"items-first__description"
             %p
               #textlength
-                0
+                現在 0/1000 文字入力済
         %hr.items-hr
         .items-second
           %p.items-second__detail
@@ -47,13 +51,22 @@
             %span.form-require 必須
             %br/
             .items-second__head--first
-              = select_tag 'parent', options_for_select(@categories.pluck(:name,:id))
+              = select_tag 'parent', options_for_select(@categories.pluck(:name,:id),selected:@item.category.parent.parent.id)
             .items-second__head--second
+              = select_tag 'child' , options_for_select(Category.where(ancestry: @item.category.parent.parent.id).pluck(:name,:id),selected:@item.category.parent.id)
             .items-second__head--third
-            .items-second__head--fourth{style:"display:none;"}
-              = f.label :"サイズ"
-              %span.form-require 必須
-              %br/
+              = f.collection_select :category_id,Category.where(ancestry: "#{@item.category.parent.parent.id.to_s + '/' + @item.category.parent.id.to_s}"),:id,:name,selected:@item.category.id
+            -if ProductSize.where(ancestry: CategorySize.find_by(category_id: @item.category.id).product_size_id).present?
+              .items-second__head--fourth
+                = f.label :"サイズ"
+                %span.form-require 必須
+                %br/
+                = f.collection_select :product_size_id,ProductSize.where(ancestry: CategorySize.find_by(category_id: @item.category.id).product_size_id),:id,:name,selected:@item.category.id
+            - else
+              .items-second__head--fourth{style:"display:none;"}
+                = f.label :"サイズ"
+                %span.form-require 必須
+                %br/
           .items-second__center
             = f.label :"ブランド"
             %span.common-field__tag--any 任意
@@ -72,11 +85,12 @@
             = f.label :"配送料の負担"
             %span.form-require 必須
             %br/
-            = select_tag 'shippingway', options_for_select(Shippingway.where(ancestry: nil).pluck(:name,:id))
-          .items-third__center{style:"display:none;"}
+            = select_tag 'shippingway', options_for_select(Shippingway.where(ancestry: nil).pluck(:name,:id),selected:@item.shippingway.parent.id)
+          .items-third__center
             = f.label :"配送の方法"
             %span.form-require 必須
             %br/
+            = f.collection_select :shippingway_id ,Shippingway.where(ancestry: @item.shippingway.parent.id),:id,:name,selected:@item.shippingway.id
           .items-third__foot
             = f.label :"発送までの日数"
             %span.form-require 必須

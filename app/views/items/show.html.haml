@@ -78,7 +78,7 @@
                       %td.items-show-detail__table--td
                         = @item.daystoship_num_i18n
           .items-show-button
-            - if @item.trades.present?
+            - if @item.trade.present?
               .items-show-button__sold-out 売り切れ御免
             - else
               - if user_signed_in? && @item.user_id == current_user.id

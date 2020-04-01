@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :set_user_address,only: :create
-  before_action :set_item,only: [:show,:destroy]
+  before_action :set_item,only: [:edit,:show,:destroy]
 
   def index
   end
@@ -22,24 +22,27 @@ class ItemsController < ApplicationController
     
     if @item.save
       params[:item_images]['image'].each do |img|
-        @item_image = @item.item_images.create(image: img, item_id: @item.id)
+        @item.item_images.create(image: img, item_id: @item.id)
       end
-      #この後の画像機能追加で、以下の記述を使用するためコメントアウトしています。
-      # image_params[:images].each do |image|
-      #   @item.images.build
-      #   item_image = @item.images.new(image: image)
-      #   item_image.save
-      # end
-
-      # respond_to do |format|
-      #   format.html { redirect_to root_path}
-      #   format.json
-      # end
       redirect_to item_path(@item.id)
     end
   end
 
   def show
+  end
+
+
+  def edit
+    @categories = []
+    @categories.push(Category.new(id:0,name:"---"))
+    @categories.concat(Category.where(ancestry: nil))
+    gon.item_images = @item.item_images
+  end
+
+  def update
+    item = Item.find(params[:id])
+    item.update(item_update_params)
+    redirect_to item_path(item.id)
   end
 
   def destroy
@@ -48,12 +51,12 @@ class ItemsController < ApplicationController
 
   private
     def item_params
-      params.require(:item).permit(:brand_id,:category_id,:shippingway_id,:product_size_id,:condition_num,:daystoship_num,:title,:description,:price, item_images_attributes: [:id, :item_id, :image])
+      params.require(:item).permit(:brand_id,:category_id,:shippingway_id,:product_size_id,:condition_num,:daystoship_num,:title,:description,:price, [item_images_attributes: [:id, :image]])
     end
-    # ドラッグ&ドロップのajax通信の際に必要な記述ですが、今はhtmlを通してデータを保存しているのでコメントアウト。
-    # def image_params
-    #   params.require(:item_image).permit({:image => []})
-    # end
+
+    def item_update_params
+      params.require(:item).permit(:brand_id,:category_id,:shippingway_id,:product_size_id,:condition_num,:daystoship_num,:title,:description,:price, [item_images_attributes: [:image, :_destroy, :id]])
+    end
 
     def set_user_address
       @address = Address.find_by(user_id: current_user.id,status_num: 0)

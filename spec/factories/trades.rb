@@ -2,11 +2,11 @@ FactoryBot.define do
 
   factory :trade do
 
-    status_num         {0}
+    status_num  {0}
 
-    association :item
-    association :user
-    association :address
+    association :item, factory: :seller_item
+    association :address, factory: :buyer_address
+    user        {address.user}
 
   end
 
