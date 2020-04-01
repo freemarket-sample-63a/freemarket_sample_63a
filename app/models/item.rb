@@ -17,11 +17,4 @@ class Item < ApplicationRecord
   enum condition_num:{ brand_new: 0, near_new: 1, no_dirt: 2, near_dirt:3 ,dirty:4, bad_condition:5 }
   enum daystoship_num:{one_to_two: 0, two_to_three:1, four_to_seven:2 }
   enum status_num:{exhibit: 0, sold_out:1, finished:2 }
-
-  # scope
-  # 出品中の商品のみを抽出するscope。
-  scope :for_sale_only, -> {
-    left_outer_joins(:trade).where(trades: {id: nil})
-  }
-
 end
