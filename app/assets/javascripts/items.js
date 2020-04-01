@@ -306,7 +306,7 @@ $(document).on('turbolinks:load', function() {
   //ここから配送方法の段階的表示機能
   $("#shippingway").on("change",function(){
     var str = document.getElementById("shippingway").value
-    if(str == 1){
+    if(str == 0){
       $('#item_shippingway_id').remove();
       $(".items-third__center").css('display','none');
     }else{
