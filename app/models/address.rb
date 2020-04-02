@@ -7,7 +7,7 @@ class Address < ApplicationRecord
     has_many      :trades
     
     #REGEX
-    VALID_KATAKANA_REGEX = /\A[\p{katakana}]+\z/
+    VALID_KATAKANA_REGEX = /\A[\p{katakana}\p{blank}ー－]+\z/
     VALID_PHONE_REGEX = /\A\d{10}$|^\d{11}\z/
 
     # validation

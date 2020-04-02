@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
   before_action :set_user_address,only: :create
+  before_action :set_categories, :set_shippingways,only:[:new,:edit]
   before_action :set_item,only: [:edit,:show,:destroy]
 
   def index
@@ -8,9 +9,6 @@ class ItemsController < ApplicationController
   def new
     @item = Item.new(feerate: 0.1)
     @item_image = @item.item_images.build
-    @categories = []
-    @categories.push(Category.new(id:0,name:"---"))
-    @categories.concat(Category.where(ancestry: nil))
   end
 
   def create
@@ -33,9 +31,6 @@ class ItemsController < ApplicationController
 
 
   def edit
-    @categories = []
-    @categories.push(Category.new(id:0,name:"---"))
-    @categories.concat(Category.where(ancestry: nil))
     gon.item_images = @item.item_images
   end
 
@@ -46,7 +41,11 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    @item.destroy
+    if @item.destroy
+      render :destroy
+    else
+      redirect_to item_path(@item.id), notice:"商品を削除できませんでした"
+    end
   end
 
   private
@@ -64,5 +63,15 @@ class ItemsController < ApplicationController
 
     def set_item
       @item = Item.find(params[:id])
+    end
+    def set_categories
+      @categories = []
+      @categories.push(Category.new(id:0,name:"---"))
+      @categories.concat(Category.where(ancestry: nil))
+    end
+    def set_shippingways
+      @shippingways = []
+      @shippingways.push(Shippingway.new(id:0,name:"---"))
+      @shippingways.concat(Shippingway.where(ancestry: nil))
     end
 end

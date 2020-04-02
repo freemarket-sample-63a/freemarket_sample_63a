@@ -37,7 +37,7 @@
             = f.text_area :description,placeholder: text_placeholder ,class:"items-first__description"
             %p
               #textlength
-                0
+                現在 0/1000 文字入力済
         %hr.items-hr
         .items-second
           %p.items-second__detail
@@ -72,7 +72,7 @@
             = f.label :"配送料の負担"
             %span.form-require 必須
             %br/
-            = select_tag 'shippingway', options_for_select(Shippingway.where(ancestry: nil).pluck(:name,:id))
+            = select_tag 'shippingway', options_for_select(@shippingways.pluck(:name,:id))
           .items-third__center{style:"display:none;"}
             = f.label :"配送の方法"
             %span.form-require 必須

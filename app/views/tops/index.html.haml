@@ -76,10 +76,12 @@
                     %h3.tops-index-content-picup-list-body__name 
                       = item.title
                     .tops-index-content-picup-list-body__details  
-                      %ul
-                        %li
+                      -if item.trade.present?
+                        %i.sold-out soldout
+                      -else
+                        %i
                           = thousands_separator(item.price)
-                      %p (税込)
+                        %i (税込)
     .tops-index-content-picups
       .tops-index-content-picup
         %h2.tops-index-content-picup__subtitle ピックアップブランド
