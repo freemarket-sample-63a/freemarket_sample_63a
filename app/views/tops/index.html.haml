@@ -77,7 +77,7 @@
                       = item.title
                     .tops-index-content-picup-list-body__details  
                       -if item.trade.present?
-                        %i soldout
+                        %i.sold-out soldout
                       -else
                         %i
                           = thousands_separator(item.price)
