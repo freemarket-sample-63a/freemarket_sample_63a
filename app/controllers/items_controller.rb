@@ -41,7 +41,11 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    @item.destroy
+    if @item.destroy
+      render :destroy
+    else
+      redirect_to item_path(@item.id), notice:"商品を削除できませんでした"
+    end
   end
 
   private
