@@ -1,6 +1,7 @@
 class AddressesController < ApplicationController
   before_action :set_address, only: [:edit, :update, :destroy]
-  before_action :must_not_destroy_child_eixts, only: [:destroy]
+  before_action :address_children_exists?, only: [:destroy]
+  before_action :trades_exists?, only: [:edit]
 
   def index
     @addresses = Address.where(user_id: current_user.id)
@@ -17,6 +18,9 @@ class AddressesController < ApplicationController
   end
 
   def edit
+    if trades_exists?
+      redirect_to user_addresses_path, notice: "購入に利用されている住所のため変更できません"
+    end
   end
 
   def update
@@ -25,11 +29,11 @@ class AddressesController < ApplicationController
   end
 
   def destroy
-    if must_not_destroy_child_eixts
+    if address_children_exists?
+      redirect_to user_addresses_path, notice:"出品または購入に利用した住所は削除できません" 
+    else
       render :index and return unless @address.destroy
       redirect_to user_addresses_path, notice:"住所を削除しました" 
-    else
-      redirect_to user_addresses_path, notice:"出品または購入に利用した住所は削除できません" 
     end
   end
 
@@ -43,8 +47,15 @@ class AddressesController < ApplicationController
     @address = Address.find(params[:id])
   end
 
-  def must_not_destroy_child_eixts
-    return @address.items.empty? && @address.trades.empty?  
+  def address_children_exists?
+    #出品済または購入済ならtrueを返す 
+    return @address.items.present? || @address.trades.present?  
+  end
+
+  def trades_exists?
+    #購入済ならtrueを返す 
+    item_ids = @address.items.ids
+    return Trade.find_by(item_id: item_ids).present?
   end
 
 end
