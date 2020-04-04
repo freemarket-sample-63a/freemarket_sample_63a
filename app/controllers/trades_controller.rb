@@ -55,7 +55,7 @@ class TradesController < ApplicationController
       @trade = Trade.new
       @trade.user_id = current_user.id
       @trade.item_id = @item.id
-      @trade.address_id = @address.id
+      @trade.address_id = @address.id if @address.present? 
     end 
   end
 
