@@ -16,7 +16,7 @@ class ItemsController < ApplicationController
     @item["user_id"] = current_user.id
     @item["address_id"] = @address.id
     @item["feerate"] = 0.1
-    if @item["price"] >= 200
+    if @item["price"] != nil
       @item["profit_price"] = @item.price - (@item.price * @item.feerate)
     else
       redirect_to new_item_path, notice:"販売価格を入力してください"
@@ -28,9 +28,11 @@ class ItemsController < ApplicationController
       @item = Item.find(@item.id)
       if @item.item_images.empty?
         @item.destroy
-        redirect_to new_item_path and return
+        redirect_to new_item_path, notice:"拡張子がjpeg,jpg,pngのファイルを選択してください"
+        return
       end
-      redirect_to item_path(@item.id) and return
+      redirect_to item_path(@item.id)
+      return
     end
   end
 
