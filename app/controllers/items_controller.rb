@@ -46,11 +46,11 @@ class ItemsController < ApplicationController
 
   def update
     item = Item.find(params[:id])
-    if params[:item_images]
+    if params[:item]['item_images_attributes']['0']['_destroy'] == "1"
+      redirect_to item_path(item.id), notice:"商品を編集できませんでした"
+    else
       item.update(item_update_params)
       redirect_to item_path(item.id)
-    else
-      redirect_to item_path(item.id), notice:"商品を編集できませんでした"
     end
   end
 
