@@ -5,6 +5,9 @@
         = image_tag 'logo.png'
   .items__main
     .items__main--form
+      .items-notification
+        - flash.each do |key, value|
+          = content_tag :div, value, class: key
       = form_with(model:@item, local: true , id: 'edit_item') do |f|
         .item-image-container
           = f.label :"出品画像"
