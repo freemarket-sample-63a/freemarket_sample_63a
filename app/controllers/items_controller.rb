@@ -36,7 +36,7 @@ class ItemsController < ApplicationController
       redirect_to item_path(@item.id)
       return
     else 
-      redirect_to new_item_path, notice:"画像ファイルがない商品は登録できません。"
+      redirect_to new_item_path, notice:"画像がない商品は登録できません。"
       return
     end
   end
@@ -52,7 +52,7 @@ class ItemsController < ApplicationController
   def update
     item = Item.find(params[:id])
     if params[:item]['item_images_attributes']['0']['_destroy'] == "1"
-      redirect_to edit_item_path(item.id), notice:"商品を編集できませんでした"
+      redirect_to edit_item_path(item.id), notice:"画像がない商品は登録できません。"
     else
       item.update(item_update_params)
       redirect_to item_path(item.id)
