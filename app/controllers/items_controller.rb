@@ -24,7 +24,8 @@ class ItemsController < ApplicationController
     if params[:item_images] 
       if @item.save
         params[:item_images]['image'].each do |img|
-        @image = @item.item_images.create(image: img, item_id: @item.id)
+          @image = @item.item_images.create(image: img, item_id: @item.id)
+        end
       end
       @item = Item.find(@item.id)
       if @item.item_images.empty?
