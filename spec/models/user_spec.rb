@@ -256,7 +256,7 @@ RSpec.describe User, type: :model do
     end
 
     # 37. first_name_kanaが記号だと登録ができないこと
-    it "is invalid with a first_name_kana that sumbol " do
+    it "is invalid with a first_name_kana that symbol " do
       user = build(:user, first_name_kana: "!#()$%")
       user.valid?
       expect(user.errors[:first_name_kana]).to include("はカタカナで入力して下さい。")
@@ -298,7 +298,7 @@ RSpec.describe User, type: :model do
     end
 
     # 43. last_name_kanaが数字だと登録ができないこと
-    it "is invalid with a last_name_kana that sumbol " do
+    it "is invalid with a last_name_kana that symbol " do
       user = build(:user, last_name_kana: "!#()$%")
       user.valid?
       expect(user.errors[:last_name_kana]).to include("はカタカナで入力して下さい。")
