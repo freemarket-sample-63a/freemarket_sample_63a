@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :set_user_address,only: :create
-  before_action :set_categories, :set_shippingways,only:[:new,:edit]
+  before_action :set_categories, :set_shippingways,:set_brands,only:[:new,:edit]
   before_action :set_item,only: [:edit,:show,:destroy]
 
   def index
@@ -16,13 +16,28 @@ class ItemsController < ApplicationController
     @item["user_id"] = current_user.id
     @item["address_id"] = @address.id
     @item["feerate"] = 0.1
-    @item["profit_price"] = @item.price - (@item.price * @item.feerate)
-    
-    if @item.save
-      params[:item_images]['image'].each do |img|
-        @item.item_images.create(image: img, item_id: @item.id)
+    if @item["price"] != nil
+      @item["profit_price"] = @item.price - (@item.price * @item.feerate)
+    else
+      redirect_to new_item_path, notice:"販売価格を入力してください"
+    end
+    if params[:item_images] 
+      if @item.save
+        params[:item_images]['image'].each do |img|
+          @image = @item.item_images.create(image: img, item_id: @item.id)
+        end
+      end
+      @item = Item.find(@item.id)
+      if @item.item_images.empty?
+        @item.destroy
+        redirect_to new_item_path, notice:"拡張子がjpeg,jpg,pngのファイルを選択してください"
+        return
       end
       redirect_to item_path(@item.id)
+      return
+    else 
+      redirect_to new_item_path, notice:"画像がない商品は登録できません。"
+      return
     end
   end
 
@@ -36,8 +51,12 @@ class ItemsController < ApplicationController
 
   def update
     item = Item.find(params[:id])
-    item.update(item_update_params)
-    redirect_to item_path(item.id)
+    if params[:item]['item_images_attributes']['0']['_destroy'] == "1"
+      redirect_to edit_item_path(item.id), notice:"画像がない商品は登録できません。"
+    else
+      item.update(item_update_params)
+      redirect_to item_path(item.id)
+    end
   end
 
   def destroy
@@ -73,5 +92,10 @@ class ItemsController < ApplicationController
       @shippingways = []
       @shippingways.push(Shippingway.new(id:0,name:"---"))
       @shippingways.concat(Shippingway.where(ancestry: nil))
+    end
+    def set_brands
+      @brands = []
+      @brands.push(Brand.new(id: nil,name:"例)シャネル"))
+      @brands.concat(Brand.all)
     end
 end
