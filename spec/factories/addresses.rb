@@ -6,14 +6,16 @@ FactoryBot.define do
     sequence(:number)   { |i| "number_#{i}"}
     sequence(:building) { |i| "building#{i}"}
 
-    first_name    {"鈴木"}
-    last_name     {"一郎"}
-    first_name_kana {"スズキ"}
-    last_name_kana  {"イチロウ"}
-    postal_number   {1500041}
+    first_name       {"鈴木"}
+    last_name        {"一郎"}
+    first_name_kana  {"スズキ"}
+    last_name_kana   {"イチロウ"}
+    postal_number    {1500041}
     telephone_number {1031234567}
 
+
     association :area
+    area_id             {"1"}
     association :user
 
     trait :with_ladies_items do

@@ -21,50 +21,43 @@ RSpec.describe Address, type: :model do
     # ----空の場合に登録が出来ないこと----
     #first_nameが空だと登録できない
     it "is invalid without a first_name" do
-      address = build(:address, first_name: nil)
-      address.valid?
+      address.first_name = nil
       expect(address.errors[:first_name]).to include("を入力してください")
     end
 
     #last_nameが空だと登録できない
     it "is invalid without a last_name" do
-      address = build(:address, last_name: nil)
-      address.valid?
+      address.last_name = nil
       expect(address.errors[:last_name]).to include("を入力してください")
     end
 
     #first_name_kanaが空だと登録できない
     it "is invalid without a first_name_kana" do
-      address = build(:address, first_name_kana: nil)
-      address.valid?
+      address.first_name_kana = nil
       expect(address.errors[:first_name_kana]).to include("を入力してください")
     end
 
     #last_name_kanaが空だと登録できない
     it "is invalid without a last_name_kana" do
-      address = build(:address, last_name_kana: nil)
-      address.valid?
+      address.last_name_kana = nil
       expect(address.errors[:last_name_kana]).to include("を入力してください")
     end
 
     #postal_numberが空だと登録できない
     it "is invalid without a postal_number" do
-      address = build(:address, postal_number: nil)
-      address.valid?
+      address.postal_number = nil
       expect(address.errors[:postal_number]).to include("を入力してください")
     end
 
     #cityが空だと登録できない
     it "is invalid without a city" do
-      address = build(:address, city: nil)
-      address.valid?
+      address.city = nil
       expect(address.errors[:city]).to include("を入力してください")
     end
 
     #numberが空だと登録できない
     it "is invalid without a number" do
-      address = build(:address, number: nil)
-      address.valid?
+      address.number = nil
       expect(address.errors[:number]).to include("を入力してください")
     end
 
