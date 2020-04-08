@@ -4,6 +4,9 @@
   %main.items-show__main
     .items-show-container
       .items-show-contents
+        .items-notification
+          - flash.each do |key, value|
+            = content_tag :div, value, class: key
         .items-show-content
           .items-show-summary
             %h2.items-show-summary__name
