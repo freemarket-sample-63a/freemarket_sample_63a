@@ -21,8 +21,9 @@ class ItemsController < ApplicationController
     else
       redirect_to new_item_path, notice:"販売価格を入力してください"
     end
-    if params[:item_images] && @item.save
-      params[:item_images]['image'].each do |img|
+    if params[:item_images] 
+      if @item.save
+        params[:item_images]['image'].each do |img|
         @image = @item.item_images.create(image: img, item_id: @item.id)
       end
       @item = Item.find(@item.id)
@@ -32,6 +33,9 @@ class ItemsController < ApplicationController
         return
       end
       redirect_to item_path(@item.id)
+      return
+    else 
+      redirect_to new_item_path, notice:"画像ファイルがない商品は登録できません。"
       return
     end
   end
@@ -47,7 +51,7 @@ class ItemsController < ApplicationController
   def update
     item = Item.find(params[:id])
     if params[:item]['item_images_attributes']['0']['_destroy'] == "1"
-      redirect_to item_path(item.id), notice:"商品を編集できませんでした"
+      redirect_to edit_item_path(item.id), notice:"商品を編集できませんでした"
     else
       item.update(item_update_params)
       redirect_to item_path(item.id)
