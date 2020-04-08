@@ -74,7 +74,7 @@
             = f.label :"ブランド"
             %span.common-field__tag--any 任意
             %br/
-            = f.text_field :brand_id ,placeholder: "例）シャネル"
+            = f.collection_select :brand_id,@brands,:id,:name,selected: @item.brand_id
           .items-second__foot
             = f.label :"商品の状態"
             %span.form-require 必須
