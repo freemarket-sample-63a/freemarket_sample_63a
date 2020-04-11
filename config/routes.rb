@@ -3,7 +3,8 @@ Rails.application.routes.draw do
 
   root "tops#index"
   resources :tops,only: :index 
-  resources :categories,only: :index, defaults: {format: 'json'}
+  resources :brands,only: [:index,:show]
+  resources :categories,only: [:index,:show]
   resources :product_sizes,only: :index, defaults: {format: 'json'}
   resources :shippingways,only: :index, defaults: {format: 'json'}
   resources :sign_ups, only: :create do
@@ -30,5 +31,7 @@ Rails.application.routes.draw do
     end
     resources :addresses, only: [:index,:new, :create, :edit, :update, :destroy]
   end
-
+  namespace :api do
+    resources :categories, only: [:index,:show],defaults: {format: 'json'}
+  end
 end
