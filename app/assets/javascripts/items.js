@@ -209,7 +209,7 @@ $(document).on('turbolinks:load', function() {
       $("#item_product_size_id").remove();
     }else{
       $.ajax({
-        url: "/categories",
+        url: "/api/categories",
         type: 'GET',
         dataType: 'json',
         data: {id: str}
@@ -246,7 +246,7 @@ $(document).on('turbolinks:load', function() {
       $("#item_product_size_id").remove();
     } else {
       $.ajax({
-        url: "/categories",
+        url: "/api/categories",
         type: 'GET',
         dataType: 'json',
         data: {id: str}
