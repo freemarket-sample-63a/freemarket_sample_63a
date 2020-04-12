@@ -100,3 +100,14 @@
     color: #3CCACE;
   }
 }
+
+/*---配送先---*/
+.trades-new-cash-address {
+  &__edit {
+    float: right;
+    color: #3CCACE;
+  }
+  &__info {
+    padding: 25px 0;
+  }
+}
