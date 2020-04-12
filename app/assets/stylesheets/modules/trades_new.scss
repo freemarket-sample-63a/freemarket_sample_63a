@@ -70,3 +70,20 @@
     font-size: 15px;
   }
 }
+
+/*---支払金額---*/
+.trades-new-buy-price-table {
+  margin: 20px 0;
+  display: table;
+  border-collapse: collapse;
+  font-size: 20px;
+  width: 100%;
+  &__row {
+    display: table-row;
+  }
+  &__cell {
+    display: table-cell;
+    text-align: center;
+    padding: 0;
+  }
+}
