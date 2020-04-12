@@ -30,3 +30,14 @@
     }
   }
 }
+
+/*---購入内容の確認---*/
+.trades-new-buy {
+  &__head {
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
+    height: 100px;
+    padding: 32px;
+  }
+}
