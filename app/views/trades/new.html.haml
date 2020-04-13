@@ -12,7 +12,7 @@
             %h3.trades-new-buy-item__image
               = image_tag @item.item_images.first.image.url, class:'trades-image'
               .trades-new-buy-item__detail
-                .trades-item__name
+                .trades-new-buy-item__detail--name
                   = @item.title
                 .trades-new-buy-item__price-ja
                   %span
@@ -66,7 +66,7 @@
                       %p.trades-new-cash-address
                         .trades-new-cash__icon
                           = icon('fas', 'plus-circle')
-                          %span.trades-new-buy-register-text 登録してください
+                          %span.trades-new-buy-register-text 登録する
                   - else
                     = link_to edit_user_address_path(current_user.id, @address.id), class: "trades-new-buy-user-info-fix" do
                       %span.trades-new-cash-address__edit
