@@ -12,7 +12,7 @@
             %h3.trades-new-buy-item__image
               = image_tag @item.item_images.first.image.url, class:'trades-image'
               .trades-new-buy-item__detail
-                .trades-item__name 
+                .trades-item__name
                   = @item.title
                 .trades-new-buy-item__price-ja
                   %span
@@ -21,8 +21,9 @@
       .trades-new-buy-content
         .trades-new-buy-content-inner
           - if trade_submited?(@trade)
-            %span.trades-new-buy-alreay-submited
-              この商品は売約済みです。
+            .trades-new-buy-alreay-submited
+              %span.trades-new-buy-alreay-submited__text
+                この商品は売約済みです。
             .trades-create-buy-content-inner
               = link_to root_path do
                 = button_tag "戻る", class: "trades-create-buy-content-inner__rootbtn"
@@ -30,7 +31,7 @@
             = form_with(model: [@item, @trade],  local: true) do |f|
               %ul.trades-new-buy-price-table
                 %li.trades-new-buy-price-table__row
-                  %span.trades-new-buy-price-table__cell--label 支払い金額
+                  %h3.trades-new-buy-price-table__cell--label 支払い金額
                   .trades-new-buy-price-table__cell
                     %span
                       = thousands_separator(@item.price)
@@ -83,9 +84,9 @@
                   = f.hidden_field :user_id
                   = f.hidden_field :item_id
                   = f.hidden_field :address_id
-                .trades-new-buy-content
+                .trades-new-buy-content-inner
                 - if card_present_and_address_present?(@default_card_information, @address)
                   .trades-create-buy-content-inner
-                    = submit_tag "購入する", class: "trades-create-buy-content-inner__submit"
+                    = submit_tag "購入する", class: "trades-create-buy-content-inner__rootbtn"
   %footer.trades-new-footer
   = render 'layouts/footer'
