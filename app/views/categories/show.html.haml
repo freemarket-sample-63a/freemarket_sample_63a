@@ -1,0 +1,19 @@
+.categories-show
+  %h2.categories-show__category-name
+    = @category.name
+  .categories-show__contents
+    - @items.each do |item|
+      .categories-show__content
+        = link_to item_path(item.id) do
+          %figuer.categories-show__content--image
+            = image_tag item.item_images.first.image.url 
+          .categories-show__item
+            %h3.categories-show__item--title
+              = item.title
+            .categories-show__item--details  
+              -if item.trade.present?
+                %i.sold-out soldout
+              -else
+                %i
+                  = thousands_separator(item.price)
+                %i (税込)
