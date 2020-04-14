@@ -1,5 +1,4 @@
 class ItemsController < ApplicationController
-  skip_before_action :set_header_categories,:set_header_brands
   before_action :set_user_address,only: :create
   before_action :set_categories, :set_shippingways,:set_brands,only:[:new,:edit]
   before_action :set_item,only: [:edit,:show,:destroy]
