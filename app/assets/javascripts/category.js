@@ -10,7 +10,6 @@ $(document).on('turbolinks:load', function() {
       $('.category-tree__grand-child').fadeOut();
       $('.category-tree__child--list').remove();
       $('.category-tree__grand-child--list').remove();
-
     }
   )
 
@@ -43,6 +42,9 @@ $(document).on('turbolinks:load', function() {
   }
 
   $(".category-tree__parent--list").on('mouseover',function(){
+    if ($(".category-tree__grand-child--list").length){
+      $('.category-tree__grand-child--list').remove()
+      $('.category-tree__grand-child').fadeIn()}
       var int = $(this).attr("data-category-id")
       $.ajax({
         url: "/api/categories",
