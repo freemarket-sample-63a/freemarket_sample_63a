@@ -59,7 +59,10 @@
         text-decoration: none;
         color: #333;
       }
-      ul{
+      &__item{
+        display: flex;
+      }
+      &__user{
         display: flex;
       }
       &__Right {
@@ -67,5 +70,96 @@
       }
       
     } 
+  }
+}
+.categories{
+  font-size: 14px;
+  height:44px;
+}
+.category-tree{
+  box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+  z-index: 1;
+  width: 780px;
+  position: relative;
+  &__parent{
+    background-color: #fff;
+    text-decoration: none;
+    display: block;
+    width: 200px;
+    font-size: 14px;
+    line-height: 44px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    left: 0;
+    position: absolute;
+    &--list{
+      box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    }
+    &--list:hover{
+      background-color:#3CCACE;
+    }
+  }
+  &__child{
+    background-color: #fff;
+    display: block;
+    width: 200px;
+    font-size: 14px;
+    line-height: 44px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    left: 200px;
+    position: absolute;
+    &--list{
+      box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    }
+    &--list:hover{
+      background-color: #3CCACE;
+    }
+  }
+  &__grand-child{
+    background-color: #fff;
+    display: block;
+    min-width: 200px;
+    font-size: 14px;
+    line-height: 44px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    left: 400px;
+    position: absolute;
+    &--list{
+      box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    }
+    &--list:hover{
+      background-color: #3CCACE;
+    }
+  }
+}
+.blands{
+  padding-left:20px;
+  height:44px;
+}
+.brand-tree{
+  box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+  z-index: 1;
+  width: 780px;
+  position: relative;
+  &__item{
+    background-color: #fff;
+    text-decoration: none;
+    display: block;
+    max-width: 224px;
+    font-size: 14px;
+    line-height: 44px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    left: 0;
+    position: absolute;
+    &--list{
+      box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    }
   }
 }
