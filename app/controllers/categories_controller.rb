@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
-  skip_before_action :set_header_categories,:set_header_brands
   def show
-    @categories = Category.where(ancestry: params[:id])
+    @category = Category.find(params[:id])
+    @items = Item.where(category_id: @category.descendant_ids)
   end
 end
