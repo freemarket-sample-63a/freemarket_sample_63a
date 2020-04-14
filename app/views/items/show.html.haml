@@ -12,13 +12,11 @@
             %h2.items-show-summary__name
               = @item.title
             .items-show-summary__body
-              %ul
-                %li
-                  = image_tag @item.item_images.first.image.url,class:'items-show-summary__main-image'
-                %ul.items-show-summary__sub-images
-                  -@item.item_images.each do |image|
-                    %li
-                      = image_tag image.image.url,class:'items-show-summary__sub-image--image'
+              = image_tag @item.item_images.first.image.url,class:'items-show-summary__main-image'
+              %ul.items-show-summary__sub-images
+                -@item.item_images.each do |image|
+                  %li
+                    = image_tag image.image.url
             .items-show-summary__price
               %span
                 = thousands_separator(@item.price)
