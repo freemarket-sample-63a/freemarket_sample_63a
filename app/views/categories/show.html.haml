@@ -1,19 +1,26 @@
 .categories-show
-  %h2.categories-show__category-name
-    = @category.name
-  .categories-show__contents
-    - @items.each do |item|
-      .categories-show__content
-        = link_to item_path(item.id) do
-          %figuer.categories-show__content--image
-            = image_tag item.item_images.first.image.url 
-          .categories-show__item
-            %h3.categories-show__item--title
-              = item.title
-            .categories-show__item--details  
-              -if item.trade.present?
-                %i.sold-out soldout
-              -else
-                %i
-                  = thousands_separator(item.price)
-                %i (税込)
+  %header.categories-show__header
+    = render 'layouts/header'
+  %main.categories-show__main
+    %h2.categories-show-category-name
+      = @category.name
+    .categories-show-container
+      .categories-show-contents
+        - @items.each do |item|
+          .categories-show-content
+            = link_to item_path(item.id) do
+              %figuer.categories-show-content__image
+                = image_tag item.item_images.first.image.url 
+              .categories-show-content__info
+                %h3.categories-show-content__info--title
+                  = item.title
+                .categories-show-content__info--details  
+                  -if item.trade.present?
+                    %i.sold-out soldout
+                  -else
+                    %i
+                      = thousands_separator(item.price)
+                    %i (税込)
+  %footer.categories-show__footer
+    = render 'layouts/footer'
+  = render 'layouts/purchase-btn'
