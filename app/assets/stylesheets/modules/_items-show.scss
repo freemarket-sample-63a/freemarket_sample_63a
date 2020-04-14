@@ -32,14 +32,13 @@
     margin-top:16px;
   }
   &__main-image{
-    height:346px;
+    max-width:346px;
+    display:block;
+    margin:0 auto;
   }
   &__sub-images{
     display:flex;
     margin:0 auto;
-    &--image{
-      width:69px;
-    }
   }
 }
 .items-show-detail{
