@@ -12,10 +12,9 @@ FactoryBot.define do
     last_name_kana   {"イチロウ"}
     postal_number    {1500041}
     telephone_number {1031234567}
-
+    area_id             {"1"}
 
     association :area
-    area_id             {"1"}
     association :user
 
     trait :with_ladies_items do

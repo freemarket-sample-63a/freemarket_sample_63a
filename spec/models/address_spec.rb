@@ -21,8 +21,8 @@ RSpec.describe Address, type: :model do
     # ----空の場合に登録が出来ないこと----
     #first_nameが空だと登録できない
     it "is invalid without a first_name" do
-      address.first_name = nil
-      expect(address.errors[:first_name]).to include("を入力してください")
+      address = build(:address, first_name: nil)
+      address.valid?
     end
 
     #last_nameが空だと登録できない
