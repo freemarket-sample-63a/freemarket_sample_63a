@@ -11,4 +11,139 @@
       width: 200px;
     }
   }
+  &-container {
+    width:700px;
+    margin:0 auto;
+    background-color: rgb(255, 255, 255);
+  }
+}
+
+.trades-new-buy-content {
+  padding: 32px 16px;
+  border-top: 1px solid #f5f5f5;
+  &-inner {
+    max-width: 343px;
+    margin: 0 auto;
+    h3 {
+      float: left;
+      font-weight: bold;
+    }
+  }
+}
+
+/*---購入内容の確認---*/
+.trades-new-buy {
+  &__head {
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
+    height: 100px;
+    padding: 32px;
+  }
+/*---売約済み---*/
+  &-alreay-submited {
+    margin-bottom: 24px;
+    &__text {
+      color:#ea352d;
+      font-weight: bold;
+      font-size: 24px;
+      letter-spacing: 3.5px;
+    }
+  }
+}
+
+/*---商品詳細---*/
+.trades-new-buy-item {
+  &-box {
+    display: flex;
+  }
+  &__image {
+    display: flex;
+  }
+  &__detail {
+    margin-left: 30px;
+    font-size: 15px;
+    &--name {
+      padding: 0 0 8px;
+      line-height: 1.5;
+    }
+  }
+  &__price-ja {
+    padding-top: 20px;
+  }
+}
+
+/*---支払金額---*/
+.trades-new-buy-price-table {
+  margin: 20px 0;
+  display: table;
+  width: 100%;
+  span {
+    font-size: 20px;
+  }
+  &__row {
+    display: table-row;
+  }
+  &__cell {
+    display: table-cell;
+    text-align: right;
+  }
+}
+
+/*---支払方法---*/
+.trades-new-cash {
+  padding: 20px 0;
+  border-top: 1px solid #f5f5f5;
+  &__icon {
+    float: right;
+    color: #3CCACE;
+  }
+}
+
+.creditcards-show-confirmation {
+  &__contents {
+    padding: 24px 0 0;
+    line-height: normal;
+    font-size: 14px;
+  }
+  &__card-number {
+    &--number{
+      text-align: left;
+      color: #3CCACE;
+    }
+  }
+  &__expire {
+    margin-top: 0;
+    &--date {
+      text-align: left;
+      color: #3CCACE;
+    }
+  }
+}
+
+/*---配送先---*/
+.trades-new-cash-address {
+  &__edit {
+    float: right;
+    color: #3CCACE;
+  }
+  &__info {
+    padding-top: 24px;
+    line-height: normal;
+  }
+}
+
+.trades-create-buy-content-inner {
+  &__rootbtn {
+    margin:0 auto;
+    text-align: center;
+    font-size: 18px;
+    line-height: 48px;
+    background: #3CCACE;
+    border: 1px solid #3CCACE;
+    width: 100%;
+    border-radius: 100px;
+    color: #fff;
+    text-decoration: none;
+  }
 }

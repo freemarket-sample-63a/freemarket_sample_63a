@@ -5,6 +5,9 @@
         = image_tag 'logo.png'
   .items__main
     .items__main--form
+      .items-notification
+        - flash.each do |key, value|
+          = content_tag :div, value, class: key
       = form_with(model:@item, local: true , id: 'edit_item') do |f|
         .item-image-container
           = f.label :"出品画像"
@@ -71,7 +74,7 @@
             = f.label :"ブランド"
             %span.common-field__tag--any 任意
             %br/
-            = f.text_field :brand_id ,placeholder: "例）シャネル"
+            = f.collection_select :brand_id,@brands,:id,:name,selected: @item.brand_id
           .items-second__foot
             = f.label :"商品の状態"
             %span.form-require 必須

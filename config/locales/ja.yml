@@ -45,6 +45,15 @@ ja:
         postal_number: 郵便番号
         city: 市区町村
         number: 番地
+      item:
+        user_id: ユーザー
+        address_id: アドレス
+        category_id: カテゴリー
+        shippingway_id: 配送の方法
+        condition_num: 商品の状態
+        daystoship_num: 発送までの日数
+
+
   enums:
     item:
       condition_num:

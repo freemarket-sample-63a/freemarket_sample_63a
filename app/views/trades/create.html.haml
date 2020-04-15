@@ -1,6 +1,6 @@
-.trades-new
-  %header.trades-header
-    .trades-header__icon
+.trades-create
+  %header.trades-create-header
+    .trades-create-header__icon
       = link_to root_path do
         = image_tag 'logo.png'
   %main.trades-create-buy-main
@@ -12,7 +12,7 @@
             %h3.trades-create-buy-item__image
               = image_tag @item.item_images.first.image.url, class:'trades-image'
               .trades-create-buy-item__detail
-                .trades-item__name 
+                .trades-create-buy-item__detail--name
                   = @item.title
                 .trades-create-buy-item__price-ja
                   %span
@@ -24,5 +24,6 @@
             .trades-create-buy-content-inner
               %h2 購入が完了しました。
             = link_to root_path do
-              = button_tag "戻る"
+              = button_tag "戻る", class: "trades-create-buy-content-inner__rootbtn"
   %footer.trades-create-footer
+  = render 'layouts/footer'

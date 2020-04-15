@@ -16,9 +16,6 @@ FactoryBot.define do
 
     association :area
     association :user
-
-
-
   end
 
   # tradeモデルテスト用 出品者住所
@@ -33,7 +30,7 @@ FactoryBot.define do
     last_name_kana   {"タロウ"}
     first_name_kana  {"シュッピン"}
     status_num       {0}
-    telephone_number {"03-1234-5678"}
+    telephone_number {"0312345678"}
 
     association :area, factory: :seller_area
     association :user, factory: :seller
@@ -52,7 +49,7 @@ FactoryBot.define do
     last_name_kana   {"ジロウ"}
     first_name_kana  {"コウニュウ"}
     status_num       {0}
-    telephone_number {"03-1234-5678"}
+    telephone_number {"0312345678"}
 
     association :area, factory: :buyer_area
     association :user, factory: :buyer
