@@ -10,19 +10,31 @@
           = button_tag type: "submit", class: "head__search--input--btn" do
             = image_tag 'icon-search 1.png'
     .tops-index-head-bottom
-      %ul
-        %li.tops-index-head-bottom__Left
+      .tops-index-head-bottom__item
+        .categories
           = link_to "カテゴリー" , "#"
-        %li.tops-index-head-bottom__Right
+          .category-tree{style: "display:none;"}
+            %ul.category-tree__parent
+              - Category.where(ancestry: nil).each do |category|
+                %li.category-tree__parent--list{data:{category_id: category.id}}
+                  = link_to category.name,category_path(category.id)
+            %ul.category-tree__child{style: "display:none;"} 
+            %ul.category-tree__grand-child{style: "display:none;"} 
+        .brands
           = link_to "ブランド" , "#"
-      %ul
+          .brand-tree{style: "display:none;"}
+            %ul.brand-tree__item
+              - Brand.all.each_with_index do |brand,i|
+                %li.brand-tree__item--list{data:{brand_id: i}}
+                  = link_to brand.name,brand_path(brand.id)
+      .tops-index-head-bottom__user
         -if user_signed_in?
-          %li.tops-index-head-bottom__Left
+          .tops-index-head-bottom__Left
             = link_to "ログアウト", destroy_user_session_path, method: :delete, data: { confirm: 'ログアウトしてもよろしいですか？' } 
-          %li.tops-index-head-bottom__Right 
+          .tops-index-head-bottom__Right 
             = link_to "マイページ" ,user_path(current_user.id)
         -else
-          %li.tops-index-head-bottom__Left
+          .tops-index-head-bottom__Left
             = link_to "ログイン" , new_user_session_path
-          %li.tops-index-head-bottom__Right 
+          .tops-index-head-bottom__Right 
             = link_to "新規会員登録" , sign_ups_path

@@ -1,0 +1,28 @@
+.categories-show
+  %header.categories-show__header
+    = render 'layouts/header'
+  %main.categories-show__main
+    %h2.categories-show-category-name
+      = @category.name
+    .categories-show-container
+      -if @items.present?
+        .categories-show-contents
+          - @items.each do |item|
+            .categories-show-content
+              = link_to item_path(item.id) do
+                = image_tag item.item_images.first.image.url,class:"categories-show-content__image"
+                .categories-show-content__info
+                  %h3.categories-show-content__info--title
+                    = item.title
+                  .categories-show-content__info--details  
+                    -if item.trade.present?
+                      %i.sold-out soldout
+                    -else
+                      %i
+                        = thousands_separator(item.price)
+                      %i (税込)
+      -else
+        %h2.categories-show-content__none 現在、このカテゴリの出品はありません
+  %footer.categories-show__footer
+    = render 'layouts/footer'
+  = render 'layouts/purchase-btn'
