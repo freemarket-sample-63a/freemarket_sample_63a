@@ -27,6 +27,9 @@ class ItemsController < ApplicationController
         params[:item_images]['image'].each do |img|
           @image = @item.item_images.create(image: img, item_id: @item.id)
         end
+      else
+        redirect_to new_item_path, notice:"必要な情報が不足していたため商品が登録できませんでした。"
+        return
       end
       @item = Item.find(@item.id)
       if @item.item_images.empty?
