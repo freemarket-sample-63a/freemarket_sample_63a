@@ -245,6 +245,12 @@
   padding: 0 56px 0 16px;
 }
 
+%__price-form{
+  width: 50%;
+  height: 50px;
+  border-radius: 4px;
+}
+
 #parent{
  @extend %__select-form;
 }
@@ -282,17 +288,15 @@
 
 #item_price{
   @extend %__select-form;
-  width: 50%;
-  height: 50px;
-  border-radius: 4px;
+  @extend %__price-form;
 }
 
-#item_profit_price{
+#item_profit_price_label{
   @extend %__select-form;
-  width: 50%;
-  height: 50px;
-  border-radius: 4px;
+  @extend %__price-form;
   border: 0px;
+  text-align: left;
+  line-height: 3;
 }
 // file_fieldのcss
 .hidden-content {
