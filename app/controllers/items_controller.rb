@@ -16,19 +16,14 @@ class ItemsController < ApplicationController
     @item = Item.new(item_params)
     @item["user_id"] = current_user.id
     @item["address_id"] = @address.id
-    # @item["feerate"] = 0.1
-    # if @item["price"] != nil
-    #   @item["profit_price"] = @item.price - (@item.price * @item.feerate)
-    # else
-    #   redirect_to new_item_path, notice:"販売価格を入力してください"
-    # end
-    if @item["price"] = nil
+    @item["feerate"] = 0.1
+    if @item["price"] != nil
+      @item["profit_price"] = @item.price - (@item.price * @item.feerate)
+    else
       redirect_to new_item_path, notice:"販売価格を入力してください"
     end
-    if @item["profit_price"] = nil
-      redirect_to new_item_path, notice:"販売価格を入力して販売履歴を確定してください"
-    end
     if params[:item_images] 
+      binding.pry
       if @item.save
         params[:item_images]['image'].each do |img|
           @image = @item.item_images.create(image: img, item_id: @item.id)
@@ -61,8 +56,11 @@ class ItemsController < ApplicationController
     if params[:item]['item_images_attributes']['0']['_destroy'] == "1"
       redirect_to edit_item_path(item.id), notice:"画像がない商品は登録できません。"
     else
-      item.update(item_update_params)
-      redirect_to item_path(item.id)
+      if item.update(item_update_params)
+        redirect_to item_path(item.id)
+      else
+        redirect_to item_path(item.id), notice:"出品情報の更新に失敗しました。"
+      end
     end
   end
 
@@ -76,13 +74,15 @@ class ItemsController < ApplicationController
 
   private
     def item_params
-      binding.pry
-      params.require(:item).permit(:brand_id,:category_id,:shippingway_id,:product_size_id,:condition_num,:daystoship_num,:title,:description,:price,:feerate,:profit_price, [item_images_attributes: [:id, :image]])
+      params.require(:item).permit(:brand_id,:category_id,:shippingway_id,:product_size_id,:condition_num,:daystoship_num,:title,:description,:price, [item_images_attributes: [:id, :image]])
     end
 
     def item_update_params
-      binding.pry
       params.require(:item).permit(:brand_id,:category_id,:shippingway_id,:product_size_id,:condition_num,:daystoship_num,:title,:description,:price,:feerate,:profit_price, [item_images_attributes: [:image, :_destroy, :id]])
+    end
+
+    def calc_profit_price(item)
+      item["profit_price"] = item.price - (item.price * item.feerate)
     end
 
     def set_user_address
