@@ -334,4 +334,21 @@ $(document).on('turbolinks:load', function() {
       });
     }
   });
+
+  //ここから価格設定後の金額表示処理
+  const NumberWithDelimiter = (number) => {
+    return "¥" + String(number).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+  }
+  $("#item_price").change(function () {
+    let price = parseInt($("#item_price").val().replace(/[^0-9]/g, ''));
+    let rate = parseFloat($("#item_feerate").val());
+    let prifit_price = "";
+    if (Number.isFinite(price) && Number.isFinite(rate)) {
+      prifit_price = price - (price * rate);
+    }
+    //販売履歴の更新(label)
+    $("#item_profit_price_label").val(NumberWithDelimiter(prifit_price));
+    //販売履歴の更新(hidden)
+    $("#profit_price_hdn").val(prifit_price);
+  });
 });
