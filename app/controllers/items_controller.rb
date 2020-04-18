@@ -8,6 +8,7 @@ class ItemsController < ApplicationController
   
   def new
     @item = Item.new(feerate: 0.1)
+    @item.feerate = 0.1
     @item_image = @item.item_images.build
   end
 
@@ -15,11 +16,17 @@ class ItemsController < ApplicationController
     @item = Item.new(item_params)
     @item["user_id"] = current_user.id
     @item["address_id"] = @address.id
-    @item["feerate"] = 0.1
-    if @item["price"] != nil
-      @item["profit_price"] = @item.price - (@item.price * @item.feerate)
-    else
+    # @item["feerate"] = 0.1
+    # if @item["price"] != nil
+    #   @item["profit_price"] = @item.price - (@item.price * @item.feerate)
+    # else
+    #   redirect_to new_item_path, notice:"販売価格を入力してください"
+    # end
+    if @item["price"] = nil
       redirect_to new_item_path, notice:"販売価格を入力してください"
+    end
+    if @item["profit_price"] = nil
+      redirect_to new_item_path, notice:"販売価格を入力して販売履歴を確定してください"
     end
     if params[:item_images] 
       if @item.save
@@ -69,11 +76,13 @@ class ItemsController < ApplicationController
 
   private
     def item_params
-      params.require(:item).permit(:brand_id,:category_id,:shippingway_id,:product_size_id,:condition_num,:daystoship_num,:title,:description,:price, [item_images_attributes: [:id, :image]])
+      binding.pry
+      params.require(:item).permit(:brand_id,:category_id,:shippingway_id,:product_size_id,:condition_num,:daystoship_num,:title,:description,:price,:feerate,:profit_price, [item_images_attributes: [:id, :image]])
     end
 
     def item_update_params
-      params.require(:item).permit(:brand_id,:category_id,:shippingway_id,:product_size_id,:condition_num,:daystoship_num,:title,:description,:price, [item_images_attributes: [:image, :_destroy, :id]])
+      binding.pry
+      params.require(:item).permit(:brand_id,:category_id,:shippingway_id,:product_size_id,:condition_num,:daystoship_num,:title,:description,:price,:feerate,:profit_price, [item_images_attributes: [:image, :_destroy, :id]])
     end
 
     def set_user_address
@@ -82,6 +91,7 @@ class ItemsController < ApplicationController
 
     def set_item
       @item = Item.find(params[:id])
+      @item.price = @item.price.to_i
     end
     def set_categories
       @categories = []
