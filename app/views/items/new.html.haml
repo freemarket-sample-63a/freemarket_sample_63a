@@ -96,8 +96,8 @@
             = f.text_field :price, data: {autonumeric: { aSign: '¥', mDec: 0 } } , placeholder: "金額を入力して下さい"
           .items-final__commission
             .items-final__commission--factor
-              %div
-                販売手数料(10%)
+              = f.label :feerate, "販売手数料(#{disp_ratepercent(@item.feerate)})"
+              = f.hidden_field :feerate
           %hr.items-hr
           .items-final__profit
             .items-final__profit--factor
