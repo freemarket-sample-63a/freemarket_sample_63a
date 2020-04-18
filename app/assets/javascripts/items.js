@@ -8,9 +8,6 @@ $(document).on('turbolinks:load', function() {
             <img src="${loadedImageUri}">
           </div>
           <div class="image-option">
-            <div  class="image-option__list">
-              <div class="image-option__list--edit">編集</div>
-            </div>
             <div class="image-option__list">
               <div class="image-option__list--delete">削除</div>
             </div>
@@ -126,9 +123,6 @@ $(document).on('turbolinks:load', function() {
             <img src="${loadedImageUri}">
           </div>
           <div class="image-option">
-            <div  class="image-option__list">
-              <div class="image-option__list--edit">編集</div>
-            </div>
             <div class="image-option__list">
               <div class="image-option__list--delete">削除</div>
             </div>
