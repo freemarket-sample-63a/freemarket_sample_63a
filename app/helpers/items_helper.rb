@@ -8,6 +8,10 @@ module ItemsHelper
     EOS
   end
 
+  def disp_ratepercent(rate)
+    return "#{(rate * 100).to_i}%"
+  end
+
   def thousands_separator(price)
     # 現状はJPY固定。
     number_to_currency(price, format: "%u%n", unit: "￥", strip_insignificant_zeros: true)
