@@ -345,13 +345,17 @@ $(document).on('turbolinks:load', function() {
   $("#item_price").change(function () {
     let price = parseInt($("#item_price").val().replace(/[^0-9]/g, ''));
     let rate = parseFloat($("#item_feerate").val());
+    let commission_price = "";
     let prifit_price = "";
     if (Number.isFinite(price) && Number.isFinite(rate)) {
-      prifit_price = price - (price * rate);
+      commission_price = price * rate
+      prifit_price = price - (commission_price);
     }
-    //販売履歴の更新(label)
+    //販売手数料の更新(label)
+    $("#item_commission_price_label").val(NumberWithDelimiter(commission_price));
+    //販売利益の更新(label)
     $("#item_profit_price_label").val(NumberWithDelimiter(prifit_price));
-    //販売履歴の更新(hidden)
+    //販売利益の更新(hidden)
     $("#profit_price_hdn").val(prifit_price);
   });
 });

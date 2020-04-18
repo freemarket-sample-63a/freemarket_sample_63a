@@ -25,7 +25,6 @@ class ItemsController < ApplicationController
       return
     end
     if params[:item_images] 
-      binding.pry
       if @item.save
         params[:item_images]['image'].each do |img|
           @image = @item.item_images.create(image: img, item_id: @item.id)
