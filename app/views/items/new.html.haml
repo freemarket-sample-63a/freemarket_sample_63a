@@ -103,6 +103,8 @@
             .items-final__profit--factor
               %div
                 販売利益
+            = f.text_field :profit_price_label, disabled: true
+            = f.hidden_field :profit_price, id: "profit_price_hdn"
           .items-final__exibition
             .exibition-n-back
               = f.submit "出品する",class:"exibition-n-back__submit" , data: { confirm: '入力した情報で出品します。よろしいですか？' }
