@@ -29,6 +29,9 @@ class ItemsController < ApplicationController
         params[:item_images]['image'].each do |img|
           @image = @item.item_images.create(image: img, item_id: @item.id)
         end
+      else
+        redirect_to new_item_path, notice:"必要な情報が不足していたため商品が登録できませんでした。"
+        return
       end
       @item = Item.find(@item.id)
       if @item.item_images.empty?
@@ -70,6 +73,7 @@ class ItemsController < ApplicationController
       render :destroy
     else
       redirect_to item_path(@item.id), notice:"商品を削除できませんでした"
+      return
     end
   end
 
@@ -87,7 +91,11 @@ class ItemsController < ApplicationController
     end
 
     def set_user_address
-      @address = Address.find_by(user_id: current_user.id,status_num: 0)
+      if @address = Address.find_by(user_id: current_user.id,status_num: 0)
+      else
+        redirect_to user_addresses_path(current_user.id), notice:"アドレスの登録がないと商品の登録ができません。"
+        return
+      end
     end
 
     def set_item

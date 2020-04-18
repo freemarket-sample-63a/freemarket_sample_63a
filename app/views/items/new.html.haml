@@ -93,7 +93,7 @@
               = f.label :"販売価格"
               %span.form-require 必須
             %br/
-            = f.text_field :price, data: {autonumeric: { aSign: '¥', mDec: 0 } } , placeholder: "金額を入力して下さい"
+            = f.text_field :price, data: {autonumeric: { aSign: '¥', mDec: 0 ,vMax:9999999} } , placeholder: "金額を入力して下さい"
           .items-final__commission
             .items-final__commission--factor
               = f.label :feerate, "販売手数料(#{disp_ratepercent(@item.feerate)})"
