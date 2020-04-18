@@ -337,7 +337,10 @@ $(document).on('turbolinks:load', function() {
 
   //ここから価格設定後の金額表示処理
   const NumberWithDelimiter = (number) => {
-    return "¥" + String(number).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+    if (number != "") {
+      number = "¥" + String(number).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+    }
+    return number;
   }
   $("#item_price").change(function () {
     let price = parseInt($("#item_price").val().replace(/[^0-9]/g, ''));
