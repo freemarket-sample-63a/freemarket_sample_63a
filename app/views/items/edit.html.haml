@@ -108,8 +108,7 @@
               = f.label :price, "販売価格"
               %span.form-require 必須
             %br/
-            = f.text_field :price, data: { autonumeric: { aSign: '¥', mDec: 0 } } , placeholder: "金額を入力して下さい"
-            = f.hidden_field :price
+            = f.text_field :price, data: { autonumeric: { aSign: '¥', mDec: 0 } } , placeholder: "金額を入力して下さい", value: thousands_separator(@item.price)
           .items-final__commission
             .items-final__commission--factor
               = f.label :feerate, "販売手数料(#{disp_ratepercent(@item.feerate)})"
@@ -118,7 +117,8 @@
             .items-final__profit--factor
               %div
                 販売利益
-            = f.text_field :profit_price, value: thousands_separator(@item.profit_price), disabled: true
+            = f.text_field :profit_price_label, value: thousands_separator(@item.profit_price), disabled: true
+            = f.hidden_field :profit_price, id: "profit_price_hdn"
           %hr.items-hr
           %br/
           .items-final__exibition
