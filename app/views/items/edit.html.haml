@@ -105,19 +105,22 @@
             価格 (¥200~9,999,999)
           .items-final__head
             .items-final__head--inner
-              = f.label :"販売価格"
+              = f.label :price, "販売価格"
               %span.form-require 必須
             %br/
             = f.text_field :price, data: { autonumeric: { aSign: '¥', mDec: 0 } } , placeholder: "金額を入力して下さい"
+            = f.hidden_field :price
           .items-final__commission
             .items-final__commission--factor
-              %div
-                販売手数料(10%)
-          %hr.items-hr
+              = f.label :feerate, "販売手数料(#{disp_ratepercent(@item.feerate)})"
+              = f.hidden_field :feerate
           .items-final__profit
             .items-final__profit--factor
               %div
                 販売利益
+            = f.text_field :profit_price, value: thousands_separator(@item.profit_price), disabled: true
+          %hr.items-hr
+          %br/
           .items-final__exibition
             .exibition-n-back
               = f.submit "出品する",class:"exibition-n-back__submit" , data: { confirm: '入力した情報で出品します。よろしいですか？' }
