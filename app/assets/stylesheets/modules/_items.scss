@@ -301,13 +301,13 @@
 #item_commission_price_label{
   @extend %__select-form;
   @extend %__price-form;
-  @extend %__commission-and-profit-form
+  @extend %__commission-and-profit-form;
 }
 
 #item_profit_price_label{
   @extend %__select-form;
   @extend %__price-form;
-  @extend %__commission-and-profit-form
+  @extend %__commission-and-profit-form;
 }
 
 // file_fieldのcss
