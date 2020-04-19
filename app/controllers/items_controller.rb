@@ -86,10 +86,6 @@ class ItemsController < ApplicationController
       params.require(:item).permit(:brand_id,:category_id,:shippingway_id,:product_size_id,:condition_num,:daystoship_num,:title,:description,:price,:feerate,:profit_price, [item_images_attributes: [:image, :_destroy, :id]])
     end
 
-    def calc_profit_price(item)
-      item["profit_price"] = item.price - (item.price * item.feerate)
-    end
-
     def set_user_address
       if @address = Address.find_by(user_id: current_user.id,status_num: 0)
       else
@@ -100,7 +96,6 @@ class ItemsController < ApplicationController
 
     def set_item
       @item = Item.find(params[:id])
-      @item.price = @item.price.to_i
     end
     def set_categories
       @categories = []
