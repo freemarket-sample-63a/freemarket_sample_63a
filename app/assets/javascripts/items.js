@@ -46,7 +46,7 @@ $(document).on('turbolinks:load', function() {
       labelWidth = (620 - $(prevContent).css('width').replace(/[^0-9]/g, ''));
       $('.item-image-container__unit--guide').css('width', labelWidth);
     }
-  // プレビューの追加
+    // プレビューの追加
     $(document).on('change', '.hidden-field', function() {
       //hidden-fieldのidの数値のみ取得
       var id = $(this).attr('id').replace(/[^0-9]/g, '');
@@ -82,7 +82,7 @@ $(document).on('turbolinks:load', function() {
       };
     });
 
-  // 画像の削除
+    // 画像の削除
     $(document).on('click', '.image-option__list--delete', function() {
 
       var id = $(this).parent().parent().parent().attr('data-image-id')
@@ -162,30 +162,30 @@ $(document).on('turbolinks:load', function() {
       $('#click-delete').css('display','none');
     });
 
-  $('.item-image-container__unit--guide').on('dragover',function(e){
-    e.preventDefault();
-  });
-  $('.item-image-container__unit--guide').on('drop',function(e){
-    e.preventDefault();
-    var files = e.originalEvent.dataTransfer.files;
-    imageUpdate(files)
-    $('#d-d-delete').css('display','none')
-    $('#click-delete').css('display','none');
-  });
+    $('.item-image-container__unit--guide').on('dragover',function(e){
+      e.preventDefault();
+    });
+    $('.item-image-container__unit--guide').on('drop',function(e){
+      e.preventDefault();
+      var files = e.originalEvent.dataTransfer.files;
+      imageUpdate(files)
+      $('#d-d-delete').css('display','none')
+      $('#click-delete').css('display','none');
+    });
 
-  $(document).on('click','.image-option__list--delete',function(){
-    var index = $(".image-option__list--delete").index(this);
-    var id = $(this).parent().parent().parent().attr('data-image-id')
-    files_array.splice(index - 1, 1);
-    $(this).parent().parent().parent().remove();
-    dataBox.items.remove(dataBox.items[id])
-    file_field.files = dataBox.files
-    if(dataBox.items.length == 0){
-      $('#d-d-delete').css('display','block')
-      $('#click-delete').css('display','block');
-    }
-  });
-}
+    $(document).on('click','.image-option__list--delete',function(){
+      var index = $(".image-option__list--delete").index(this);
+      var id = $(this).parent().parent().parent().attr('data-image-id')
+      files_array.splice(index - 1, 1);
+      $(this).parent().parent().parent().remove();
+      dataBox.items.remove(dataBox.items[id])
+      file_field.files = dataBox.files
+      if(dataBox.items.length == 0){
+        $('#d-d-delete').css('display','block')
+        $('#click-delete').css('display','block');
+      }
+    });
+  }
 
   //ここからカテゴリの段階的表示機能
   function buildHTML(result){
@@ -327,5 +327,29 @@ $(document).on('turbolinks:load', function() {
         alert("サーバとの通信に失敗しました");
       });
     }
+  });
+
+  //ここから価格設定後の金額表示処理
+  const NumberWithDelimiter = (number) => {
+    if (number != "") {
+      number = "¥" + String(number).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+    }
+    return number;
+  }
+  $("#item_price").change(function () {
+    let price = parseInt($("#item_price").val().replace(/[^0-9]/g, ''));
+    let rate = parseFloat($("#item_feerate").val());
+    let commission_price = "";
+    let prifit_price = "";
+    if (Number.isFinite(price) && Number.isFinite(rate)) {
+      commission_price = Math.floor(price * rate)
+      prifit_price = price - (commission_price);
+    }
+    //販売手数料の更新(label)
+    $("#item_commission_price_label").val(NumberWithDelimiter(commission_price));
+    //販売利益の更新(label)
+    $("#item_profit_price_label").val(NumberWithDelimiter(prifit_price));
+    //販売利益の更新(hidden)
+    $("#profit_price_hdn").val(prifit_price);
   });
 });
