@@ -342,7 +342,7 @@ $(document).on('turbolinks:load', function() {
     let commission_price = "";
     let prifit_price = "";
     if (Number.isFinite(price) && Number.isFinite(rate)) {
-      commission_price = price * rate
+      commission_price = Math.floor(price * rate)
       prifit_price = price - (commission_price);
     }
     //販売手数料の更新(label)
