@@ -207,8 +207,6 @@ Things you may want to cover:
 |------|----|-------|
 |item_id|references|null: false, foreign_key: true, index: true|
 |product_size_id|references|null: false, foreign_key: true, index: true|
-|name|string|null:false, index: true|
-|ancestry|string|index: true|
 
 ### Association
 
