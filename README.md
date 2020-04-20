@@ -23,140 +23,194 @@ Things you may want to cover:
 
 * ...
 
-
 ## Userテーブル
+
 |Column|Type|Options|
 |------|----|-------|
-|birthday|date|null: false|
+|nickname|string|null: false, index: true, unique: true|
 |email|string|null: false, index: true, unique: true|
 |encrypted_password|string|null: false|
-|first_name|string|null: false|
-|first_name_kana|string|null: false|
-|last_name|string|null: false|
-|last_name_kana|string|null: false|
-|nickname|string|null: false, index: true, unique: true|
-|remember_created_at|datetime||
-|reset_password_sent_at|datetime||
 |reset_password_token|string|index: true, unique: true|
+|reset_password_sent_at|datetime||
+|remember_created_at|datetime||
+|first_name|string|null: false|
+|last_name|string|null: false|
+|first_name_kana|string|null: false|
+|last_name_kana|string|null: false|
+|birthday|date|null: false|
+|telephone_number|string||
 |self_image|string||
 |self_introduction|text||
-|telephone_number|string||
 
 ### Association
+
 - has_many   :items
 - has_many   :creditcards
-- has_many   :shippings
 - has_many   :addresses
+- has_many   :trades
 
 ## Itemテーブル
+
 |Column|Type|Options|
 |------|----|-------|
-|brand_id|reference|null: false, foreign_key: true|
-|category_id|reference|null: false, foreign_key: true|
+|user_id|references|null: false, foreign_key: true|
+|address_id|references|null: false, foreign_key: true, index: true|
+|brand_id|references|null: true, foreign_key: true, index: true|
+|category_id|references|null: false, foreign_key: true, index: true|
+|product_size_id|references|null: true, foreign_key: true, index: true|
+|shippingway_id|references|null: true, foreign_key: true, index: true|
 |condition_num|integer|null: false, limit: 1, unsigned: true, index: true|
 |daystoship_num|integer|null: false, limit: 1, unsigned: true, index: true|
-|description|text|null: false|
-|feerate|decimal|null: false, precision: 4, scale: 3|
-|price|decimal|null: false, precision: 10, scale: 3|
-|profit_price|desimal|null: false, precision: 10, scale: 3|
-|shippingcharge_num|integer|null: false, limit: 1, unsigned: true, index: true|
-|shippingway_id|references|null: false, foreign_key: true|
-|size_num|integer|null: false, limit: 1, unsigned: true, index: true|
-|sold_at|datetime||
 |title|string|null: false, index: true|
-|seller_id|references|null: false, foreign_key: { to_table: 'users' }|
-|status_num|integer|null: false, limit: 1, unsigned: true|
-|buyer_id|reference|foreign_key: { to_table: 'users' }|
+|description|text|null: false|
+|price|decimal|null: false, precision: 10, scale: 3|
+|feerate|decimal|null: false, precision: 4, scale: 3|
+|profit_price|desimal|null: false, precision: 10, scale: 3|
 
 ### Association
-- belongs_to    :brand
+
+- belongs_to    :address
+- belongs_to    :brand, optional: true
 - belongs_to    :category
-- belongs_to    :shippingway
+- belongs_to    :product_size, optional: true
+- belongs_to    :shippingway, optional: true
 - belongs_to    :user
-
+- has_one       :trade
 - has_many      :item_images
+- accepts_nested_attributes_for :item_images, allow_destroy: true
 
-- has_one       :shipping
+## Tradeテーブル
+
+|Column|Type|Options|
+|------|----|-------|
+|item_id|references|null: false, foreign_key: true, index: true|
+|user_id|references|null: false, foreign_key: true, index: true|
+|address_id|references|null: false, foreign_key: true, index: true|
+|status_num|integer|null: false, limit: 1, unsigned: true|
+
+### Association
+
+- belongs_to    :item
+- belongs_to    :user
+- belongs_to    :address
 
 ## Areaテーブル
+
 |Column|Type|Options|
 |------|----|-------|
 |name|string|null: false|
 
 ### Association
+
 - has_many :addresses
 
+## Addressテーブル
 
-## Creditcardテーブル
 |Column|Type|Options|
 |------|----|-------|
-|customer|string|null: false|
-|pay_token|string|null: false|
-|user_id|references|null: false, foreign_key: true|
+|user_id|references|null: false, foreign_key: true, index: true|
+|area_id|references|null: false, foreign_key: true, index: true|
+|status_num|integer|null: false, limit: 1, unsigned: true|
+|first_name|string|null: false|
+|last_name|string|null: false|
+|first_name_kana|string|null: false|
+|last_name_kana|string|null: false|
+|postal_number|string|null: false|
+|city|string|null: false|
+|number|string|null: false|
+|building|string|null: true|
+|telephone_number|string|null: false|
+
 ### Association
+
+- belongs_to  :area
+- belongs_to  :user
+- has_many    :items
+- has_many    :trades
+  
+## Creditcardテーブル
+
+|Column|Type|Options|
+|------|----|-------|
+|user_id|references|null: false, foreign_key: true, index: true|
+|card_id|string|null: false|
+|customer_id|string|null: false|
+
+### Association
+
 - belongs_to :user
 
 ## Item_imageテーブル
+
 |Column|Type|Options|
 |------|----|-------|
+|item_id|references|null: false, foreign_key: true, index: true|
 |image|string|null: false|
-|item_id|references|null: false, foreign_key: true|
 
 ### Association
-- belongs_to :item
 
+- belongs_to :item, optional: true
+- mount_uploader :image, ImageUploader
+  
 ## Shippingwayテーブル
+
 |Column|Type|Options|
 |------|----|-------|
-|name|string|null: false|
-|status_num|integer|null: false, limit: 1, unsigned: true|
+|name|string|null: false, index: true|
+|ancestry|string|null: false, index: true|
 
 ### Association
+
 - has_many :items
+- has_ancestry
 
 ## Brandテーブル
+
 |Column|Type|Options|
 |------|----|-------|
 |name|string|null: false, index: true|
 
 ### Association
+
 - has_many :items
-
-## Shippingテーブル
-|Column|Type|Options|
-|------|----|-------|
-|address_id|reference|null: false, foreign_key: true|
-|item_id|reference|null: false, foreign_key: true|
-|user_id|reference|null: false, foreign_key: true|
-
-### Association
-- belongs_to :address
-- belongs_to :user
-- belongs_to :item
 
 ## Catetgoryテーブル
+
 |Column|Type|Options|
 |------|----|-------|
-|ancestry|string||
 |name|string|null:false, index: true|
+|ancestry|string|index: true|
 
 ### Association
+
 - has_many :items
+- has_many :category_sizes
+- has_many :product_sizes, through: :category_sizes
 - has_ancestry
 
-## Addressテーブル
+## Product_sizeテーブル
+
 |Column|Type|Options|
 |------|----|-------|
-|building|string|null: false|
-|city|string|null: false|
-|number|string|null: false|
-|area_id|reference|null: false, foreign_key: true|
-|postal_number|string|null: false|
-|status_num|integer|null: false, limit: 1, unsigned: true|
-|telephone_number|string|null: false|
-|user_id|reference|null: false, foreign_key: true|
-### Association
-- belongs_to  :area
-- belongs_to  :user
+|name|string|null:false, index: true|
+|ancestry|string|index: true|
 
-- has_many    :shippings
+### Association
+
+- has_many :category_sizes
+- has_many :categories, through: :category_sizes
+- has_ancestry  
+
+## Catetgory_sizeテーブル
+
+|Column|Type|Options|
+|------|----|-------|
+|item_id|references|null: false, foreign_key: true, index: true|
+|product_size_id|references|null: false, foreign_key: true, index: true|
+|name|string|null:false, index: true|
+|ancestry|string|index: true|
+
+### Association
+
+- belongs_to :category
+- belongs_to :product_size
