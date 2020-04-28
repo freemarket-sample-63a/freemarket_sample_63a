@@ -56,16 +56,28 @@ class ItemsController < ApplicationController
   end
 
   def update
-    item = Item.find(params[:id])
-    if params[:item]['item_images_attributes']['0']['_destroy'] == "1"
-      redirect_to edit_item_path(item.id), notice:"画像がない商品は登録できません。"
-    else
-      if item.update(item_update_params)
-        redirect_to item_path(item.id)
+    @item = Item.find(params[:id])
+    length = @item.item_images.length
+    i = 0
+    while i < length do
+      if  item_update_params[:item_images_attributes]["#{i}"]["_destroy"] == "0"
+        if @item.update(item_update_params)
+          redirect_to item_path(@item.id)
+          return
+        else
+          redirect_to item_path(item.id), notice:"出品情報の更新に失敗しました。"
+          return
+        end
       else
-        redirect_to item_path(item.id), notice:"出品情報の更新に失敗しました。"
+        i += 1
       end
     end
+    if item_update_params[:item_images_attributes]["#{i}"]
+      @item.update(item_update_params)
+      redirect_to item_path(@item.id)
+      return
+    end
+    redirect_to edit_item_path(@item.id), notice:"画像がない商品は登録できません。"
   end
 
   def destroy
