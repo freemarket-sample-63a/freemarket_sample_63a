@@ -18,7 +18,7 @@
             %ul
             .item-image-container__unit--guide
               //プレビューの数に合わせてforオプションを指定
-              = f.label :"item_images_attributes_#{@item.item_images.length}_image", class: "label-box", id: "label-box--#{@item.item_images.length}" do
+              = f.label :"item_images_attributes_#{@item.item_images.length}_image", class: "label-box" do
                 %div.image-upload-dropfile-entire
                   .have-image
                     %p#click-delete クリックしてファイルをアップロード
